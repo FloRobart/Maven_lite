@@ -79,7 +79,7 @@ else
     if [ ! -d "./bin" ]
     then
         mkdir "./bin"
-        cp -fr "./donnees/" "./bin/donnees/"
+        cp -fr "./donnees/" "./bin/"
     fi
 
     javac -cp "$CLASSPATH:./bin/donnees/jar_libraries/jdom-2.0.6.jar:./bin/donnees/:." -encoding utf8 -d "./bin" @compile.list

@@ -75,7 +75,7 @@ then
     mkdir "./bin"
 fi
 
-cp -fr "./donnees/" "./bin/donnees/"
+cp -fr "./donnees/" "./bin/"
 
 echo "Compilation..."
 javac -cp "$CLASSPATH:./bin/donnees/jar_libraries/jdom-2.0.6.jar:./bin/donnees/:." -encoding utf8 -d "./bin" @compile.list
