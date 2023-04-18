@@ -4,7 +4,7 @@
 IF NOT EXIST "./bin/"         ( mkdir "./bin" )
 IF NOT EXIST "./bin/donnees/" ( mkdir "./bin/donnees/" )
 
-XCOPY "./donnees" "./bin/donnees" /E /Y >NUL
+IF EXIST "./donnees" ( XCOPY "./donnees" "./bin/donnees" /E /Y >NUL )
 
 call :genererCompileList ".\src"
 
