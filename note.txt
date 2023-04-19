@@ -1,0 +1,3 @@
+faire en sorte de modifier le fichier contenant le main (voir le définir automatiquement)
+
+faire en sorte de rajouter dynaquement les librairies ajouter au projet
