@@ -58,7 +58,7 @@ verificationDossier()
 # Main #
 #------#
 extensionValide="java"               
-nomFichierSortie="./compile.list"  
+nomFichierSortie="./compile.list"
 
 if [ $# -gt 0 ]                    
 then
@@ -69,7 +69,7 @@ else
     verificationDossier "./src"
 fi
 
-# s'il n'existe pas le dossier bin, on le crée
+# si le dossier bin n'existe pas, on le crée
 if [ ! -d "./bin" ]
 then
     mkdir "./bin"
