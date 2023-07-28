@@ -122,6 +122,7 @@ then
 
     for line in `cat $2`
     do
+        line=$( echo "$line" | sed -e 's/\"//g' )
         args+=("$line")
     done
 
