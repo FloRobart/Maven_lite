@@ -55,6 +55,21 @@ function genererCompileList()
     return 0
 }
 
+#=========================#
+# Liste les fichiers .jar #
+#=========================#
+function listerdependencies()
+{
+    for file in `ls -1 $1`    # permet de parcourir chaque éléments d'un répertoire
+    do
+        [[ -f $1"/"$file ]] && { [[ "${file##*.}" = "jar" ]] && dependencies+="$1/$file:"; }
+        [[ -d $1"/"$file ]] && { listerdependencies $1"/"$file; }
+    done
+
+    echo dependance : "'$dependencies'"
+    return 0
+}
+
 
 #============================#
 # Compile les fichiers .java #
@@ -63,7 +78,7 @@ function genererCompileList()
 function compilation()
 {
     echo 'Compilation...'
-    javac -cp "$classpath:$dependancies" -encoding $encoding -d "$output" @$nomFichierSortie && { echo 'Fin de la compilation.'; } || { echo "Erreur lors de la compilation."; help 1; }
+    javac -cp "$classpath:$dependencies" -encoding $encoding -d "$output" @$nomFichierSortie && { echo 'Fin de la compilation.'; } || { echo "Erreur lors de la compilation."; help 1; }
 }
 
 #====================#
@@ -72,7 +87,7 @@ function compilation()
 function lancement()
 {
     echo 'Lancement du programme...'
-    java -cp "$classpath:$dependancies" $main && { echo 'Fin de l'\''execution.'; } || { echo "Erreur lors du lancement du programme."; help 1; }
+    java -cp "$classpath:$dependencies" $main && { echo 'Fin de l'\''execution.'; } || { echo "Erreur lors du lancement du programme."; help 1; }
 }
 
 
@@ -85,23 +100,38 @@ function lancement()
 extensionValide="java"
 nomFichierSortie="compile.list"
 classpath="."
+dependencies=""
 encoding="UTF-8"
 compilation=1
 lancement=1
-args=("$@" "-a")
+args=("$@")
 ancienArg="a"
 
 
 #-----------#
 # Execution #
 #-----------#
+if [ $1 = "-h" ] || [ $1 = "--help" ]
+then
+    help 0
+fi
+
+if [ $1 = "-f" ] || [ $1 = "--file" ]
+then
+    [[ -z $2 ]] && { echo "Aucun fichier de configuration donnée pour l'option '-f' ou '--file'"; help 1; }
+    ls $2 > /dev/null 2>&1 || { echo "Le fichier de configuration '$2' n'existe pas"; help 1; }
+    [[ ! -f $2 ]] && { echo "Le fichier de configuration '$2' n'est pas un fichier"; help 1; }
+
+    args=()
+    for line in `cat $2`
+    do
+        args+=("$line")
+    done
+fi
+
+args+=("-a")
 for arg in "${args[@]}"
 do
-    if [ $arg = "-h" ] || [ $arg = "--help" ]
-    then
-        help 0
-    fi
-
     case "${ancienArg}" in
         "-s") verifArguments $arg "Aucune source donnée pour l'option '-s'" && source=$arg ;;
         "--source") verifArguments $arg "Aucune source donnée pour l'option '--source'" && source=$arg ;;
@@ -112,8 +142,8 @@ do
         "-cp") verifArguments $arg "Aucun classpath donnée pour l'option '-cp'" && classpath=$arg ;;
         "--classpath") verifArguments $arg "Aucun classpath donnée pour l'option '--classpath'" && classpath=$arg ;;
 
-        "-d") verifArguments $arg "Aucun dépendance donnée pour l'option '-d'" && dependancies=$arg ;;
-        "--dependancies") verifArguments $arg "Aucune dépendance donnée pour l'option '--directory'" && dependancies=$arg ;;
+        "-d") verifArguments $arg "Aucune dépendance donnée pour l'option '-d'" && dependency=$arg ;;
+        "--dependency") verifArguments $arg "Aucune dépendance donnée pour l'option '--dependency'" && dependency=$arg ;;
 
         "-n") verifArguments $arg "Aucun nom donnée pour l'option '-n'" && nomFichierSortie=$arg ;;
         "--name") verifArguments $arg "Aucun nom donnée pour l'option '--name'" && nomFichierSortie=$arg ;;
@@ -127,11 +157,19 @@ do
         "-dt") verifArguments $arg "Aucun dossier de données donnée pour l'option '-dt'" && data=$arg ;;
         "--data") verifArguments $arg "Aucun dossier de données donnée pour l'option '--data'" && data=$arg ;;
 
+        "-f") verifArguments $arg "Aucun fichier donnée pour l'option '-f'" && fileConfig=$arg ;;
+        "--file") verifArguments $arg "Aucun fichier donnée pour l'option '--file'" && fileConfig=$arg ;;
+
         "-c") compilation=0 ;;
         "--compilation") compilation=0 ;;
 
         "-l") lancement=0 ;;
-        "--lancement") lancement=0 ;;
+        "--launch") lancement=0 ;;
+
+        "-cl") compilation=0 ; lancement=0 ;;
+        "--compile-launch") compilation=0 ; lancement=0 ;;
+        "-lc") compilation=0 ; lancement=0 ;;
+        "--launch-compile") compilation=0 ; lancement=0 ;;
     esac
 
     ancienArg=$arg
@@ -168,6 +206,8 @@ then
     then
         [[ -d $data ]] && { cp -fr "$data" "$output"; } || { echo "Le dossier de données '$data' n'existe pas"; help 1; }
     fi
+
+    listerdependencies $dependency
 
     echo 'Génération de la compile liste'
     echo -n > $nomFichierSortie
