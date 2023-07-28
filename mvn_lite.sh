@@ -77,6 +77,7 @@ function listerdependencies()
 function compilation()
 {
     echo 'Compilation...'
+    echo "'javac -cp \"$classpath:$dependencies\" -encoding $encoding -d \"$output\" @$nomFichierSortie'"
     javac -cp "$classpath:$dependencies" -encoding $encoding -d "$output" @$nomFichierSortie && { echo 'Fin de la compilation.'; } || { echo "Erreur lors de la compilation."; help 1; }
 }
 
@@ -215,7 +216,6 @@ then
     fi
 
     [[ ! -z $dependency ]] && listerdependencies $dependency
-    echo dependance : "'$dependencies'"
 
     echo 'Génération de la compile liste'
     echo -n > $nomFichierSortie
