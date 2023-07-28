@@ -153,7 +153,7 @@ do
         "--encoding") verifArguments $arg "Aucun encodage donnée pour l'option '--encoding'" && encoding=$arg ;;
 
         "-m") verifArguments $arg "Aucun fichier main donnée pour l'option '-m'" && main=$arg ;;
-        "--extension") verifArguments $arg "Aucun fichier main donnée pour l'option '--extension'" && main=$arg ;;
+        "--main") verifArguments $arg "Aucun fichier main donnée pour l'option '--main'" && main=$arg ;;
 
         "-dt") verifArguments $arg "Aucun dossier de données donnée pour l'option '-dt'" && data=$arg ;;
         "--data") verifArguments $arg "Aucun dossier de données donnée pour l'option '--data'" && data=$arg ;;
