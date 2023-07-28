@@ -159,8 +159,13 @@ ls $output > /dev/null 2>&1 || {
 
 echo 'Génération de la compile liste'
 echo -n > $nomFichierSortie
-genererCompileList $source
 
-ls $nomFichierSortie > /dev/null 2>&1 || { echo "Erreur lors de la génération du fichier '$nomFichierSortie'."; help 1; }
-[[ $compilation -eq 0 ]] &&  { compilation; }
+[[ $compilation -eq 0 ]] &&  {
+    genererCompileList $source; ls $nomFichierSortie > /dev/null 2>&1 || {
+        echo "Erreur lors de la génération du fichier '$nomFichierSortie'."
+        help 1
+    }
+    compilation
+}
+
 [[ $lancement -eq 0 ]] && { lancement; }
