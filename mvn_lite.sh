@@ -121,7 +121,6 @@ then
     ls $2 > /dev/null 2>&1 || { echo "Le fichier de configuration '$2' n'existe pas"; help 1; }
     [[ ! -f $2 ]] && { echo "Le fichier de configuration '$2' n'est pas un fichier"; help 1; }
 
-    args=()
     for line in `cat $2`
     do
         args+=("$line")
@@ -155,9 +154,6 @@ do
 
         "-dt") verifArguments $arg "Aucun dossier de données donnée pour l'option '-dt'" && data=$arg ;;
         "--data") verifArguments $arg "Aucun dossier de données donnée pour l'option '--data'" && data=$arg ;;
-
-        "-f") verifArguments $arg "Aucun fichier donnée pour l'option '-f'" && fileConfig=$arg ;;
-        "--file") verifArguments $arg "Aucun fichier donnée pour l'option '--file'" && fileConfig=$arg ;;
 
         "-c") compilation=0 ;;
         "--compilation") compilation=0 ;;
