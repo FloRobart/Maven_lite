@@ -77,8 +77,11 @@ function listerdependencies()
 function compilation()
 {
     echo 'Compilation...'
+    echo "classpath = '$classpath'"
+    $classpath="$( echo "$classpath" | sed -e 's#"##' )"
+    echo "classpath = '$classpath'"
     echo "'javac -cp $classpath:$dependencies -encoding $encoding -d \"$output\" @$nomFichierSortie'"
-    javac -cp $classpath:$dependencies -encoding $encoding -d "$output" @$nomFichierSortie && { echo 'Fin de la compilation.'; } || { echo "Erreur lors de la compilation."; help 1; }
+    javac -cp "$classpath:$dependencies" -encoding $encoding -d "$output" @$nomFichierSortie && { echo 'Fin de la compilation.'; } || { echo "Erreur lors de la compilation."; help 1; }
 }
 
 #====================#
