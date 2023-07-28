@@ -77,7 +77,6 @@ function listerdependencies()
 function compilation()
 {
     echo 'Compilation...'
-    classpath=$( echo "$classpath" | sed -e 's/\"//g' )
     javac -cp "$classpath:$dependencies" -encoding $encoding -d "$output" @$nomFichierSortie && { echo 'Fin de la compilation.'; } || { echo "Erreur lors de la compilation."; help 1; }
 }
 
@@ -174,6 +173,7 @@ do
     ancienArg=$arg
 done
 
+classpath=$( echo "$classpath" | sed -e 's/\"//g' )
 
 if [ $compilation -eq 0 ]
 then
