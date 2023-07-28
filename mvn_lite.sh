@@ -66,7 +66,6 @@ function listerdependencies()
         [[ -d $1"/"$file ]] && { listerdependencies $1"/"$file; }
     done
 
-    echo dependance : "'$dependencies'"
     return 0
 }
 
@@ -207,7 +206,8 @@ then
         [[ -d $data ]] && { cp -fr "$data" "$output"; } || { echo "Le dossier de données '$data' n'existe pas"; help 1; }
     fi
 
-    listerdependencies $dependency
+    [[ ! -z $dependency ]] && listerdependencies $dependency
+    echo dependance : "'$dependencies'"
 
     echo 'Génération de la compile liste'
     echo -n > $nomFichierSortie
