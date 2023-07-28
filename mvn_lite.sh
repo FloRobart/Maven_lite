@@ -124,6 +124,9 @@ do
         "-m") verifArguments $arg "Aucun fichier main donnée pour l'option '-m'" && extensionValide=$arg ;;
         "--extension") verifArguments $arg "Aucun fichier main donnée pour l'option '--extension'" && extensionValide=$arg ;;
 
+        "-dt") verifArguments $arg "Aucun dossier de données donnée pour l'option '-dt'" && data=$arg ;;
+        "--data") verifArguments $arg "Aucun dossier de données donnée pour l'option '--data'" && data=$arg ;;
+
         "-c") compilation=0 ;;
         "--compilation") compilation=0 ;;
 
@@ -133,6 +136,11 @@ do
 
     ancienArg=$arg
 done
+
+if ! [ -z $data ]
+then
+    [[ -d $data ]] && { cp -fr "$data" "$output"; } || { echo "Le dossier de données '$data' n'existe pas"; help 1; }
+fi
 
 if [ $compilation -eq 0]
 then
@@ -164,6 +172,7 @@ then
         echo "Erreur lors de la génération du fichier '$nomFichierSortie'."
         help 1
     }
+
     compilation
 fi
 
