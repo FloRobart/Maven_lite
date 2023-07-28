@@ -58,13 +58,16 @@ function genererCompileList()
 #=========================#
 function listerdependencies()
 {
-    for file in `ls -1 $1`    # permet de parcourir chaque éléments d'un répertoire
-    do
-        [[ -f $1"/"$file ]] && { [[ "${file##*.}" = "jar" ]] && dependencies+="$1/$file:"; }
-        [[ -d $1"/"$file ]] && { listerdependencies $1"/"$file; }
-    done
+    if [ ! -z $dependency ]
+    then
+        for file in `ls -1 $1`    # permet de parcourir chaque éléments d'un répertoire
+        do
+            [[ -f $1"/"$file ]] && { [[ "${file##*.}" = "jar" ]] && dependencies+="$1/$file:"; }
+            [[ -d $1"/"$file ]] && { listerdependencies $1"/"$file; }
+        done
 
-    dependencies=$( echo "$dependencies" | sed -e 's/\"//g' )
+        dependencies=$( echo "$dependencies" | sed -e 's/\"//g' )
+    fi
 }
 
 
@@ -205,7 +208,7 @@ then
         [[ -d $data ]] && { cp -fr "$data" "$output"; } || { echo "Le dossier de données '$data' n'existe pas"; help 1; }
     fi
 
-    [[ ! -z $dependency ]] && listerdependencies $dependency
+    listerdependencies $dependency
 
     echo -n > $nomFichierSortie
     genererCompileList $source; ls $nomFichierSortie > /dev/null 2>&1 || {
@@ -217,4 +220,4 @@ then
 fi
 
 
-[[ $lancement -eq 0 ]] && { lancement; }
+[[ $lancement -eq 0 ]] && { listerdependencies $dependency; lancement; }
