@@ -142,7 +142,7 @@ then
     [[ -d $data ]] && { cp -fr "$data" "$output"; } || { echo "Le dossier de données '$data' n'existe pas"; help 1; }
 fi
 
-if [ $compilation -eq 0]
+if [ $compilation -eq 0 ]
 then
     # Vérification du dossier source
     until ls $source > /dev/null 2>&1 && ! [[ -z $source ]]
