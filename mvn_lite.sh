@@ -126,10 +126,12 @@ then
     do
         args+=("$line")
     done
+
+    unset args[0]
+    unset args[1]
 fi
 
-unset args[0]
-unset args[1]
+
 args+=("-a")
 for arg in "${args[@]}"
 do
@@ -183,6 +185,8 @@ echo "compilation : '$compilation'"
 echo "lancement : '$lancement'"
 echo "main : '$main'"
 echo "data : '$data'"
+
+exit 0
 
 classpath=$( echo "$classpath" | sed -e 's/\"//g' )
 
