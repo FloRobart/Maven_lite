@@ -137,10 +137,7 @@ do
     ancienArg=$arg
 done
 
-if ! [ -z $data ]
-then
-    [[ -d $data ]] && { cp -fr "$data" "$output"; } || { echo "Le dossier de données '$data' n'existe pas"; help 1; }
-fi
+
 
 if [ $compilation -eq 0 ]
 then
@@ -165,6 +162,12 @@ then
             mkdir -p $output && echo "Le dossier '$output' a été créé" || { echo "Erreur lors de la création du dossier '$output'"; help 1; }
         } || exit 0
     }
+
+    # Copie du dossier de données
+    if [ ! -z $data ]
+    then
+        [[ -d $data ]] && { cp -fr "$data" "$output"; } || { echo "Le dossier de données '$data' n'existe pas"; help 1; }
+    fi
 
     echo 'Génération de la compile liste'
     echo -n > $nomFichierSortie
