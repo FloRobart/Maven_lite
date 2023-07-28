@@ -51,8 +51,6 @@ function genererCompileList()
         [[ -f $1"/"$file ]] && { [[ "${file##*.}" = "$extensionValide" ]] && echo $1"/"$file >> "$nomFichierSortie"; }
         [[ -d $1"/"$file ]] && { genererCompileList $1"/"$file; }
     done
-
-    return 0
 }
 
 #=========================#
@@ -66,7 +64,7 @@ function listerdependencies()
         [[ -d $1"/"$file ]] && { listerdependencies $1"/"$file; }
     done
 
-    return 0
+    dependencies=$( echo "$dependencies" | sed -e 's/\"//g' )
 }
 
 
@@ -186,7 +184,6 @@ echo "lancement : '$lancement'"
 echo "main : '$main'"
 echo "data : '$data'"
 
-#classpath=$( echo "$classpath" | sed -e 's/\"//g' )
 
 if [ $compilation -eq 0 ]
 then
