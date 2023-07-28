@@ -78,7 +78,7 @@ function compilation()
 {
     echo 'Compilation...'
     echo "classpath = '$classpath'"
-    classpath=$( echo "$classpath" | sed -i -e 's/\"//g' )
+    classpath=$( echo "$classpath" | sed -e 's/\"//g' )
     echo "classpath = '$classpath'"
     echo "'javac -cp $classpath:$dependencies -encoding $encoding -d \"$output\" @$nomFichierSortie'"
     javac -cp "$classpath:$dependencies" -encoding $encoding -d "$output" @$nomFichierSortie && { echo 'Fin de la compilation.'; } || { echo "Erreur lors de la compilation."; help 1; }
