@@ -173,17 +173,6 @@ do
     ancienArg=$arg
 done
 
-echo "classpath : '$classpath'"
-echo "dependencies : '$dependencies'"
-echo "encoding : '$encoding'"
-echo "compilation : '$compilation'"
-echo "lancement : '$lancement'"
-echo "source : '$source'"
-echo "output : '$output'"
-echo "nomFichierSortie : '$nomFichierSortie'"
-echo "main : '$main'"
-echo "data : '$data'"
-
 
 if [ $compilation -eq 0 ]
 then
