@@ -72,7 +72,6 @@ function compilation()
 function lancement()
 {
     echo 'Lancement du programme...'
-    echo java -cp "$classpath:$dependancies" $main
     java -cp "$classpath:$dependancies" $main && { echo 'Fin de l'\''execution.'; } || { echo "Erreur lors du lancement du programme."; help 1; }
 }
 
@@ -113,8 +112,8 @@ do
         "-cp") verifArguments $arg "Aucun classpath donnée pour l'option '-cp'" && classpath=$arg ;;
         "--classpath") verifArguments $arg "Aucun classpath donnée pour l'option '--classpath'" && classpath=$arg ;;
 
-        "-d") verifArguments $arg "Aucun dépendance donnée pour l'option '-d'" && classpath=$arg ;;
-        "--dependancies") verifArguments $arg "Aucune dépendance donnée pour l'option '--directory'" && classpath=$arg ;;
+        "-d") verifArguments $arg "Aucun dépendance donnée pour l'option '-d'" && dependancies=$arg ;;
+        "--dependancies") verifArguments $arg "Aucune dépendance donnée pour l'option '--directory'" && dependancies=$arg ;;
 
         "-n") verifArguments $arg "Aucun nom donnée pour l'option '-n'" && nomFichierSortie=$arg ;;
         "--name") verifArguments $arg "Aucun nom donnée pour l'option '--name'" && nomFichierSortie=$arg ;;
@@ -122,8 +121,8 @@ do
         "-e") verifArguments $arg "Aucun encodage donnée pour l'option '-e'" && encoding=$arg ;;
         "--encoding") verifArguments $arg "Aucun encodage donnée pour l'option '--encoding'" && encoding=$arg ;;
 
-        "-m") verifArguments $arg "Aucun fichier main donnée pour l'option '-m'" && extensionValide=$arg ;;
-        "--extension") verifArguments $arg "Aucun fichier main donnée pour l'option '--extension'" && extensionValide=$arg ;;
+        "-m") verifArguments $arg "Aucun fichier main donnée pour l'option '-m'" && main=$arg ;;
+        "--extension") verifArguments $arg "Aucun fichier main donnée pour l'option '--extension'" && main=$arg ;;
 
         "-dt") verifArguments $arg "Aucun dossier de données donnée pour l'option '-dt'" && data=$arg ;;
         "--data") verifArguments $arg "Aucun dossier de données donnée pour l'option '--data'" && data=$arg ;;
