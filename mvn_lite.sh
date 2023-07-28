@@ -157,10 +157,9 @@ ls $output > /dev/null 2>&1 || {
 }
 
 
-echo 'Génération de la compile liste'
-echo -n > $nomFichierSortie
-
 [[ $compilation -eq 0 ]] &&  {
+    echo 'Génération de la compile liste'
+    echo -n > $nomFichierSortie
     genererCompileList $source; ls $nomFichierSortie > /dev/null 2>&1 || {
         echo "Erreur lors de la génération du fichier '$nomFichierSortie'."
         help 1
