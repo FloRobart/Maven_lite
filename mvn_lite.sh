@@ -86,7 +86,6 @@ function compilation()
 function lancement()
 {
     echo 'Lancement du programme...'
-    echo "'java -cp "$classpath:$dependencies" $main'"
     java -cp "$classpath:$dependencies" $main && { echo 'Fin de l'\''execution.'; } || { echo "Erreur lors du lancement du programme."; help 1; }
 }
 
@@ -207,7 +206,6 @@ then
 
     [[ ! -z $dependency ]] && listerdependencies $dependency
 
-    echo 'Génération de la compile liste'
     echo -n > $nomFichierSortie
     genererCompileList $source; ls $nomFichierSortie > /dev/null 2>&1 || {
         echo "Erreur lors de la génération du fichier '$nomFichierSortie'."
