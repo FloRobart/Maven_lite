@@ -127,6 +127,8 @@ then
     done
 fi
 
+unset args[0]
+unset args[1]
 args+=("-a")
 for arg in "${args[@]}"
 do
