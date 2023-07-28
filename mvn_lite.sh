@@ -134,30 +134,30 @@ do
     ancienArg=$arg
 done
 
-# Vérification du dossier source
-until ls $source > /dev/null 2>&1 && ! [[ -z $source ]]
-do
-    echo "Le dossier source '$source' n'existe pas"
-    demandeInfo "source"
-done
+if [ $compilation -eq 0]
+then
+    # Vérification du dossier source
+    until ls $source > /dev/null 2>&1 && ! [[ -z $source ]]
+    do
+        echo "Le dossier source '$source' n'existe pas"
+        demandeInfo "source"
+    done
 
-# Vérification du dossier de sortie
-while [[ -z $output ]]
-do
-    echo 'aucun dossier de sortie donnée'
-    demandeInfo "output"
-done
+    # Vérification du dossier de sortie
+    while [[ -z $output ]]
+    do
+        echo 'aucun dossier de sortie donnée'
+        demandeInfo "output"
+    done
 
-# Vérification du dossier de sortie
-ls $output > /dev/null 2>&1 || {
-    read -p "Le dossier de sortie '$output' n'existe pas. Voulez-vous le créer ? (y/n) : " reponse
-    [[ ${reponse} =~ ^[yY]([eE][sS])?$ ]] && {
-        mkdir -p $output && echo "Le dossier '$output' a été créé" || { echo "Erreur lors de la création du dossier '$output'"; help 1; }
-    } || exit 0
-}
+    # Vérification du dossier de sortie
+    ls $output > /dev/null 2>&1 || {
+        read -p "Le dossier de sortie '$output' n'existe pas. Voulez-vous le créer ? (y/n) : " reponse
+        [[ ${reponse} =~ ^[yY]([eE][sS])?$ ]] && {
+            mkdir -p $output && echo "Le dossier '$output' a été créé" || { echo "Erreur lors de la création du dossier '$output'"; help 1; }
+        } || exit 0
+    }
 
-
-[[ $compilation -eq 0 ]] &&  {
     echo 'Génération de la compile liste'
     echo -n > $nomFichierSortie
     genererCompileList $source; ls $nomFichierSortie > /dev/null 2>&1 || {
@@ -165,6 +165,7 @@ ls $output > /dev/null 2>&1 || {
         help 1
     }
     compilation
-}
+fi
+
 
 [[ $lancement -eq 0 ]] && { lancement; }
