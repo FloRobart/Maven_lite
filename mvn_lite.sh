@@ -72,7 +72,8 @@ function compilation()
 function lancement()
 {
     echo 'Lancement du programme...'
-    java -cp "$classpath:$dependancies" $main  && { echo 'Fin de l'\''execution.'; } || { echo "Erreur lors du lancement du programme."; help 1; }
+    echo java -cp "$classpath:$dependancies" $main
+    java -cp "$classpath:$dependancies" $main && { echo 'Fin de l'\''execution.'; } || { echo "Erreur lors du lancement du programme."; help 1; }
 }
 
 
