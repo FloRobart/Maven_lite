@@ -186,9 +186,7 @@ echo "lancement : '$lancement'"
 echo "main : '$main'"
 echo "data : '$data'"
 
-exit 0
-
-classpath=$( echo "$classpath" | sed -e 's/\"//g' )
+#classpath=$( echo "$classpath" | sed -e 's/\"//g' )
 
 if [ $compilation -eq 0 ]
 then
