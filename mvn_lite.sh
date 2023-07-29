@@ -3,9 +3,9 @@
 #======#
 # Aide #
 #======#
-# $1 = status de sortie
+# $1 = status de sortie, $2 = message optionnel
 function help()
-{   
+{
     echo "Utilisation : mvn_lite.sh [options] [arguments]"
     echo "Permet de compiler et lancer un projet java en utilisant le minimum d'options et de manipulation."
     echo "Facilite la compilation et le lancement d'un projet java plus simplement que maven."
@@ -40,17 +40,17 @@ function help()
     echo ""
     echo "  -h , --help            afficher l'aide et quitter."
     echo ""
-    echo "Les options obligatoires pour la compilation sont :"
+    echo "Les options minimum obligatoires pour la compilation sont :"
     echo "  -s, --source       Dossier racine du projet à compiler."
     echo "  -o, --output       Dossier de sortie des fichiers compilés."
     echo "  -c, --compilation  Compiler le projet."
     echo ""
-    echo "Les options obligatoires pour le lancement sont :"
+    echo "Les options minimum obligatoires pour le lancement sont :"
     echo "  -m , --main       Classe principale à lancer."
     echo "  -l , --launch     Lancer le projet."
     echo "  -cp, --classpath  Voir l'option -cp dans listes des options."
     echo ""
-    echo "Les options obligatoires pour la compilation et le lancement sont :"
+    echo "Les options minimum obligatoires pour la compilation et le lancement sont :"
     echo "  -s , --source          Dossier racine du projet à compiler."
     echo "  -o , --output          Dossier de sortie des fichiers compilés."
     echo "  -m , --main            Classe principale à lancer."
@@ -60,10 +60,22 @@ function help()
     echo "Exemple d'utiliation : './mvn_lite.sh -s src -o ./bin -m "controleur.Main" -cl'"
     echo "Cette ligne de commande va compiler et lancer le projet java contenu dans le dossier 'src' et lancer la classe 'controleur.Main' avec le classpath './bin'."
     echo "Tout les fichiers compilés seront dans le dossier 'bin'."
-    
 
-    exit $1
+    [[ ! -z "$2" ]] && { echo; echo; echo "$2"; echo; }
+    exit "$1"
 }
+
+
+#====================================================#
+# Affiche un message d'erreur et quitte le programme #
+#====================================================#
+# $1 = message d'erreur
+function exitError()
+{
+    echo "$1"
+    exit 1
+}
+
 
 #================================================================#
 # Demande à l'utilisateur de rentrer les informations manquantes #
@@ -88,8 +100,8 @@ function demandeInfo()
 # $1 = argument à vérifier, $2 = phrase à afficher si l'argument est invalide
 function verifArguments()
 {
-    [[ ${1} =~ ^-{1,2}[a-z]+$ ]] && { echo "$2"; help 1; }
-    [[ ${1} =~ ^$ ]] && { echo "$2"; help 1; }
+    [[ ${1} =~ ^-{1,2}[a-z]+$ ]] && { echo "$2"; exit 1; }
+    [[ ${1} =~ ^$ ]] && { echo "$2"; exit 1; }
 
     return 0
 }
@@ -100,7 +112,7 @@ function verifArguments()
 # $1 = dossier source
 function genererCompileList()
 {
-    for file in `ls -1 $1`    # permet de parcourir chaque éléments d'un répertoire
+    for file in `ls -1 $1`
     do
         [[ -f $1"/"$file ]] && { [[ "${file##*.}" = "$extensionValide" ]] && echo $1"/"$file >> "$nomFichierSortie"; }
         [[ -d $1"/"$file ]] && { genererCompileList $1"/"$file; }
@@ -114,7 +126,7 @@ function listerdependencies()
 {
     if [ ! -z $dependency ]
     then
-        for file in `ls -1 $1`    # permet de parcourir chaque éléments d'un répertoire
+        for file in `ls -1 $1`
         do
             [[ -f $1"/"$file ]] && { [[ "${file##*.}" = "jar" ]] && dependencies+="$1/$file:"; }
             [[ -d $1"/"$file ]] && { listerdependencies $1"/"$file; }
@@ -132,7 +144,7 @@ function listerdependencies()
 function compilation()
 {
     echo 'Compilation...'
-    javac -cp "$classpath:$dependencies" -encoding $encoding -d "$output" @$nomFichierSortie && { echo 'Fin de la compilation.'; } || { echo "Erreur lors de la compilation."; help 1; }
+    javac -cp "$classpath:$dependencies" -encoding $encoding -d "$output" @$nomFichierSortie && { echo 'Fin de la compilation.'; } || { echo "Erreur lors de la compilation."; exit 1; }
 }
 
 #====================#
@@ -141,8 +153,7 @@ function compilation()
 function lancement()
 {
     echo 'Lancement du programme...'
-    echo "'java -cp \"$classpath:$dependencies\" $main'"
-    java -cp "$classpath:$dependencies" $main && { echo 'Fin de l'\''execution.'; } || { echo "Erreur lors du lancement du programme."; help 1; }
+    java -cp "$classpath:$dependencies" $main && { echo 'Fin de l'\''execution.'; } || { echo "Erreur lors du lancement du programme."; exit 1; }
 }
 
 
@@ -172,9 +183,9 @@ fi
 
 if [ $1 = "-f" ] || [ $1 = "--file" ]
 then
-    [[ -z $2 ]] && { echo "Aucun fichier de configuration donnée pour l'option '-f' ou '--file'"; help 1; }
-    ls $2 > /dev/null 2>&1 || { echo "Le fichier de configuration '$2' n'existe pas"; help 1; }
-    [[ ! -f $2 ]] && { echo "Le fichier de configuration '$2' n'est pas un fichier"; help 1; }
+    [[ -z $2 ]] && { help 1 "Aucun fichier de configuration donnée pour l'option '-f' ou '--file'"; }
+    ls $2 > /dev/null 2>&1 || { echo "Le fichier de configuration '$2' n'existe pas"; exit 1; }
+    [[ ! -f $2 ]] && { echo "Le fichier de configuration '$2' n'est pas un fichier"; exit 1; }
 
     for line in `cat $2`
     do
@@ -190,7 +201,6 @@ fi
 args+=("-a")
 for arg in "${args[@]}"
 do
-    echo -n "'$arg', "
     case "${ancienArg}" in
         "-s") verifArguments $arg "Aucune source donnée pour l'option '-s'" && source=$arg ;;
         "--source") verifArguments $arg "Aucune source donnée pour l'option '--source'" && source=$arg ;;
@@ -249,34 +259,31 @@ then
     done
 
     # Vérification du dossier de sortie
-    ls $output > /dev/null 2>&1 || {
+    ls -d $output > /dev/null 2>&1 && { [[ -d $output ]] || { echo "'$output' n'est pas un dossier."; exit 1; }; } || {
         read -p "Le dossier de sortie '$output' n'existe pas. Voulez-vous le créer ? (y/n) : " reponse
         [[ ${reponse} =~ ^[yY]([eE][sS])?$ ]] && {
-            mkdir -p $output && echo "Le dossier '$output' a été créé" || { echo "Erreur lors de la création du dossier '$output'"; help 1; }
+            mkdir -p $output && echo "Le dossier '$output' a été créé" || { echo "Erreur lors de la création du dossier '$output'"; exit 1; }
         } || exit 0
     }
 
     # Copie du dossier de données
     if [ ! -z $data ]
     then
-        [[ -d $data ]] && { cp -fr "$data" "$output"; } || { echo "Le dossier de données '$data' n'existe pas"; help 1; }
+        [[ -d $data ]] && { cp -fr "$data" "$output" || { echo "Erreur lors de la copie du dossier '$data' dans le dossier '$output'"; exit 1; }; } || { echo "Le dossier de données '$data' n'existe pas"; exit 1; }
     fi
 
     [[ -z $classpath ]] && classpath=$output
     listerdependencies $dependency
 
     echo -n > $nomFichierSortie
-    genererCompileList $source; ls $nomFichierSortie > /dev/null 2>&1 || {
-        echo "Erreur lors de la génération du fichier '$nomFichierSortie'."
-        help 1
-    }
-
+    genererCompileList $source; ls $nomFichierSortie > /dev/null 2>&1 || { echo "Erreur lors de la génération du fichier '$nomFichierSortie'."; exit 1; }
     compilation
 fi
 
 
 [[ $lancement -eq 0 ]] && {
     [[ -z $classpath ]] && classpath=$output
+    [[ -z $main ]] && { help 1 "L'option -m ou --main est obligatoire pour lancer le programme"; }
     listerdependencies $dependency
     lancement
 }
