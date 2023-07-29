@@ -1,0 +1,53 @@
+Utilisation : mvn_lite.sh [options] [arguments]
+Permet de compiler et lancer un projet java en utilisant le minimum d'options et de manipulation.
+Facilite la compilation et le lancement d'un projet java plus simplement que maven.
+
+Toutes les options prennent un seul argument sauf -c et -l qui n'en prennent aucun.
+
+L'ordre des options n'a pas d'importance sauf pour l'option -f qui doit être la première option de la ligne de commande.
+les guillements double ne sont pas obligatoires, sauf si l'argument contient un espace
+
+Les options qui sont utilisé avec -c alors qu'elles sont utilisable uniquement avec -l sont ignorées et inversement.
+Les options qui sont utilisable avec -c ou -l sont utilisable avec -cl et -lc.
+
+Les arguments obligatoires pour les options longues le sont aussi pour les options courtes :
+  -s , --source          Dossier racine du projet à compiler.
+  -o , --output          Dossier de sortie des fichiers compilés.
+  -cp, --classpath       Liste des fichiers jar et du dossier de sortie des fichiers compilés (le même dossier que pour l'option -o) à ajouter au classpath lors de la compilation et du lancement.
+                         Les fichiers jar doivent être séparés par des ':'. La valeur par defaut du classpath est le dossier de sortie des fichiers compilés si l'option -o est utilisé.
+  -d , --dependency      Dossier contenant les fichiers jar utiliser par le programme. Tout les fichiers jar seront ajoutés au classpath lors de la compilation et du lancement.
+  -n , --name            Permet de changer le nom du fichier contenant les chemins des fichiers java à compiler. Le nom par defaut est 'compile.list'.
+                         Utilisable uniquement avec l'option -c.
+  -e , --encoding        Permet de changer l'encodage des fichiers java à compiler. L'encodage par defaut est 'UTF-8'. Utilisable uniquement avec l'option -c.
+  -m , --main            Classe principale à lancer. Utilisable uniquement avec l'option -l.
+  -dt, --data            Dossier contenant les données du projet. Permet de copier le dossier de données dans le dossier de sortie. Utilisable uniquement avec l'option -c.
+  -f , --file            Fichier de configuration. Permet de charger les options à partir d'un fichier de configuration, le séparateur sont l'espace et le retour à la ligne.
+                         Les options du fichier de configuration prédomine sur les options de la ligne de commande.
+                         L'option -f doit obligatoirement être la première option de la ligne de commande.
+
+  -c , --compilation     Compiler le projet.
+  -l , --launch          Lancer le projet.
+  -cl, --compile-launch  Compiler et lancer le projet. (équivalent à -c -l)
+  -lc, --launch-compile  Compiler et lancer le projet. (équivalent à -c -l)
+
+  -h , --help            afficher l'aide et quitter.
+
+Les options obligatoires pour la compilation sont :
+  -s, --source       Dossier racine du projet à compiler.
+  -o, --output       Dossier de sortie des fichiers compilés.
+  -c, --compilation  Compiler le projet.
+
+Les options obligatoires pour le lancement sont :
+  -m , --main       Classe principale à lancer.
+  -l , --launch     Lancer le projet.
+  -cp, --classpath  Voir l'option -cp dans listes des options.
+
+Les options obligatoires pour la compilation et le lancement sont :
+  -s , --source          Dossier racine du projet à compiler.
+  -o , --output          Dossier de sortie des fichiers compilés.
+  -m , --main            Classe principale à lancer.
+  -cl, --compile-launch  Compiler et lancer le projet. (équivalent à -c -l)
+
+
+Exemple d'utiliation : './mvn_lite.sh -s src -o ./bin -m "controleur.Main" -cl'
+Cette ligne de commande va compiler et lancer le projet java contenu dans le dossier 'src' et lancer la classe 'controleur.Main' avec le classpath './bin'. Tout les fichiers compilés seront dans le dossier 'bin'.
