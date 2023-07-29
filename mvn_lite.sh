@@ -102,6 +102,7 @@ function verifArguments()
 {
     [[ ${1} =~ ^-{1,2}[a-z]+$ ]] && { echo "$2"; exit 1; }
     [[ ${1} =~ ^$ ]] && { echo "$2"; exit 1; }
+    [[ -z $1 ]] && { echo "$2"; exit 1; }
 
     return 0
 }
@@ -240,7 +241,7 @@ do
 
     ancienArg=$arg
 done
-exit 0
+
 
 if [ $compilation -eq 0 ]
 then
@@ -282,7 +283,7 @@ fi
 
 
 [[ $lancement -eq 0 ]] && {
-    [[ -z $classpath ]] && classpath=$output
+    [[ -z $classpath ]] && { help 1 "L'option -cp ou --classpath est obligatoire pour lancer le programme"; }
     [[ -z $main ]] && { help 1 "L'option -m ou --main est obligatoire pour lancer le programme"; }
     listerdependencies $dependency
     lancement
