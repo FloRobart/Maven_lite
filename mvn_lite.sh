@@ -100,7 +100,6 @@ function lancement()
 #-----------#
 extensionValide="java"
 nomFichierSortie="compile.list"
-classpath="."
 dependencies=""
 encoding="UTF-8"
 compilation=1
@@ -208,6 +207,7 @@ then
         [[ -d $data ]] && { cp -fr "$data" "$output"; } || { echo "Le dossier de données '$data' n'existe pas"; help 1; }
     fi
 
+    [[ -z $classpath ]] && classpath=$output
     listerdependencies $dependency
 
     echo -n > $nomFichierSortie
@@ -220,4 +220,8 @@ then
 fi
 
 
-[[ $lancement -eq 0 ]] && { listerdependencies $dependency; lancement; }
+[[ $lancement -eq 0 ]] && {
+    [[ -z $classpath ]] && classpath=$output
+    listerdependencies $dependency
+    lancement
+}
