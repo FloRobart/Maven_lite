@@ -5,9 +5,62 @@
 #======#
 # $1 = status de sortie
 function help()
-{
-    echo 'help'
-    # voir mkdir --help pour créer l'aide
+{   
+    echo "Utilisation : mvn_lite.sh [options] [arguments]"
+    echo "Permet de compiler et lancer un projet java en utilisant le minimum d'options et de manipulation."
+    echo "Facilite la compilation et le lancement d'un projet java plus simplement que maven."
+    echo ""
+    echo "Toutes les options prennent un seul argument sauf -c et -l qui n'en prennent aucun."
+    echo ""
+    echo "L'ordre des options n'a pas d'importance sauf pour l'option -f qui doit être la première option de la ligne de commande."
+    echo "les guillements double ne sont pas obligatoires, sauf si l'argument contient un espace"
+    echo ""
+    echo "Les options qui sont utilisé avec -c alors qu'elles sont utilisable uniquement avec -l sont ignorées et inversement."
+    echo "Les options qui sont utilisable avec -c ou -l sont utilisable avec -cl et -lc."
+    echo ""
+    echo "Les arguments obligatoires pour les options longues le sont aussi pour les options courtes :"
+    echo "  -s , --source          Dossier racine du projet à compiler."
+    echo "  -o , --output          Dossier de sortie des fichiers compilés."
+    echo "  -cp, --classpath       Liste des fichiers jar et du dossier de sortie des fichiers compilés (le même dossier que pour l'option -o) à ajouter au classpath lors de la compilation et du lancement."
+    echo "                         Les fichiers jar doivent être séparés par des ':'. La valeur par defaut du classpath est le dossier de sortie des fichiers compilés si l'option -o est utilisé."
+    echo "  -d , --dependency      Dossier contenant les fichiers jar utiliser par le programme. Tout les fichiers jar seront ajoutés au classpath lors de la compilation et du lancement."
+    echo "  -n , --name            Permet de changer le nom du fichier contenant les chemins des fichiers java à compiler. Le nom par defaut est 'compile.list'."
+    echo "                         Utilisable uniquement avec l'option -c."
+    echo "  -e , --encoding        Permet de changer l'encodage des fichiers java à compiler. L'encodage par defaut est 'UTF-8'. Utilisable uniquement avec l'option -c."
+    echo "  -m , --main            Classe principale à lancer. Utilisable uniquement avec l'option -l."
+    echo "  -dt, --data            Dossier contenant les données du projet. Permet de copier le dossier de données dans le dossier de sortie. Utilisable uniquement avec l'option -c."
+    echo "  -f , --file            Fichier de configuration. Permet de charger les options à partir d'un fichier de configuration, le séparateur sont l'espace et le retour à la ligne."
+    echo "                         Les options du fichier de configuration prédomine sur les options de la ligne de commande."
+    echo "                         L'option -f doit obligatoirement être la première option de la ligne de commande."
+    echo ""
+    echo "  -c , --compilation     Compiler le projet."
+    echo "  -l , --launch          Lancer le projet."
+    echo "  -cl, --compile-launch  Compiler et lancer le projet. (équivalent à -c -l)"
+    echo "  -lc, --launch-compile  Compiler et lancer le projet. (équivalent à -c -l)"
+    echo ""
+    echo "  -h , --help            afficher l'aide et quitter."
+    echo ""
+    echo "Les options obligatoires pour la compilation sont :"
+    echo "  -s, --source       Dossier racine du projet à compiler."
+    echo "  -o, --output       Dossier de sortie des fichiers compilés."
+    echo "  -c, --compilation  Compiler le projet."
+    echo ""
+    echo "Les options obligatoires pour le lancement sont :"
+    echo "  -m , --main       Classe principale à lancer."
+    echo "  -l , --launch     Lancer le projet."
+    echo "  -cp, --classpath  Voir l'option -cp dans listes des options."
+    echo ""
+    echo "Les options obligatoires pour la compilation et le lancement sont :"
+    echo "  -s , --source          Dossier racine du projet à compiler."
+    echo "  -o , --output          Dossier de sortie des fichiers compilés."
+    echo "  -m , --main            Classe principale à lancer."
+    echo "  -cl, --compile-launch  Compiler et lancer le projet. (équivalent à -c -l)"
+    echo ""
+    echo "Exemple d'utiliation : './mvn_lite.sh -s src -o ./bin -m "controleur.Main" -cl'"
+    echo "Cette ligne de commande va compiler et lancer le projet java contenu dans le dossier 'src' et lancer la classe 'controleur.Main' avec le classpath './bin'."
+    echo "Tout les fichiers compilés seront dans le dossier 'bin'."
+    
+
     exit $1
 }
 
@@ -136,6 +189,7 @@ fi
 args+=("-a")
 for arg in "${args[@]}"
 do
+    echo -n "'$arg', "
     case "${ancienArg}" in
         "-s") verifArguments $arg "Aucune source donnée pour l'option '-s'" && source=$arg ;;
         "--source") verifArguments $arg "Aucune source donnée pour l'option '--source'" && source=$arg ;;
@@ -175,7 +229,7 @@ do
 
     ancienArg=$arg
 done
-
+exit 0
 
 if [ $compilation -eq 0 ]
 then
