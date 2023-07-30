@@ -12,8 +12,6 @@ function addCommand() {
         echo >> $bashrc
         echo "# Maven Lite" >> $bashrc
         echo "alias mvnl='bash $dossier/$fichier'" >> $bashrc
-
-        source $bashrc
     } && {
         echo "Installation terminée."
         echo "Pour utiliser maven lite, tapez 'mvnl --help' dans un terminal."
@@ -49,3 +47,4 @@ ls $dossier >/dev/null 2>&1 && {
 }
 
 addCommand
+source $bashrc
