@@ -88,7 +88,7 @@ function help()
     echo "Les options minimum obligatoires pour le lancement sont :"
     echo "  -m , --main       Classe principale à lancer."
     echo "  -l , --launch     Lancer le projet."
-    echo "  -cp, --classpath  Voir l'option -cp dans listes des options."
+    echo "  -cp, --classpath  Voir l'option -cp dans la listes des options."
     echo ""
     echo ""
     echo "Les options minimum obligatoires pour la compilation et le lancement sont :"
