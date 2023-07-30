@@ -32,10 +32,17 @@ fichier="maven_lite.sh"
 dossier="/home/$USER/.maven_lite"
 bashrc="/home/$USER/.bashrc"
 
+chmod +x $fichier || {
+    echo "Erreur lors du changement des droits du fichier 'maven_lite.sh'."
+    exit 1
+}
+
 ls $dossier >/dev/null 2>&1 && {
     copie
 } || {
-    mkdir $dossier && { copie; } || {
+    mkdir $dossier && {
+        copie
+    } || {
         echo "Erreur lors de la création du dossier '$dossier'."
         exit 1
     }
