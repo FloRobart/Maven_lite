@@ -166,6 +166,7 @@ ancienArg="a"
 #-----------#
 # Execution #
 #-----------#
+[[ -z $1 ]] && { help 1 "Aucun argument donnée"; }
 if [ $1 = "-h" ] || [ $1 = "--help" ]
 then
     help 0
