@@ -9,6 +9,8 @@ function copie() {
 
 function addCommand() {
     {
+        sed -i '/# Maven Lite/,/# Fin Maven Lite/d' $bashrc
+
         echo >> $bashrc
         echo "# Maven Lite" >> $bashrc
         echo "alias mvnl='bash $dossier/$fichier'" >> $bashrc
