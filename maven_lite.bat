@@ -66,6 +66,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
     set "args=!args:~1!"
     set "args=!args:~1!"
+    set "args=!args:~1!"
     echo args : '!args!'
 
 ENDLOCAL
