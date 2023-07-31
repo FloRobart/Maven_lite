@@ -56,7 +56,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
         echo Lecture du fichier de configuration '%~2'
         for /f "usebackq tokens=*" %%I in ("%~2") do (
-            echo %%I
+            echo i : '%%I'
             set "line=%%~I"
             set "line=!line:"=!"
             set "args=!args! %line%"
