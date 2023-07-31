@@ -54,14 +54,18 @@ SETLOCAL ENABLEDELAYEDEXPANSION
             exit /b 1
         )
 
+        echo Lecture du fichier de configuration '%~2'
         for /f "usebackq tokens=*" %%I in ("%~2") do (
+            echo %%I
             set "line=%%~I"
             set "line=!line:"=!"
             set "args=!args! %line%"
         )
 
-        set "args=!args:~1!"   REM Supprime l'espace initial
-        set "args=!args:~1!"   REM Supprime l'espace avant le deuxième argument
+        ::set "args=!args:~1!"
+        ::set "args=!args:~1!"
+        ::set "args=!args:~2!"
+        ::set "args=!args:~2!"
     )
 
     echo !args!
