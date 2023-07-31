@@ -27,6 +27,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
     if "%~1"=="-h" (
         call :help 0
+        exit /b 0
     )
 
     if "%~1"=="--help" (
@@ -56,7 +57,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         for /f "usebackq tokens=*" %%I in ("%~2") do (
             set "line=%%~I"
             set "line=!line:"=!"
-            set "args=!args! %%line%%"
+            set "args=!args! %line%"
         )
 
         set "args=!args:~1!"   REM Supprime l'espace initial
@@ -200,7 +201,7 @@ goto :eof
 :: 1 = argument à vérifier, 2 = phrase à afficher si l'argument est invalide
 :verifArguments
 
-gogo :eof
+goto :eof
 
 
 ::=========================::
