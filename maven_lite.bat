@@ -62,13 +62,9 @@ SETLOCAL ENABLEDELAYEDEXPANSION
             set "args=!args! %line%"
         )
 
-        ::set "args=!args:~1!"
-        ::set "args=!args:~1!"
-        ::set "args=!args:~2!"
-        ::set "args=!args:~2!"
     )
 
-    echo !args!
+    echo args : '!args!'
 
 ENDLOCAL
 EXIT /B 0
