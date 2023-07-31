@@ -59,11 +59,13 @@ SETLOCAL ENABLEDELAYEDEXPANSION
             echo i : '%%I'
             set "line=%%~I"
             set "line=!line:"=!"
-            set "args=!args! %line%"
+            echo line : '!line!'
         )
 
     )
 
+    set "args=!args:~1!"
+    set "args=!args:~1!"
     echo args : '!args!'
 
 ENDLOCAL
