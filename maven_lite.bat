@@ -51,7 +51,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         )
 
         REM Lire chaque ligne du fichier spécifié (argument 2)
-        set /a "args_count=0"
+        set /a "args_count=2"
         for /f "usebackq delims=" %%i in ("%~2") do (
             REM Supprimer les guillemets doubles de chaque ligne
             set "line=%%i"
