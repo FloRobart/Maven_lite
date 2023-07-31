@@ -1,6 +1,78 @@
 @echo off
 
 ::======::
+:: Main ::
+::======::
+SETLOCAL ENABLEDELAYEDEXPANSION
+::-----------::
+:: Varaibles ::
+::-----------::
+set "extensionValide=java"
+set "nomFichierSortie=compile.list"
+set "dependencies="
+set "encoding=UTF-8"
+set /a "compilation=1"
+set /a "lancement=1"
+
+set "args=%*"
+echo args : %args%
+echo all : %*
+set "ancienArg=a"
+
+exit /b 0
+
+::-----------::
+:: Execution ::
+::-----------::
+if "%args%"=="" (
+    call :help 1 "Aucun argument donnée"
+)
+
+if "%~1"=="-h" (
+    call :help 0
+)
+
+if "%~1"=="--help" (
+    call :help 0
+)
+
+
+@echo off
+REM Main
+
+REM Execution
+if "%~1"=="-f" (
+    if "%~2"=="" (
+        call :help 1 "Aucun fichier de configuration donnée pour l'option '-f' ou '--file'"
+    )
+
+    if not exist "%~2" (
+        echo Le fichier de configuration '%~2' n'existe pas
+        exit /b 1
+    )
+
+    if "%~x2"=="" (
+        echo Le fichier de configuration '%~2' n'est pas un fichier
+        exit /b 1
+    )
+
+    for /f "usebackq tokens=*" %%I in ("%~2") do (
+        set "line=%%~I"
+        set "line=!line:"=!"
+        set "args=!args! %%line%%"
+    )
+
+    set "args=!args:~1!"   REM Supprime l'espace initial
+    set "args=!args:~1!"   REM Supprime l'espace avant le deuxième argument
+)
+
+
+
+ENDLOCAL
+
+
+
+::======::
 :: Aide ::
 ::======::
 :: 1 = status de sortie, 2 = message optionnel
@@ -165,75 +237,3 @@ goto :eof
 :lancement
 
 goto :eof
-
-
-
-::======::
-:: Main ::
-::======::
-SETLOCAL ENABLEDELAYEDEXPANSION
-::-----------::
-:: Varaibles ::
-::-----------::
-set "extensionValide=java"
-set "nomFichierSortie=compile.list"
-set "dependencies="
-set "encoding=UTF-8"
-set /a "compilation=1"
-set /a "lancement=1"
-
-set "args=%*"
-echo args : %args%
-echo all : %*
-set "ancienArg=a"
-
-exit /b 0
-
-::-----------::
-:: Execution ::
-::-----------::
-if "%args%"=="" (
-    call :help 1 "Aucun argument donnée"
-)
-
-if "%~1"=="-h" (
-    call :help 0
-)
-
-if "%~1"=="--help" (
-    call :help 0
-)
-
-
-@echo off
-REM Main
-
-REM Execution
-if "%~1"=="-f" (
-    if "%~2"=="" (
-        call :help 1 "Aucun fichier de configuration donnée pour l'option '-f' ou '--file'"
-    )
-
-    if not exist "%~2" (
-        echo Le fichier de configuration '%~2' n'existe pas
-        exit /b 1
-    )
-
-    if "%~x2"=="" (
-        echo Le fichier de configuration '%~2' n'est pas un fichier
-        exit /b 1
-    )
-
-    for /f "usebackq tokens=*" %%I in ("%~2") do (
-        set "line=%%~I"
-        set "line=!line:"=!"
-        set "args=!args! %%line%%"
-    )
-
-    set "args=!args:~1!"   REM Supprime l'espace initial
-    set "args=!args:~1!"   REM Supprime l'espace avant le deuxième argument
-)
-
-
-
-ENDLOCAL
