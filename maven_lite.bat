@@ -35,10 +35,6 @@ SETLOCAL ENABLEDELAYEDEXPANSION
     )
 
 
-    @echo off
-    REM Main
-
-    REM Execution
     if "%~1"=="-f" (
         if "%~2"=="" (
             call :help 1 "Aucun fichier de configuration donnée pour l'option '-f' ou '--file'"
@@ -54,17 +50,25 @@ SETLOCAL ENABLEDELAYEDEXPANSION
             exit /b 1
         )
 
-        echo Lecture du fichier de configuration '%~2'
-        set /a "cpt=2"
-        for /f "usebackq tokens=*" %%I in ("%~2") do (
-            echo i : '%%I'
-            set "line=%%~I"
+        REM Lire chaque ligne du fichier spécifié (argument 2)
+        set /a "args_count=0"
+        for /f "usebackq delims=" %%i in ("%~2") do (
+            REM Supprimer les guillemets doubles de chaque ligne
+            set "line=%%i"
             set "line=!line:"=!"
-            echo line : '!line!'
 
-            set args[!cpt!]=!line!
+            REM Ajouter la ligne modifiée au tableau args
+            set args[!args_count!]=!line!
+            set /a "args_count+=1"
+        )
 
-            set /a "cpt+=1"
+        REM Supprimer les éléments d'indice 0 et 1 du tableau args
+        set "args[0]="
+        set "args[1]="
+
+        REM Afficher le contenu du tableau args (facultatif)
+        for /l %%i in (2,1,%args_count%) do (
+            echo !args[%%i]!
         )
 
     )
