@@ -174,7 +174,6 @@ function listerdependencies()
 #============================#
 # Compile les fichiers .java #
 #============================#
-
 function compilation()
 {
     echo 'Compilation...'
