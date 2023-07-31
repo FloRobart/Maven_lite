@@ -58,9 +58,13 @@ SETLOCAL ENABLEDELAYEDEXPANSION
             set "line=%%i"
             set "line=!line:"=!"
 
+            echo line : '!line!'
+
             REM Ajouter la ligne modifiée au tableau args
             set args[!argscount!]=!line!
             set /a "argscount+=1"
+
+            echo !argscount!
         )
 
         echo flag 2
@@ -75,7 +79,6 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         )
 
         echo flag 3
-
     )
 
     echo args : '!args!'
