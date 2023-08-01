@@ -52,7 +52,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
         REM Lire chaque ligne du fichier spécifié ^(argument 2^)
         set /a "argscount=0"
-        for /f "tokens=* delims= " %%i in ("%~2") do (
+        for /f "usebackq tokens=*" %%i in ("%~2") do (
 
             REM Supprimer les guillemets doubles de chaque ligne
             set "line=%%i"
@@ -60,7 +60,6 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
             REM Ajouter la ligne modifiée au tableau args
             set args[!argscount!]=!line!
-            set /a "argscount+=1"
         )
 
         set "args[!argscount!]=-a"
