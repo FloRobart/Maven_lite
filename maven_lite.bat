@@ -73,11 +73,11 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
         REM Afficher le contenu du tableau args (facultatif)
         for /l %%i in (0,1,!argscount!) do (
-            echo '!args[%%i]!'
+            echo args de %%i : '!args[%%i]!'
         )
-    )
 
-    echo args : '!args!'
+        echo args : '!args!'
+    )
 
 ENDLOCAL
 EXIT /B 0
