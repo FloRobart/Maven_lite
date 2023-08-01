@@ -51,8 +51,10 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         )
 
         REM Lire chaque ligne du fichier spécifié ^(argument 2^)
-        set /a "argscount=0"
+        set /a "argscount=-1"
         for /f "usebackq delims=" %%i in ("%~2") do (
+            set /a "argscount+=1"
+
             REM Supprimer les guillemets doubles de chaque ligne
             set "line=%%i"
             set "line=!line:"=!"
@@ -61,14 +63,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
             REM Ajouter la ligne modifiée au tableau args
             set args[!argscount!]=!line!
-
-            set /a "argscount+=1"
         )
-
-
-        REM Supprimer les éléments d'indice 0 et 1 du tableau args
-        set "args[0]="
-        set "args[1]="
 
         REM Afficher le contenu du tableau args (facultatif)
         for /l %%i in (0,1,!argscount!) do (
