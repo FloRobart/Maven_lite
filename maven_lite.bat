@@ -70,7 +70,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
             echo args de %%i : '!args[%%i]!'
         )
 
-        echo args : '!args!'
+        echo args : '%args%'
     )
 
 ENDLOCAL
