@@ -72,7 +72,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         set "args[1]="
 
         REM Afficher le contenu du tableau args (facultatif)
-        for /l %%i in (2,1,!argscount!) do (
+        for /l %%i in (0,1,!argscount!) do (
             echo '!args[%%i]!'
         )
     )
