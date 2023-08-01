@@ -62,9 +62,9 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
             REM Ajouter la ligne modifiée au tableau args
             set args[!argscount!]=!line!
-            set /a "argscount+=1"
+            echo argscount '!argscount!'
 
-            echo !argscount!
+            set /a "argscount+=1"
         )
 
         echo flag 2
