@@ -60,10 +60,10 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
             REM Ajouter la ligne modifiée au tableau args
             set args[!argscount!]=!line!
+            set /a "argscount+=1"
         )
 
         set "args[!argscount!]=-a"
-        set /a "argscount+=1"
 
         REM Afficher le contenu du tableau args (facultatif)
         for /l %%i in (0,1,!argscount!) do (
