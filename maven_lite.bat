@@ -186,7 +186,6 @@ goto :eof
     )
 
     REM Lire chaque ligne du fichier spécifié ^(argument 2^)
-    set "args="
     for /f "usebackq tokens=* delims=" %%i in ("%~1") do (
 
         REM Supprimer les guillemets doubles de chaque ligne
@@ -204,59 +203,59 @@ goto :eof
 
     for %%a in (!args!) do (
         echo a : '%%a'
-        echo ancienarg : '%ancienarg%'
+        echo ancienarg : '!ancienArg!'
 
         REM Exécuter des actions en fonction de la valeur de ancienArg
-        if "%ancienArg%"=="-s" (
+        if "!ancienArg!"=="-s" (
             call :verifArguments %%a "Aucune source donnée pour l'option '-s'" && set "source=%%a"
-        ) else if "%ancienArg%"=="--source" (
+        ) else if "!ancienArg!"=="--source" (
             call :verifArguments %%a "Aucune source donnée pour l'option '--source'" && set "source=%%a"
-        ) else if "%ancienArg%"=="-o" (
+        ) else if "!ancienArg!"=="-o" (
             call :verifArguments %%a "Aucune sortie donnée pour l'option '-o'" && set "output=%%a"
-        ) else if "%ancienArg%"=="--output" (
+        ) else if "!ancienArg!"=="--output" (
             call :verifArguments %%a "Aucune sortie donnée pour l'option '--output'" && set "output=%%a"
-        ) else if "%ancienArg%"=="-cp" (
+        ) else if "!ancienArg!"=="-cp" (
             call :verifArguments %%a "Aucun classpath donné pour l'option '-cp'" && set "classpath=%%a"
-        ) else if "%ancienArg%"=="--classpath" (
+        ) else if "!ancienArg!"=="--classpath" (
             call :verifArguments %%a "Aucun classpath donné pour l'option '--classpath'" && set "classpath=%%a"
-        ) else if "%ancienArg%"=="-d" (
+        ) else if "!ancienArg!"=="-d" (
             call :verifArguments %%a "Aucune dépendance donnée pour l'option '-d'" && set "dependency=%%a"
-        ) else if "%ancienArg%"=="--dependency" (
+        ) else if "!ancienArg!"=="--dependency" (
             call :verifArguments %%a "Aucune dépendance donnée pour l'option '--dependency'" && set "dependency=%%a"
-        ) else if "%ancienArg%"=="-n" (
+        ) else if "!ancienArg!"=="-n" (
             call :verifArguments %%a "Aucun nom donné pour l'option '-n'" && set "nomFichierSortie=%%a"
-        ) else if "%ancienArg%"=="--name" (
+        ) else if "!ancienArg!"=="--name" (
             call :verifArguments %%a "Aucun nom donné pour l'option '--name'" && set "nomFichierSortie=%%a"
-        ) else if "%ancienArg%"=="-e" (
+        ) else if "!ancienArg!"=="-e" (
             call :verifArguments %%a "Aucun encodage donné pour l'option '-e'" && set "encoding=%%a"
-        ) else if "%ancienArg%"=="--encoding" (
+        ) else if "!ancienArg!"=="--encoding" (
             call :verifArguments %%a "Aucun encodage donné pour l'option '--encoding'" && set "encoding=%%a"
-        ) else if "%ancienArg%"=="-m" (
+        ) else if "!ancienArg!"=="-m" (
             call :verifArguments %%a "Aucun fichier main donné pour l'option '-m'" && set "main=%%a"
-        ) else if "%ancienArg%"=="--main" (
+        ) else if "!ancienArg!"=="--main" (
             call :verifArguments %%a "Aucun fichier main donné pour l'option '--main'" && set "main=%%a"
-        ) else if "%ancienArg%"=="-dt" (
+        ) else if "!ancienArg!"=="-dt" (
             call :verifArguments %%a "Aucun dossier de données donné pour l'option '-dt'" && set "data=%%a"
-        ) else if "%ancienArg%"=="--data" (
+        ) else if "!ancienArg!"=="--data" (
             call :verifArguments %%a "Aucun dossier de données donné pour l'option '--data'" && set "data=%%a"
-        ) else if "%ancienArg%"=="-c" (
+        ) else if "!ancienArg!"=="-c" (
             set "compilation=0"
-        ) else if "%ancienArg%"=="--compilation" (
+        ) else if "!ancienArg!"=="--compilation" (
             set "compilation=0"
-        ) else if "%ancienArg%"=="-l" (
+        ) else if "!ancienArg!"=="-l" (
             set "lancement=0"
-        ) else if "%ancienArg%"=="--launch" (
+        ) else if "!ancienArg!"=="--launch" (
             set "lancement=0"
-        ) else if "%ancienArg%"=="-cl" (
-            set "compilation=0"
-            set "lancement=0"
-        ) else if "%ancienArg%"=="--compile-launch" (
+        ) else if "!ancienArg!"=="-cl" (
             set "compilation=0"
             set "lancement=0"
-        ) else if "%ancienArg%"=="-lc" (
+        ) else if "!ancienArg!"=="--compile-launch" (
             set "compilation=0"
             set "lancement=0"
-        ) else if "%ancienArg%"=="--launch-compile" (
+        ) else if "!ancienArg!"=="-lc" (
+            set "compilation=0"
+            set "lancement=0"
+        ) else if "!ancienArg!"=="--launch-compile" (
             set "compilation=0"
             set "lancement=0"
         )
