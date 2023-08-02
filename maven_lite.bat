@@ -150,6 +150,7 @@ EXIT /B 0
         REM Supprimer les guillemets doubles de chaque ligne
         set "line=%%i"
         set "line=!line:"=!"
+        set "line=!line:'=!"
 
         REM Ajouter la ligne modifiée au tableau args
         set "args=!args! !line!"
@@ -183,7 +184,6 @@ goto :eof
         echo %~2
         exit /b 1
     )
-
 EXIT /B 0
 
 
