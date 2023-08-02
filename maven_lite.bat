@@ -65,6 +65,9 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
         REM Afficher le contenu du tableau args (facultatif)
         echo args : '!args!'
+
+        echo args : '%args%'
+        for %%a in (%args%) do echo %%a
     )
 
 ENDLOCAL
