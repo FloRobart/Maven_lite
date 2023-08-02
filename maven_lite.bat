@@ -25,6 +25,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         call :help 1 "Aucun argument donnée"
     )
 
+    :: Aide
     if "%~1"=="-h" (
         call :help 0
         exit /b 0
@@ -35,40 +36,13 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         exit /b 0
     )
 
-
+    :: Fichier de configuration
     if "%~1"=="-f" (
-        if "%~2"=="" (
-            call :help 1 "Aucun fichier de configuration donnée pour l'option '-f' ou '--file'"
-        )
+        call :fichierConfiguration %~2 %~1 || echo Erreur & exit /b 1
+    )
 
-        if not exist "%~2" (
-            echo Le fichier de configuration '%~2' n'existe pas
-            exit /b 1
-        )
-
-        if "%~x2"=="" (
-            echo Le fichier de configuration '%~2' n'est pas un fichier
-            exit /b 1
-        )
-
-        REM Lire chaque ligne du fichier spécifié ^(argument 2^)
-        set "args="
-        for /f "usebackq tokens=* delims=" %%i in ("%~2") do (
-
-            REM Supprimer les guillemets doubles de chaque ligne
-            set "line=%%i"
-            set "line=!line:"=!"
-
-            REM Ajouter la ligne modifiée au tableau args
-            set "args=!args! !line!"
-        )
-
-        set "args=!args! -a"
-
-        REM Afficher le contenu du tableau args (facultatif)
-        echo args : '!args!'
-
-        for %%a in (!args!) do echo '%%a'
+    if "%~1"=="--file" (
+        call :fichierConfiguration %~2 %~1 || echo Erreur & exit /b 1
     )
 
 ENDLOCAL
@@ -190,6 +164,46 @@ EXIT /B 0
 
     exit /b %~1
 goto :eof
+
+
+::==========================::
+:: Fichier de configuration ::
+::==========================::
+:: 1 = nom du fichier de configuration, 2 = option utilisé
+:fileConfig
+    if "%~1"=="" (
+        call :help 1 "Aucun fichier de configuration donnée pour l'option '%~2'"
+    )
+
+    if not exist "%~1" (
+        echo Le fichier de configuration '%~1' n'existe pas
+        exit /b 1
+    )
+
+    if "%~x1"=="" (
+        echo Le fichier de configuration '%~1' n'est pas un fichier
+        exit /b 1
+    )
+
+    REM Lire chaque ligne du fichier spécifié ^(argument 2^)
+    set "args="
+    for /f "usebackq tokens=* delims=" %%i in ("%~1") do (
+
+        REM Supprimer les guillemets doubles de chaque ligne
+        set "line=%%i"
+        set "line=!line:"=!"
+
+        REM Ajouter la ligne modifiée au tableau args
+        set "args=!args! !line!"
+    )
+
+    set "args=!args! -a"
+
+    REM Afficher le contenu du tableau args (facultatif)
+    echo args : '!args!'
+
+    for %%a in (!args!) do echo '%%a'
+EXIT /B 0
 
 
 ::================================================================::
