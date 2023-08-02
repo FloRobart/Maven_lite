@@ -68,9 +68,6 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
         REM Afficher le contenu du tableau args (facultatif)
         echo args : '!args!'
-
-        :: echo test
-        
     )
 
 ENDLOCAL
