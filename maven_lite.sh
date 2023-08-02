@@ -157,6 +157,7 @@ function genererCompileList()
 #=========================#
 # Liste les fichiers .jar #
 #=========================#
+# $1 = dossier source
 function listerdependencies()
 {
     if [ ! -z $dependency ]
