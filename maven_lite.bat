@@ -38,11 +38,74 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
     :: Fichier de configuration
     if "%~1"=="-f" (
-        call :fileConfig %~2 %~1 || echo Erreur & exit /b 1
+        call :fileConfig %~2 %~1 || exit /b 1
     )
 
     if "%~1"=="--file" (
-        call :fileConfig %~2 %~1 || echo Erreur & exit /b 1
+        call :fileConfig %~2 %~1 || exit /b 1
+    )
+
+    echo args in main : '%args%'
+    for %%a in (!args!) do (
+        echo a : '%%a'
+        echo ancienarg : '!ancienArg!'
+
+        REM Exécuter des actions en fonction de la valeur de ancienArg
+        if "!ancienArg!"=="-s" (
+            call :verifArguments %%a "Aucune source donnée pour l'option '-s'" && set "source=%%a" || exit /b 1
+        ) else if "!ancienArg!"=="--source" (
+            call :verifArguments %%a "Aucune source donnée pour l'option '--source'" && set "source=%%a" || exit /b 1
+        ) else if "!ancienArg!"=="-o" (
+            call :verifArguments %%a "Aucune sortie donnée pour l'option '-o'" && set "output=%%a" || exit /b 1
+        ) else if "!ancienArg!"=="--output" (
+            call :verifArguments %%a "Aucune sortie donnée pour l'option '--output'" && set "output=%%a" || exit /b 1
+        ) else if "!ancienArg!"=="-cp" (
+            call :verifArguments %%a "Aucun classpath donné pour l'option '-cp'" && set "classpath=%%a" || exit /b 1
+        ) else if "!ancienArg!"=="--classpath" (
+            call :verifArguments %%a "Aucun classpath donné pour l'option '--classpath'" && set "classpath=%%a" || exit /b 1
+        ) else if "!ancienArg!"=="-d" (
+            call :verifArguments %%a "Aucune dépendance donnée pour l'option '-d'" && set "dependency=%%a" || exit /b 1
+        ) else if "!ancienArg!"=="--dependency" (
+            call :verifArguments %%a "Aucune dépendance donnée pour l'option '--dependency'" && set "dependency=%%a" || exit /b 1
+        ) else if "!ancienArg!"=="-n" (
+            call :verifArguments %%a "Aucun nom donné pour l'option '-n'" && set "nomFichierSortie=%%a" || exit /b 1
+        ) else if "!ancienArg!"=="--name" (
+            call :verifArguments %%a "Aucun nom donné pour l'option '--name'" && set "nomFichierSortie=%%a" || exit /b 1
+        ) else if "!ancienArg!"=="-e" (
+            call :verifArguments %%a "Aucun encodage donné pour l'option '-e'" && set "encoding=%%a" || exit /b 1
+        ) else if "!ancienArg!"=="--encoding" (
+            call :verifArguments %%a "Aucun encodage donné pour l'option '--encoding'" && set "encoding=%%a" || exit /b 1
+        ) else if "!ancienArg!"=="-m" (
+            call :verifArguments %%a "Aucun fichier main donné pour l'option '-m'" && set "main=%%a" || exit /b 1
+        ) else if "!ancienArg!"=="--main" (
+            call :verifArguments %%a "Aucun fichier main donné pour l'option '--main'" && set "main=%%a" || exit /b 1
+        ) else if "!ancienArg!"=="-dt" (
+            call :verifArguments %%a "Aucun dossier de données donné pour l'option '-dt'" && set "data=%%a" || exit /b 1
+        ) else if "!ancienArg!"=="--data" (
+            call :verifArguments %%a "Aucun dossier de données donné pour l'option '--data'" && set "data=%%a" || exit /b 1
+        ) else if "!ancienArg!"=="-c" (
+            set "compilation=0"
+        ) else if "!ancienArg!"=="--compilation" (
+            set "compilation=0"
+        ) else if "!ancienArg!"=="-l" (
+            set "lancement=0"
+        ) else if "!ancienArg!"=="--launch" (
+            set "lancement=0"
+        ) else if "!ancienArg!"=="-cl" (
+            set "compilation=0"
+            set "lancement=0"
+        ) else if "!ancienArg!"=="--compile-launch" (
+            set "compilation=0"
+            set "lancement=0"
+        ) else if "!ancienArg!"=="-lc" (
+            set "compilation=0"
+            set "lancement=0"
+        ) else if "!ancienArg!"=="--launch-compile" (
+            set "compilation=0"
+            set "lancement=0"
+        )
+
+        set "ancienArg=%%a"
     )
 
 ENDLOCAL
@@ -200,68 +263,6 @@ goto :eof
 
     REM Afficher le contenu du tableau args (facultatif)
     echo args : '!args!'
-
-    for %%a in (!args!) do (
-        echo a : '%%a'
-        echo ancienarg : '!ancienArg!'
-
-        REM Exécuter des actions en fonction de la valeur de ancienArg
-        if "!ancienArg!"=="-s" (
-            call :verifArguments %%a "Aucune source donnée pour l'option '-s'" && set "source=%%a"
-        ) else if "!ancienArg!"=="--source" (
-            call :verifArguments %%a "Aucune source donnée pour l'option '--source'" && set "source=%%a"
-        ) else if "!ancienArg!"=="-o" (
-            call :verifArguments %%a "Aucune sortie donnée pour l'option '-o'" && set "output=%%a"
-        ) else if "!ancienArg!"=="--output" (
-            call :verifArguments %%a "Aucune sortie donnée pour l'option '--output'" && set "output=%%a"
-        ) else if "!ancienArg!"=="-cp" (
-            call :verifArguments %%a "Aucun classpath donné pour l'option '-cp'" && set "classpath=%%a"
-        ) else if "!ancienArg!"=="--classpath" (
-            call :verifArguments %%a "Aucun classpath donné pour l'option '--classpath'" && set "classpath=%%a"
-        ) else if "!ancienArg!"=="-d" (
-            call :verifArguments %%a "Aucune dépendance donnée pour l'option '-d'" && set "dependency=%%a"
-        ) else if "!ancienArg!"=="--dependency" (
-            call :verifArguments %%a "Aucune dépendance donnée pour l'option '--dependency'" && set "dependency=%%a"
-        ) else if "!ancienArg!"=="-n" (
-            call :verifArguments %%a "Aucun nom donné pour l'option '-n'" && set "nomFichierSortie=%%a"
-        ) else if "!ancienArg!"=="--name" (
-            call :verifArguments %%a "Aucun nom donné pour l'option '--name'" && set "nomFichierSortie=%%a"
-        ) else if "!ancienArg!"=="-e" (
-            call :verifArguments %%a "Aucun encodage donné pour l'option '-e'" && set "encoding=%%a"
-        ) else if "!ancienArg!"=="--encoding" (
-            call :verifArguments %%a "Aucun encodage donné pour l'option '--encoding'" && set "encoding=%%a"
-        ) else if "!ancienArg!"=="-m" (
-            call :verifArguments %%a "Aucun fichier main donné pour l'option '-m'" && set "main=%%a"
-        ) else if "!ancienArg!"=="--main" (
-            call :verifArguments %%a "Aucun fichier main donné pour l'option '--main'" && set "main=%%a"
-        ) else if "!ancienArg!"=="-dt" (
-            call :verifArguments %%a "Aucun dossier de données donné pour l'option '-dt'" && set "data=%%a"
-        ) else if "!ancienArg!"=="--data" (
-            call :verifArguments %%a "Aucun dossier de données donné pour l'option '--data'" && set "data=%%a"
-        ) else if "!ancienArg!"=="-c" (
-            set "compilation=0"
-        ) else if "!ancienArg!"=="--compilation" (
-            set "compilation=0"
-        ) else if "!ancienArg!"=="-l" (
-            set "lancement=0"
-        ) else if "!ancienArg!"=="--launch" (
-            set "lancement=0"
-        ) else if "!ancienArg!"=="-cl" (
-            set "compilation=0"
-            set "lancement=0"
-        ) else if "!ancienArg!"=="--compile-launch" (
-            set "compilation=0"
-            set "lancement=0"
-        ) else if "!ancienArg!"=="-lc" (
-            set "compilation=0"
-            set "lancement=0"
-        ) else if "!ancienArg!"=="--launch-compile" (
-            set "compilation=0"
-            set "lancement=0"
-        )
-
-        set "ancienArg=%%a"
-    )
 EXIT /B 0
 
 
@@ -282,7 +283,14 @@ goto :eof
 ::=======================================::
 :: 1 = argument à vérifier, 2 = phrase à afficher si l'argument est invalide
 :verifArguments
+    if "%~1"=="" (
+        echo %~2
+        exit /b 1
+    )
 
+    echo %~1 | findstr /r "^\-{1,2}[a-z]*$" > nul || exit /b 1
+
+    exit /b 0
 goto :eof
 
 
