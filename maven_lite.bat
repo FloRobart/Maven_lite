@@ -117,6 +117,10 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         echo Lancement
     )
 
+    call :listerdependencies %dependency%
+
+    echo dependencies : '%dependencies%'
+
 ENDLOCAL
 EXIT /B 0
 
@@ -201,8 +205,22 @@ goto :eof
 ::=========================::
 :: Liste les fichiers .jar ::
 ::=========================::
+:: 1 = dossier source
 :listerdependencies
+    if not "%dependency%"=="" (
+        for %%F in (%~1\*) do (
+            if exist "%%F" (
+                if "%%~xF"=="jar" (
+                    set "dependencies=!dependencies!%%~F;"
+                )
+                if exist "%%F\" (
+                    call :listerdependencies "%%F"
+                )
+            )
+        )
 
+        set "dependencies=!dependencies:~0,-1!"
+    )
 goto :eof
 
 
@@ -210,7 +228,8 @@ goto :eof
 :: Compile les fichiers .java ::
 ::============================::
 :compilation
-
+    echo Compilation...
+    call javac -cp "%classpath%;%dependencies%" -encoding %encoding% -d "%output%" "@%nomFichierSortie%" && echo Fin de la compilation. || ( echo Erreur lors de la compilation. & exit 1 )
 goto :eof
 
 
@@ -218,7 +237,8 @@ goto :eof
 :: Lance le programme ::
 ::====================::
 :lancement
-
+    echo Lancement du programme...
+    call java -cp "%classpath%;%dependencies%" %main% && echo Fin de l'execution. || ( echo Erreur lors du lancement du programme. & exit 1 )
 goto :eof
 
 
@@ -255,9 +275,10 @@ goto :eof
     echo                          des fichiers compilés ^(le même dossier que pour
     echo                          l'option -o^) à ajouter au classpath lors de la
     echo                          compilation et du lancement.
-    echo                          Les fichiers jar doivent être séparés par des ':'.
+    echo                          Les fichiers jar doivent être séparés par des ';'.
     echo                          La valeur par defaut du classpath est le dossier de
-    echo                          sortie des fichiers compilés si l'option -o est utilisé.
+    echo                          sortie des fichiers compilés si l'option -o est utilisé,
+    echo                          sinon le classpath sera le dossier courent.
     echo.
     echo   -d , --dependency      Dossier contenant les fichiers jar utiliser
     echo                          par le programme. Tout les fichiers jar seront
