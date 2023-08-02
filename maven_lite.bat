@@ -107,19 +107,15 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         set "ancienArg=%%a"
     )
 
+    if "%compilation%"=="0" (
+        echo Compilation
+    )
+    
 
-    echo variables :
-    echo source : '%source%'
-    echo output : '%output%'
-    echo classpath : '%classpath%'
-    echo dependency : '%dependency%'
-    echo nomFichierSortie : '%nomFichierSortie%'
-    echo encoding : '%encoding%'
-    echo main : '%main%'
-    echo data : '%data%'
-    echo compilation : '%compilation%'
-    echo lancement : '%lancement%'
-    echo.
+
+    if "%lancement%"=="0" (
+        echo Lancement
+    )
 
 ENDLOCAL
 EXIT /B 0
@@ -166,7 +162,13 @@ EXIT /B 0
 :: Demande à l'utilisateur de rentrer les informations manquantes ::
 ::================================================================::
 :demandeInfo
-
+    if "%~1"=="source" (
+        set /p "source=Veuillez entrer le dossier racine à partir duquel le fichier compile.list va être généré : "
+    ) else (
+        if "%~1"=="output" (
+            set /p "output=Veuillez entrer le dossier de sortie dans lequel les fichiers .class seront placés : "
+        )
+    )
 goto :eof
 
 
