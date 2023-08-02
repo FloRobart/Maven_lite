@@ -55,7 +55,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         for /f "usebackq  tokens=* delims=" %%i in ("%~2") do (
 
             REM Supprimer les guillemets doubles de chaque ligne
-            set "line=%%~i"
+            set "line=%%i"
             echo line : '!line!'
             set "line=!line:"=!"
 
