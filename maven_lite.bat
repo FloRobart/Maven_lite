@@ -32,6 +32,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
     if "%~1"=="--help" (
         call :help 0
+        exit /b 0
     )
 
 
@@ -51,6 +52,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         )
 
         REM Lire chaque ligne du fichier spécifié ^(argument 2^)
+        set "args="
         for /f "usebackq tokens=* delims=" %%i in ("%~2") do (
 
             REM Supprimer les guillemets doubles de chaque ligne
@@ -66,7 +68,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         REM Afficher le contenu du tableau args (facultatif)
         echo args : '!args!'
 
-        for %%a "skip=2" in (!args!) do echo '%%a'
+        for %%a in (!args!) do echo '%%a'
     )
 
 ENDLOCAL
