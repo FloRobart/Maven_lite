@@ -219,7 +219,7 @@ goto :eof
             )
         )
 
-        set "dependencies=!dependencies:~0,-1!"
+        set "dependencies=!dependencies:"=!"
     )
 goto :eof
 
