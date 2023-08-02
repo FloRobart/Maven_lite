@@ -38,11 +38,11 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
     :: Fichier de configuration
     if "%~1"=="-f" (
-        call :fichierConfiguration %~2 %~1 || echo Erreur & exit /b 1
+        call :fileConfig %~2 %~1 || echo Erreur & exit /b 1
     )
 
     if "%~1"=="--file" (
-        call :fichierConfiguration %~2 %~1 || echo Erreur & exit /b 1
+        call :fileConfig %~2 %~1 || echo Erreur & exit /b 1
     )
 
 ENDLOCAL
