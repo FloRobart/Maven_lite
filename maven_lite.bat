@@ -70,7 +70,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         echo args : '!args!'
 
         :: echo test
-        :: for %%a in (%s%) do echo %%a
+        
     )
 
 ENDLOCAL
