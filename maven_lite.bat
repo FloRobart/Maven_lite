@@ -179,7 +179,7 @@ goto :eof
         exit /b 1
     )
 
-    echo %~1 | findstr /r "^\-{1,2}[a-z]*$" >nul && exit /b 1
+    echo %~1 | findstr /r ^^-{1,2}[a-z]+$ >nul && ( echo probleme & exit /b 1 )
 
     exit /b 0
 goto :eof
