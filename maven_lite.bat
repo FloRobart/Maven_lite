@@ -45,26 +45,24 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         call :fileConfig %~2 %~1 || exit /b 1
     )
 
-    echo args in main : '%args%'
-    for %%a in (!args!) do (
-        echo a : '%%a'
-        echo ancienarg : '!ancienArg!'
+
+    for %%a in (%args%) do (
 
         REM Exécuter des actions en fonction de la valeur de ancienArg
         if "!ancienArg!"=="-s" (
-            call :verifArguments %%a "Aucune source donnée pour l'option '-s'" && set "source=%%a" || exit /b 1
+            call :verifArguments %%a "Aucune source donnée pour l'option '-s'" && set "source=%%a" || ( echo erreur source & exit /b 1 )
         ) else if "!ancienArg!"=="--source" (
             call :verifArguments %%a "Aucune source donnée pour l'option '--source'" && set "source=%%a" || exit /b 1
         ) else if "!ancienArg!"=="-o" (
-            call :verifArguments %%a "Aucune sortie donnée pour l'option '-o'" && set "output=%%a" || exit /b 1
+            call :verifArguments %%a "Aucune sortie donnée pour l'option '-o'" && set "output=%%a" || ( echo erreur output & exit /b 1 )
         ) else if "!ancienArg!"=="--output" (
             call :verifArguments %%a "Aucune sortie donnée pour l'option '--output'" && set "output=%%a" || exit /b 1
         ) else if "!ancienArg!"=="-cp" (
-            call :verifArguments %%a "Aucun classpath donné pour l'option '-cp'" && set "classpath=%%a" || exit /b 1
+            call :verifArguments %%a "Aucun classpath donné pour l'option '-cp'" && set "classpath=%%a" || ( echo erreur cp & exit /b 1 )
         ) else if "!ancienArg!"=="--classpath" (
             call :verifArguments %%a "Aucun classpath donné pour l'option '--classpath'" && set "classpath=%%a" || exit /b 1
         ) else if "!ancienArg!"=="-d" (
-            call :verifArguments %%a "Aucune dépendance donnée pour l'option '-d'" && set "dependency=%%a" || exit /b 1
+            call :verifArguments %%a "Aucune dépendance donnée pour l'option '-d'" && set "dependency=%%a" || ( echo erreur dependance & exit /b 1 )
         ) else if "!ancienArg!"=="--dependency" (
             call :verifArguments %%a "Aucune dépendance donnée pour l'option '--dependency'" && set "dependency=%%a" || exit /b 1
         ) else if "!ancienArg!"=="-n" (
@@ -76,11 +74,11 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         ) else if "!ancienArg!"=="--encoding" (
             call :verifArguments %%a "Aucun encodage donné pour l'option '--encoding'" && set "encoding=%%a" || exit /b 1
         ) else if "!ancienArg!"=="-m" (
-            call :verifArguments %%a "Aucun fichier main donné pour l'option '-m'" && set "main=%%a" || exit /b 1
+            call :verifArguments %%a "Aucun fichier main donné pour l'option '-m'" && set "main=%%a" || ( echo erreur main & exit /b 1 )
         ) else if "!ancienArg!"=="--main" (
             call :verifArguments %%a "Aucun fichier main donné pour l'option '--main'" && set "main=%%a" || exit /b 1
         ) else if "!ancienArg!"=="-dt" (
-            call :verifArguments %%a "Aucun dossier de données donné pour l'option '-dt'" && set "data=%%a" || exit /b 1
+            call :verifArguments %%a "Aucun dossier de données donné pour l'option '-dt'" && set "data=%%a" || ( echo erreur data & exit /b 1 )
         ) else if "!ancienArg!"=="--data" (
             call :verifArguments %%a "Aucun dossier de données donné pour l'option '--data'" && set "data=%%a" || exit /b 1
         ) else if "!ancienArg!"=="-c" (
