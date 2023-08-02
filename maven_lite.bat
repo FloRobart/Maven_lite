@@ -124,6 +124,106 @@ ENDLOCAL
 EXIT /B 0
 
 
+::==========================::
+:: Fichier de configuration ::
+::==========================::
+:: 1 = nom du fichier de configuration, 2 = option utilisé
+:fileConfig
+    if "%~1"=="" (
+        call :help 1 "Aucun fichier de configuration donnée pour l'option '%~2'"
+    )
+
+    if not exist "%~1" (
+        echo Le fichier de configuration '%~1' n'existe pas
+        exit /b 1
+    )
+
+    if "%~x1"=="" (
+        echo Le fichier de configuration '%~1' n'est pas un fichier
+        exit /b 1
+    )
+
+    REM Lire chaque ligne du fichier spécifié ^(argument 2^)
+    for /f "usebackq tokens=* delims=" %%i in ("%~1") do (
+
+        REM Supprimer les guillemets doubles de chaque ligne
+        set "line=%%i"
+        set "line=!line:"=!"
+
+        REM Ajouter la ligne modifiée au tableau args
+        set "args=!args! !line!"
+    )
+
+    set "args=!args! -a"
+
+    REM Afficher le contenu du tableau args (facultatif)
+    echo args : '!args!'
+EXIT /B 0
+
+
+
+
+
+
+::================================================================::
+:: Demande à l'utilisateur de rentrer les informations manquantes ::
+::================================================================::
+:demandeInfo
+
+goto :eof
+
+
+::=======================================::
+:: Vérifie si les arguments sont valides ::
+::=======================================::
+:: 1 = argument à vérifier, 2 = phrase à afficher si l'argument est invalide
+:verifArguments
+    if "%~1"=="" (
+        echo %~2
+        exit /b 1
+    )
+
+    ( echo %~1 | findstr /r "^\-{1,2}[a-z]*$" >nul ) && exit /b 1
+
+    exit /b 0
+goto :eof
+
+
+::=========================::
+:: Genère la compile liste ::
+::=========================::
+:: 1 = dossier source
+:genererCompileList
+
+goto :eof
+
+
+::=========================::
+:: Liste les fichiers .jar ::
+::=========================::
+:listerdependencies
+
+goto :eof
+
+
+::============================::
+:: Compile les fichiers .java ::
+::============================::
+:compilation
+
+goto :eof
+
+
+::====================::
+:: Lance le programme ::
+::====================::
+:lancement
+
+goto :eof
+
+
+
+
 ::======::
 :: Aide ::
 ::======::
@@ -237,103 +337,4 @@ EXIT /B 0
     )
 
 
-    exit /b %~1
-goto :eof
-
-
-::==========================::
-:: Fichier de configuration ::
-::==========================::
-:: 1 = nom du fichier de configuration, 2 = option utilisé
-:fileConfig
-    if "%~1"=="" (
-        call :help 1 "Aucun fichier de configuration donnée pour l'option '%~2'"
-    )
-
-    if not exist "%~1" (
-        echo Le fichier de configuration '%~1' n'existe pas
-        exit /b 1
-    )
-
-    if "%~x1"=="" (
-        echo Le fichier de configuration '%~1' n'est pas un fichier
-        exit /b 1
-    )
-
-    REM Lire chaque ligne du fichier spécifié ^(argument 2^)
-    for /f "usebackq tokens=* delims=" %%i in ("%~1") do (
-
-        REM Supprimer les guillemets doubles de chaque ligne
-        set "line=%%i"
-        set "line=!line:"=!"
-
-        REM Ajouter la ligne modifiée au tableau args
-        set "args=!args! !line!"
-    )
-
-    set "args=!args! -a"
-
-    REM Afficher le contenu du tableau args (facultatif)
-    echo args : '!args!'
-EXIT /B 0
-
-
-
-
-
-
-::================================================================::
-:: Demande à l'utilisateur de rentrer les informations manquantes ::
-::================================================================::
-:demandeInfo
-
-goto :eof
-
-
-::=======================================::
-:: Vérifie si les arguments sont valides ::
-::=======================================::
-:: 1 = argument à vérifier, 2 = phrase à afficher si l'argument est invalide
-:verifArguments
-    if "%~1"=="" (
-        echo %~2
-        exit /b 1
-    )
-
-    echo %~1 | findstr /r "^\-{1,2}[a-z]*$" > nul || exit /b 1
-
-    exit /b 0
-goto :eof
-
-
-::=========================::
-:: Genère la compile liste ::
-::=========================::
-:: 1 = dossier source
-:genererCompileList
-
-goto :eof
-
-
-::=========================::
-:: Liste les fichiers .jar ::
-::=========================::
-:listerdependencies
-
-goto :eof
-
-
-::============================::
-:: Compile les fichiers .java ::
-::============================::
-:compilation
-
-goto :eof
-
-
-::====================::
-:: Lance le programme ::
-::====================::
-:lancement
-
-goto :eof
+exit /b %~1
