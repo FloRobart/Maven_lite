@@ -45,7 +45,8 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         call :fileConfig %~2 %~1 || exit /b 1
     )
 
-
+    set "args=%args% -a"
+    echo args in main : '%args%'
     for %%a in (%args%) do (
 
         REM Exécuter des actions en fonction de la valeur de ancienArg
@@ -153,11 +154,6 @@ EXIT /B 0
         REM Ajouter la ligne modifiée au tableau args
         set "args=!args! !line!"
     )
-
-    set "args=!args! -a"
-
-    REM Afficher le contenu du tableau args (facultatif)
-    echo args : '!args!'
 EXIT /B 0
 
 
