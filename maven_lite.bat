@@ -108,6 +108,20 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         set "ancienArg=%%a"
     )
 
+
+    echo variables :
+    echo source : '%source%'
+    echo output : '%output%'
+    echo classpath : '%classpath%'
+    echo dependency : '%dependency%'
+    echo nomFichierSortie : '%nomFichierSortie%'
+    echo encoding : '%encoding%'
+    echo main : '%main%'
+    echo data : '%data%'
+    echo compilation : '%compilation%'
+    echo lancement : '%lancement%'
+    echo.
+
 ENDLOCAL
 EXIT /B 0
 
