@@ -166,8 +166,8 @@ SETLOCAL ENABLEDELAYEDEXPANSION
             if "%data:~-1%" == "\" set "data=%data:~0,-1%"
             if exist "%data%\" (
                 for %%f in ("%data%") do set "dataLastFolder=%%~nxf"
-                echo dataLastFolder : '%dataLastFolder%'
-                xcopy /E /Q "%data%" "%output%\%dataLastFolder%" >nul 2>&1 || (
+                echo dataLastFolder : '!dataLastFolder!'
+                xcopy /E /Q "%data%" "%output%\!dataLastFolder!" >nul 2>&1 || (
                     echo Erreur lors de la copie du dossier '%data%' dans le dossier '%output%'
                     exit /b 1
                 )
