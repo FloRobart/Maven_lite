@@ -107,7 +107,30 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
     :: Compilation ::
     if "%compilation%"=="0" (
-        echo Compilation
+        :: Vérification du dossier source
+        :verification
+        dir "%source%" > nul 2>&1 && (
+            if "%source%"=="" (
+                echo Le dossier source '%source%' n'existe pas
+                call :demandeInfo source
+                goto :verification
+            ) else (
+                echo source existe
+                goto :verification2
+            )
+        ) || (
+            echo Le dossier source '%source%' n'existe pas
+            call :demandeInfo source
+            goto :verification
+        )
+
+
+        :verification2
+        if "%output%"=="" (
+            echo aucun dossier de sortie donné
+            call :demandeInfo output
+            goto :verification2
+        )
     )
 
     :: Lancement ::
@@ -115,7 +138,6 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         echo Lancement
     )
 
-    call :genererCompileList %source%
 ENDLOCAL
 EXIT /B 0
 
