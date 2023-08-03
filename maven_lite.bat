@@ -193,15 +193,14 @@ EXIT /B 0
 ::=========================::
 :: 1 = dossier source
 :genererCompileList
-    echo. > %nomFichierSortie%
+    echo.> %nomFichierSortie%
     call :listerDossiers
+    call :listerFichiers
 goto :eof
 
 :: Listes les dossiers ::
 :listerDossiers
-    echo source : '!source!'
     FOR /f %%i IN ('dir "!source!" /b /ad') DO (
-        echo source in loop : '!source!'
         dir "!source!" /b /a-d 2>nul >nul && ( call :listerFichiers )
 
         set "source=%source%\%%i"
@@ -212,14 +211,13 @@ goto :eof
 
 :: Listes les fichiers ::
 :listerFichiers
-    echo ficher sortie : '%nomFichierSortie%'
     :: liste les fichiers dans le dossier courant ::
     FOR /f %%i IN ('dir "!source!" /b /a-d') DO (
         set "extension=%%~xi"
-        IF "%%~xi" == ".%extensionValide%" ( echo !source!\%%i >> %nomFichierSortie% )
+        IF "%%~xi" == "%extensionValide%" ( echo !source!\%%i >> %nomFichierSortie% )
     )
 
-    IF "!extension!" == ".%extensionValide%" ( echo.>> %nomFichierSortie% )
+    IF "!extension!" == "%extensionValide%" ( echo.>> %nomFichierSortie% )
 goto :eof
 
 
