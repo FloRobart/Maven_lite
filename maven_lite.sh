@@ -299,7 +299,7 @@ then
         read -p "Le dossier de sortie '$output' n'existe pas. Voulez-vous le créer ? (y/n) : " reponse
         [[ ${reponse} =~ ^[yY]([eE][sS])?$ ]] && {
             mkdir -p $output && echo "Le dossier '$output' a été créé" || { echo "Erreur lors de la création du dossier '$output'"; exit 1; }
-        } || exit 0
+        } || { echo "Le dossier '$output' n'a pas été créé"; exit 0; }
     }
 
     [[ "$output"="$source" ]] && { echo Le dossier source doit être différent du dossier de sortie; exit 1; }
