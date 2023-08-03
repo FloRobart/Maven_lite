@@ -194,16 +194,17 @@ EXIT /B 0
 :: 1 = dossier source
 :genererCompileList
     echo entrer dans la fonction
+    echo. >test.txt
     for %%F in (%~1\*) do (
-        echo fichier : '%%F'
+        echo fichier : '%%F'>>test.txt
         if exist "%%F" (
-            echo dossier ? '%%~aF'
+            echo dossier ? '%%~aF'>>test.txt
             if "%%~aF"=="d" (
                 call :genererCompileList "%%F"
             ) else if "%%~aF"=="-a-" (
                 for %%X in ("%%F") do (
                     if "%%~xX"=="%extensionValide%" (
-                        echo fichier : '%%~X'
+                        echo fichier : '%%~X'>>test.txt
                         echo %%~F>>"%nomFichierSortie%"
                     )
                 )
