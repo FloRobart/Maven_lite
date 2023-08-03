@@ -115,7 +115,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         echo Lancement
     )
 
-    call :genererCompileList %source%
+    call :genererCompileList %source% && echo compile liste généré || ( echo erreur & exit /b 1 )
 ENDLOCAL
 EXIT /B 0
 
