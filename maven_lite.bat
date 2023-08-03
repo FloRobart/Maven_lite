@@ -209,11 +209,8 @@ goto :eof
 :listerdependencies
     if not "%dependency%"=="" (
         for %%F in (%~1\*) do (
-            echo %%F
             if exist "%%F" (
-                echo %%F
-                if "%%~xF"=="jar" (
-                    echo %%F
+                if "%%~xF"==".jar" (
                     set "dependencies=!dependencies!%%~F;"
                 )
                 if exist "%%F\" (
