@@ -212,6 +212,7 @@ goto :eof
 
 :: Listes les fichiers ::
 :listerFichiers
+    echo ficher sortie : '%nomFichierSortie%'
     :: liste les fichiers dans le dossier courant ::
     FOR /f %%i IN ('dir "!source!" /b /a-d') DO (
         set "extension=%%~xi"
