@@ -115,7 +115,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         echo Lancement
     )
 
-    call :genererCompileList %source% && echo compile liste généré || ( echo erreur & exit /b 1 )
+    call :genererCompileList %source% && echo compile liste genere || ( echo erreur & exit /b 1 )
 ENDLOCAL
 EXIT /B 0
 
@@ -195,11 +195,13 @@ EXIT /B 0
 :genererCompileList
     for %%F in (%~1\*) do (
         if exist "%%F" (
+            echo dossier ? '%%~aF'
             if "%%~aF"=="d" (
                 call :genererCompileList "%%F"
             ) else if "%%~aF"=="-a-" (
                 for %%X in ("%%F") do (
                     if "%%~xX"=="%extensionValide%" (
+                        echo fichier : '%%~X'
                         echo %%~F>>"%nomFichierSortie%"
                     )
                 )
