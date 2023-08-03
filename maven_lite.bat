@@ -111,7 +111,8 @@ SETLOCAL ENABLEDELAYEDEXPANSION
     if "%compilation%"=="0" (
         :: Vérification du dossier source
         :verifSource
-        dir "%source%" > nul 2>&1 && (
+        if "%source:~-1%" == "\" set "source=%source:~0,-1%"
+        dir "%source%\" > nul 2>&1 && (
             if "%source%"=="" (
                 echo Le dossier source '%source%' n'existe pas
                 call :demandeInfo source
@@ -162,8 +163,11 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
         :: Copie du dossier de données
         if not "%data%"=="" (
+            if "%data:~-1%" == "\" set "data=%data:~0,-1%"
             if exist "%data%\" (
-                xcopy /E /Q "%data%" "%output%\" >nul 2>&1 || (
+                for %%f in ("%data%") do set "dataLastFolder=%%~nxf"
+                echo dataLastFolder : '%dataLastFolder%'
+                xcopy /E /Q "%data%" "%output%\%dataLastFolder%" >nul 2>&1 || (
                     echo Erreur lors de la copie du dossier '%data%' dans le dossier '%output%'
                     exit /b 1
                 )
