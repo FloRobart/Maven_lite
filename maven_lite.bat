@@ -115,7 +115,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         echo Lancement
     )
 
-    call :genererCompileList %source% && echo compile liste genere || ( echo erreur & exit /b 1 )
+    call :genererCompileList %source%
 ENDLOCAL
 EXIT /B 0
 
@@ -194,11 +194,14 @@ EXIT /B 0
 :: 1 = dossier source
 :genererCompileList
     call :listerDossiers
+    call :listerFichiers
 goto :eof
 
 :: Listes les dossiers ::
 :listerDossiers
+    echo source : '!source!'
     FOR /f %%i IN ('dir "!source!" /b /ad') DO (
+        echo source in loop : '!source!'
         dir "!source!" /b /a-d 2>nul >nul && ( call :listerFichiers )
 
         set "source=%source%\%%i"
