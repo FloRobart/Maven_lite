@@ -134,18 +134,13 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         :: Vérification du dossier de sortie
         dir "%output%" > nul 2>&1 && (
             if not exist "%output%\" (
-                if "%output%"=="%source%" (
-                    echo Le dossier source doit être différent du dossier de sortie
-                    exit /b 1
-                )
-            ) else (
                 echo '%output%' n'est pas un dossier.
                 exit /b 1
             )
         ) || (
             set /p "reponse=Le dossier de sortie '%output%' n'existe pas. Voulez-vous le créer ? (y/n) : "
             echo !reponse! | findstr /irc:"^y" >nul 2>&1 && (
-                mkdir "%output%" > nul 2>&1 && (
+                mkdir "%output%" >nul 2>&1 && (
                     echo Le dossier '%output%' a été créé
                 ) || (
                     echo Erreur lors de la création du dossier '%output%'
@@ -162,9 +157,22 @@ SETLOCAL ENABLEDELAYEDEXPANSION
             exit /b 1
         )
 
-
         :: Copie du dossier de données
-        echo rien
+        if not "%data%"=="" (
+            if exist "%data%\" (
+                xcopy /E /I "%data%" "%output%" >nul 2>&1 || (
+                    echo Erreur lors de la copie du dossier '%data%' dans le dossier '%output%'
+                    exit /b 1
+                )
+            ) else (
+                echo Le dossier de données '%data%' n'existe pas ou n'est pas un dossier
+                exit /b 1
+            )
+        )
+
+        if "%classpath%"=="" set "classpath=%output%"
+
+        echo classapth : '%classpath%'
     )
 
     :: Lancement ::
