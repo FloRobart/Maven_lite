@@ -193,28 +193,29 @@ EXIT /B 0
 ::=========================::
 :: 1 = dossier source
 :genererCompileList
-    echo entrer dans la fonction
-    echo. >test.txt
-    echo %~1\*>>test.txt
-    for %%F in (%~1\*) do (
-        echo fichier : '%%F'>>test.txt
-        if exist "%%F" (
-            echo dossier ? '%%~aF'>>test.txt
-            if "%%~aF"=="d" (
-                call :genererCompileList "%%F"
-            ) else if "%%~aF"=="-a-" (
-                for %%X in ("%%F") do (
-                    if "%%~xX"=="%extensionValide%" (
-                        echo fichier : '%%~X'>>test.txt
-                        echo %%~F>>"%nomFichierSortie%"
-                    )
-                )
-            )
-        ) else (
-            echo Le dossier '%~1' n'existe pas
-        )
+    call :listerDossiers
+goto :eof
+
+:: Listes les dossiers ::
+:listerDossiers
+    FOR /f %%i IN ('dir "!source!" /b /ad') DO (
+        dir "!source!" /b /a-d 2>nul >nul && ( call :listerFichiers )
+
+        set "source=%source%\%%i"
+
+        call :listerDossiers
     )
-    echo sortie de la fonction
+goto :eof
+
+:: Listes les fichiers ::
+:listerFichiers
+    :: liste les fichiers dans le dossier courant ::
+    FOR /f %%i IN ('dir "!source!" /b /a-d') DO (
+        set "extension=%%~xi"
+        IF "%%~xi" == ".%extensionValide%" ( echo !source!\%%i >> %nomFichierSortie% )
+    )
+
+    IF "!extension!" == ".%extensionValide%" ( echo.>> %nomFichierSortie% )
 goto :eof
 
 
