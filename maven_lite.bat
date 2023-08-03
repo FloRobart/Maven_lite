@@ -46,6 +46,9 @@ SETLOCAL ENABLEDELAYEDEXPANSION
     )
 
     set "args=%args% -a"
+    set "args=%args:"=%"
+    set "args=%args:'=%"
+    echo args : '%args%'
     for %%a in (%args%) do (
         if "!ancienArg!"=="-s" (
             call :verifArguments %%a "Aucune source donnée pour l'option '-s'" && set "source=%%a" || ( echo erreur source & exit /b 1 )
@@ -160,7 +163,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         :: Copie du dossier de données
         if not "%data%"=="" (
             if exist "%data%\" (
-                xcopy /E /I "%data%" "%output%" >nul 2>&1 || (
+                xcopy /E /I "%data%" "%output%\%data%" >nul 2>&1 || (
                     echo Erreur lors de la copie du dossier '%data%' dans le dossier '%output%'
                     exit /b 1
                 )
