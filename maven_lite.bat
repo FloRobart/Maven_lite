@@ -134,6 +134,11 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         :: Vérification du dossier de sortie
         dir "%output%" > nul 2>&1 && (
             if not exist "%output%\" (
+                if "%output%"=="%source%" (
+                    echo Le dossier source doit être différent du dossier de sortie
+                    exit /b 1
+                )
+            ) else (
                 echo '%output%' n'est pas un dossier.
                 exit /b 1
             )
