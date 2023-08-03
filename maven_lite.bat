@@ -193,6 +193,7 @@ EXIT /B 0
 ::=========================::
 :: 1 = dossier source
 :genererCompileList
+    echo entrer dans la fonction
     for %%F in (%~1\*) do (
         if exist "%%F" (
             echo dossier ? '%%~aF'
