@@ -195,7 +195,6 @@ EXIT /B 0
 :genererCompileList
     echo. > %nomFichierSortie%
     call :listerDossiers
-    call :listerFichiers
 goto :eof
 
 :: Listes les dossiers ::
