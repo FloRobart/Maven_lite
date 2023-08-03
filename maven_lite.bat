@@ -129,6 +129,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
         :: Vérification du dossier de sortie
         :verifOutput
+        if "%output:~-1%" == "\" set "output=%output:~0,-1%"
         if "%output%"=="" (
             echo aucun dossier de sortie donnee
             call :demandeInfo output
@@ -156,6 +157,8 @@ SETLOCAL ENABLEDELAYEDEXPANSION
             )
         )
 
+        if "%output:~-1%" == "\" set "output=%output:~0,-1%"
+        echo output : '%output%'
         if "%output%"=="%source%" (
             echo Le dossier source doit être différent du dossier de sortie
             exit /b 1
@@ -167,7 +170,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
             if exist "!data!\" (
                 for %%f in ("!data!") do set "dataLastFolder=%%~nxf"
                 if not exist "%output%\!dataLastFolder!" mkdir %output%\!dataLastFolder!
-                xcopy /E /Q "%data%" "%output%\!dataLastFolder!" >nul 2>&1 || (
+                xcopy /E /Q /Y "%data%" "%output%\!dataLastFolder!" >nul 2>&1 || (
                     echo Erreur lors de la copie du dossier '%data%' dans le dossier '%output%'
                     exit /b 1
                 )
