@@ -195,6 +195,7 @@ EXIT /B 0
 :genererCompileList
     echo entrer dans la fonction
     echo. >test.txt
+    echo %~1\*>>test.txt
     for %%F in (%~1\*) do (
         echo fichier : '%%F'>>test.txt
         if exist "%%F" (
