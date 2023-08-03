@@ -191,7 +191,19 @@ EXIT /B 0
 ::=========================::
 :: 1 = dossier source
 :genererCompileList
-
+    for %%F in (%~1\*) do (
+        if exist "%%F" (
+            if "%%~aF"=="d" (
+                call :genererCompileList "%%F"
+            ) else if "%%~aF"=="-a-" (
+                for %%X in ("%%F") do (
+                    if "%%~xX"=="%extensionValide%" (
+                        echo %%~F>>"%nomFichierSortie%"
+                    )
+                )
+            )
+        )
+    )
 goto :eof
 
 
