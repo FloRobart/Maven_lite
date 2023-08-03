@@ -195,6 +195,7 @@ EXIT /B 0
 :genererCompileList
     echo entrer dans la fonction
     for %%F in (%~1\*) do (
+        echo fichier : '%%F'
         if exist "%%F" (
             echo dossier ? '%%~aF'
             if "%%~aF"=="d" (
