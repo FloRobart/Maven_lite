@@ -25,7 +25,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         call :help 1 "Aucun argument donnée"
     )
 
-    :: Aide
+    :: Aide ::
     if "%~1"=="-h" (
         call :help 0
         exit /b 0
@@ -36,7 +36,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         exit /b 0
     )
 
-    :: Fichier de configuration
+    :: Fichier de configuration ::
     if "%~1"=="-f" (
         call :fileConfig %~2 %~1 || exit /b 1
     )
@@ -48,8 +48,6 @@ SETLOCAL ENABLEDELAYEDEXPANSION
     set "args=%args% -a"
     echo args in main : '%args%'
     for %%a in (%args%) do (
-
-        REM Exécuter des actions en fonction de la valeur de ancienArg
         if "!ancienArg!"=="-s" (
             call :verifArguments %%a "Aucune source donnée pour l'option '-s'" && set "source=%%a" || ( echo erreur source & exit /b 1 )
         ) else if "!ancienArg!"=="--source" (
@@ -107,20 +105,15 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         set "ancienArg=%%a"
     )
 
+    :: Compilation ::
     if "%compilation%"=="0" (
         echo Compilation
     )
-    
 
-
+    :: Lancement ::
     if "%lancement%"=="0" (
         echo Lancement
     )
-
-    call :listerdependencies %dependency%
-
-    echo dependencies : '%dependencies%'
-
 ENDLOCAL
 EXIT /B 0
 
@@ -213,9 +206,6 @@ goto :eof
                 if "%%~xF"==".jar" (
                     set "dependencies=!dependencies!%%~F;"
                 )
-                if exist "%%F\" (
-                    call :listerdependencies "%%F"
-                )
             )
         )
     )
@@ -281,7 +271,8 @@ goto :eof
     echo   -d , --dependency      Dossier contenant les fichiers jar utiliser
     echo                          par le programme. Tout les fichiers jar seront
     echo                          ajoutés au classpath lors de la compilation
-    echo                          et du lancement.
+    echo                          et du lancement. Tout les fichiers jar doivent être
+    echo                          placés dans le même dossier.
     echo.
     echo   -n , --name            Permet de changer le nom du fichier contenant les
     echo                          chemins des fichiers java à compiler. Le nom par
