@@ -163,7 +163,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         :: Copie du dossier de données
         if not "%data%"=="" (
             if exist "%data%\" (
-                xcopy /E /I "%data%" "%output%\%data%" >nul 2>&1 || (
+                xcopy /E /Q "%data%" "%output%\" >nul 2>&1 || (
                     echo Erreur lors de la copie du dossier '%data%' dans le dossier '%output%'
                     exit /b 1
                 )
