@@ -107,29 +107,58 @@ SETLOCAL ENABLEDELAYEDEXPANSION
     :: Compilation ::
     if "%compilation%"=="0" (
         :: Vérification du dossier source
-        :verification
+        :verifSource
         dir "%source%" > nul 2>&1 && (
             if "%source%"=="" (
                 echo Le dossier source '%source%' n'existe pas
                 call :demandeInfo source
-                goto :verification
+                goto :verifSource
             ) else (
                 echo source existe
-                goto :verification2
+                goto :verifOutput
             )
         ) || (
             echo Le dossier source '%source%' n'existe pas
             call :demandeInfo source
-            goto :verification
+            goto :verifSource
         )
 
-
-        :verification2
+        :: Vérification du dossier de sortie
+        :verifOutput
         if "%output%"=="" (
             echo aucun dossier de sortie donnee
             call :demandeInfo output
-            goto :verification2
+            goto :verifOutput
         )
+
+        :: Vérification du dossier de sortie
+        dir /ad "%output%" > nul 2>&1 && (
+            if exist "%output%\" (
+                if "%output%"=="%source%" (
+                    echo Le dossier source doit être différent du dossier de sortie
+                    exit /b 1
+                )
+            ) else (
+                echo '%output%' n'est pas un dossier.
+                exit /b 1
+            )
+        ) || (
+            set /p "reponse=Le dossier de sortie '%output%' n'existe pas. Voulez-vous le créer ? (y/n) : "
+            echo %reponse% | findstr /r "^[yY]\([eE][sS]\)\?$" > nul && (
+                mkdir "%output%" > nul 2>&1 && (
+                    echo Le dossier '%output%' a été créé
+                ) || (
+                    echo Erreur lors de la création du dossier '%output%'
+                    exit /b 1
+                )
+            ) || (
+                exit /b 0
+            )
+        )
+
+
+        :: Copie du dossier de données
+        echo rien
     )
 
     :: Lancement ::
