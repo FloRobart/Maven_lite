@@ -206,6 +206,8 @@ EXIT /B 0
                     )
                 )
             )
+        ) else (
+            echo Le dossier '%~1' n'existe pas
         )
     )
 goto :eof
