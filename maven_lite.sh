@@ -295,7 +295,7 @@ then
     done
 
     # Vérification du dossier de sortie
-    ls -d $output > /dev/null 2>&1 && { [[ -d $output ]] && { [[ "$output"="$source" ]] && { echo Le dossier source doit être différent du dossier de sortie; exit 1; } } || { echo "'$output' n'est pas un dossier."; exit 1; } } || {
+    ls -d $output > /dev/null 2>&1 && { [[ -d $output ]] || { echo "'$output' n'est pas un dossier."; exit 1; } } || {
         read -p "Le dossier de sortie '$output' n'existe pas. Voulez-vous le créer ? (y/n) : " reponse
         [[ ${reponse} =~ ^[yY]([eE][sS])?$ ]] && {
             mkdir -p $output && echo "Le dossier '$output' a été créé" || { echo "Erreur lors de la création du dossier '$output'"; exit 1; }
