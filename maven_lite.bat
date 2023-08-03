@@ -212,6 +212,7 @@ EXIT /B 0
             echo Le dossier '%~1' n'existe pas
         )
     )
+    echo sortie de la fonction
 goto :eof
 
 
