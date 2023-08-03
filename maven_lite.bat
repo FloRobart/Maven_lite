@@ -46,7 +46,6 @@ SETLOCAL ENABLEDELAYEDEXPANSION
     )
 
     set "args=%args% -a"
-    echo args in main : '%args%'
     for %%a in (%args%) do (
         if "!ancienArg!"=="-s" (
             call :verifArguments %%a "Aucune source donnée pour l'option '-s'" && set "source=%%a" || ( echo erreur source & exit /b 1 )
@@ -127,7 +126,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
         :verification2
         if "%output%"=="" (
-            echo aucun dossier de sortie donné
+            echo aucun dossier de sortie donnee
             call :demandeInfo output
             goto :verification2
         )
@@ -203,7 +202,7 @@ goto :eof
         exit /b 1
     )
 
-    echo %~1 | findstr /irc:"^\-[a-z]" /c:"^\-\-[a-z][a-z]" && (
+    echo %~1 | findstr /irc:"^\-[a-z]" /c:"^\-\-[a-z][a-z]" >nul 2>&1 && (
         echo %~2
         exit /b 1
     )
