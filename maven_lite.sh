@@ -302,6 +302,8 @@ then
         } || exit 0
     }
 
+    [[ "$output"="$source" ]] && { echo Le dossier source doit être différent du dossier de sortie; exit 1; }
+
     # Copie du dossier de données
     if [ ! -z $data ]
     then
