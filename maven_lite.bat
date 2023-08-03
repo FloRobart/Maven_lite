@@ -132,19 +132,14 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         )
 
         :: Vérification du dossier de sortie
-        dir /ad "%output%" > nul 2>&1 && (
-            if exist "%output%\" (
-                if "%output%"=="%source%" (
-                    echo Le dossier source doit être différent du dossier de sortie
-                    exit /b 1
-                )
-            ) else (
+        dir "%output%" > nul 2>&1 && (
+            if not exist "%output%\" (
                 echo '%output%' n'est pas un dossier.
                 exit /b 1
             )
         ) || (
             set /p "reponse=Le dossier de sortie '%output%' n'existe pas. Voulez-vous le créer ? (y/n) : "
-            echo %reponse% | findstr /r "^[yY]\([eE][sS]\)\?$" > nul && (
+            echo !reponse! | findstr /irc:"^y" >nul 2>&1 && (
                 mkdir "%output%" > nul 2>&1 && (
                     echo Le dossier '%output%' a été créé
                 ) || (
@@ -152,8 +147,14 @@ SETLOCAL ENABLEDELAYEDEXPANSION
                     exit /b 1
                 )
             ) || (
+                echo Le dossier '%output%' n'a pas été créé
                 exit /b 0
             )
+        )
+
+        if "%output%"=="%source%" (
+            echo Le dossier source doit être différent du dossier de sortie
+            exit /b 1
         )
 
 
