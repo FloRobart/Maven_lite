@@ -114,6 +114,8 @@ SETLOCAL ENABLEDELAYEDEXPANSION
     if "%lancement%"=="0" (
         echo Lancement
     )
+
+    call :genererCompileList %source%
 ENDLOCAL
 EXIT /B 0
 
