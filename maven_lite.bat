@@ -193,6 +193,7 @@ EXIT /B 0
 ::=========================::
 :: 1 = dossier source
 :genererCompileList
+    echo. > %nomFichierSortie%
     call :listerDossiers
     call :listerFichiers
 goto :eof
