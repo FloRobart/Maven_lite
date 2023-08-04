@@ -1,13 +1,14 @@
 @echo off
 
 set "pathToInstallFolder=C:\Program Files\Maven_Lite"
-set "nomFichier=mvnl.bat"
+set "nomFichierSource=mvnl.bat"
+set "nomFichierDestination=mvnl.bat"
 
 if not exist "%pathToInstallFolder%" (
     mkdir "%pathToInstallFolder%" || ( echo Erreur lors de la création du dossier '%pathToInstallFolder%'. & exit /b 1 )
 )
 
-copy /s /y /q "%nomFichier%" "%pathToInstallFolder%\%nomFichier%" || ( echo Erreur lors de la copie du fichier '%nomFichier%' dans le dossier '%pathToInstallFolder%'. & exit /b 1 )
+copy /s /y /q "%nomFichierSource%" "%pathToInstallFolder%\%nomFichierDestination%" || ( echo Erreur lors de la copie du fichier '%nomFichierSource%' dans le dossier '%pathToInstallFolder%'. & exit /b 1 )
 
 echo Installation terminée avec succès.
 exit /b 0
