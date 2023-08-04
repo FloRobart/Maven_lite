@@ -191,7 +191,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
             exit /b 1
         )
 
-        call :compilation
+        call :compilation || exit /b 1
     )
 
     :: Lancement ::
@@ -207,9 +207,8 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         )
 
         call :listerdependencies %dependency%
-        call :lancement
+        call :lancement || exit /b 1
     )
-
 ENDLOCAL
 EXIT /B 0
 
@@ -336,7 +335,7 @@ goto :eof
 ::============================::
 :compilation
     echo Compilation...
-    call javac -cp "%classpath%;%dependencies%" -encoding %encoding% -d "%output%" "@%nomFichierSortie%" && echo Fin de la compilation. || ( echo Erreur lors de la compilation. & exit 1 )
+    call javac -cp "%classpath%;%dependencies%" -encoding %encoding% -d "%output%" "@%nomFichierSortie%" && ( echo Fin de la compilation. & exit /b 0 ) || ( echo Erreur lors de la compilation. & exit /b 1 )
 goto :eof
 
 
@@ -345,7 +344,7 @@ goto :eof
 ::====================::
 :lancement
     echo Lancement du programme...
-    call java -cp "%classpath%;%dependencies%" %main% && echo Fin de l'execution. || ( echo Erreur lors du lancement du programme. & exit 1 )
+    call java -cp "%classpath%;%dependencies%" %main% && ( echo Fin de l'execution. & exit /b 0 ) || ( echo Erreur lors du lancement du programme. & exit /b 1 )
 goto :eof
 
 
