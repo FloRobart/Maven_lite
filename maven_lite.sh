@@ -302,7 +302,7 @@ then
         } || { echo "Le dossier '$output' n'a pas été créé"; exit 0; }
     }
 
-    [[ "$output"="$source" ]] && { echo Le dossier source doit être différent du dossier de sortie; exit 1; }
+    [[ "$output" = "$source" ]] && { echo "Le dossier source doit être différent du dossier de sortie"; exit 1; }
 
     # Copie du dossier de données
     if [ ! -z $data ]
@@ -313,9 +313,10 @@ then
     [[ -z $classpath ]] && classpath=$output
     listerdependencies $dependency
 
-    echo -n > $nomFichierSortie
+    ls $nomFichierSortie > /dev/null 2>&1 && { rm -f $nomFichierSortie || { echo "Erreur lors de la suppression du fichier '$nomFichierSortie'."; exit 1; } }
     genererCompileList $source; ls $nomFichierSortie > /dev/null 2>&1 || { echo "Erreur lors de la génération du fichier '$nomFichierSortie'."; exit 1; }
     compilation
+    ls $nomFichierSortie > /dev/null 2>&1 && { rm -f $nomFichierSortie || { echo "Erreur lors de la suppression du fichier '$nomFichierSortie'."; exit 1; } }
 fi
 
 
