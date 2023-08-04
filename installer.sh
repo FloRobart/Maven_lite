@@ -1,13 +1,15 @@
 #!/bin/bash
 
-function copie() {
+function copie()
+{
     cp -f $fichier $dossier || {
         echo "Erreur lors de la copie du fichier 'maven_lite.sh'."
         exit 1
     }
 }
 
-function addCommand() {
+function addCommand()
+{
     {
         sed -i '/# Maven Lite/,/# Fin Maven Lite/d' $bashrc
 
