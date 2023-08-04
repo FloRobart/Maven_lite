@@ -196,7 +196,18 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
     :: Lancement ::
     if "%lancement%"=="0" (
-        echo Lancement
+        if "%classpath%"=="" (
+            call :help 1 "L'option -cp ou --classpath est obligatoire pour lancer le programme"
+            exit /b 1
+        )
+
+        if "%main%"=="" (
+            call :help 1 "L'option -m ou --main est obligatoire pour lancer le programme"
+            exit /b 1
+        )
+
+        call :listerdependencies %dependency%
+        call :lancement
     )
 
 ENDLOCAL
