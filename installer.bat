@@ -1,7 +1,7 @@
 @echo off
 
 set "pathToInstallFolder=C:\Program Files\Maven_Lite"
-set "nomFichierSource=mvnl.bat"
+set "nomFichierSource=maven_lite.bat"
 set "nomFichierDestination=mvnl.bat"
 
 if not exist "%pathToInstallFolder%" (
