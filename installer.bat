@@ -4,13 +4,16 @@ set "pathToInstallFolder=C:\Program Files\Maven_Lite"
 set "nomFichierSource=maven_lite.bat"
 set "nomFichierDestination=mvnl.bat"
 
-if not exist "%pathToInstallFolder%" (
-    mkdir "%pathToInstallFolder%" || ( echo Erreur lors de la création du dossier '%pathToInstallFolder%'. & exit /b 1 )
+xcopy /s /y /q ".\%nomFichierSource%" "%pathToInstallFolder%\" >nul || ( echo Erreur lors de la copie du fichier '%nomFichierSource%' dans le dossier '%pathToInstallFolder%'. & exit /b 1 )
+
+if exist "%pathToInstallFolder%\%nomFichierDestination%" del /q /f "%pathToInstallFolder%\%nomFichierDestination%"
+
+rename "%pathToInstallFolder%\%nomFichierSource%" "%nomFichierDestination%" >nul || ( echo Erreur lors du renomage du fichier '%nomFichierSource%'. & exit /b 1 )
+
+echo %PATH% | findstr /c:"%pathToInstallFolder%" || (
+    setx path "%PATH%;%pathToInstallFolder%" >nul || ( echo Erreur lors de l'ajout du dossier '%pathToInstallFolder%' dans la variable d'environnement 'PATH'. & exit /b 1 )
 )
 
-copy /s /y /q "%nomFichierSource%" "%pathToInstallFolder%\%nomFichierDestination%" || ( echo Erreur lors de la copie du fichier '%nomFichierSource%' dans le dossier '%pathToInstallFolder%'. & exit /b 1 )
-
 echo Installation terminée avec succès.
-exit /b 0
-setx path "%PATH%;%pathToInstallFolder%" || ( echo Erreur lors de l'ajout du dossier '%pathToInstallFolder%' dans la variable d'environnement 'PATH'. & exit /b 1 )
 
+exit /b 0
