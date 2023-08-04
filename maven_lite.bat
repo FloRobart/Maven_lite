@@ -181,8 +181,17 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         )
 
         if "%classpath%"=="" set "classpath=%output%"
+        call :listerdependencies %dependency%
 
-        echo classapth : '%classpath%'
+        :: Génération du fichier de compilation
+        if exist "%nomFichierSortie%" del /Q /F "%nomFichierSortie%" >nul 2>&1
+        call :genererCompileList
+        if not exist "%nomFichierSortie%" (
+            echo Erreur lors de la génération du fichier '%nomFichierSortie%'.
+            exit /b 1
+        )
+
+        call :compilation
     )
 
     :: Lancement ::
@@ -267,7 +276,6 @@ EXIT /B 0
 ::=========================::
 :: 1 = dossier source
 :genererCompileList
-    echo.> %nomFichierSortie%
     call :listerDossiers
     call :listerFichiers
 goto :eof
