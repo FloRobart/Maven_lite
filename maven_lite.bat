@@ -23,6 +23,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
     ::-----------::
     if "%args%"=="" (
         call :help 1 "Aucun argument donnée"
+        exit /b 1
     )
 
     :: Aide ::
