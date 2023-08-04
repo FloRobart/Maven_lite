@@ -10,7 +10,7 @@ if exist "%pathToInstallFolder%\%nomFichierDestination%" del /q /f "%pathToInsta
 
 rename "%pathToInstallFolder%\%nomFichierSource%" "%nomFichierDestination%" >nul || ( echo Erreur lors du renomage du fichier '%nomFichierSource%'. & exit /b 1 )
 
-echo %PATH% | findstr /c:"%pathToInstallFolder%" || (
+echo %PATH% | findstr /c:"%pathToInstallFolder%" >nul 2>nul || (
     setx path "%PATH%;%pathToInstallFolder%" >nul || ( echo Erreur lors de l'ajout du dossier '%pathToInstallFolder%' dans la variable d'environnement 'PATH'. & exit /b 1 )
 )
 
