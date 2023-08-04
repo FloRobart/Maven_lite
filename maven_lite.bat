@@ -192,6 +192,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         )
 
         call :compilation || exit /b 1
+        if exist "%nomFichierSortie%" del /Q /F "%nomFichierSortie%" >nul 2>&1
     )
 
     :: Lancement ::
