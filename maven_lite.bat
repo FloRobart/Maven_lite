@@ -458,7 +458,7 @@ goto :eof
     if not "%~2"=="" (
         echo.
         echo.
-        echo "%~2"
+        echo %~2
         echo.
     )
 
