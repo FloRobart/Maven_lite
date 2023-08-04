@@ -48,7 +48,6 @@ SETLOCAL ENABLEDELAYEDEXPANSION
     set "args=%args% -a"
     set "args=%args:"=%"
     set "args=%args:'=%"
-    echo args : '%args%'
     for %%a in (%args%) do (
         if "!ancienArg!"=="-s" (
             call :verifArguments %%a "Aucune source donnée pour l'option '-s'" && set "source=%%a" || ( echo erreur source & exit /b 1 )
@@ -118,7 +117,6 @@ SETLOCAL ENABLEDELAYEDEXPANSION
                 call :demandeInfo source
                 goto :verifSource
             ) else (
-                echo source existe
                 goto :verifOutput
             )
         ) || (
@@ -158,7 +156,6 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         )
 
         if "%output:~-1%" == "\" set "output=%output:~0,-1%"
-        echo output : '%output%'
         if "%output%"=="%source%" (
             echo Le dossier source doit être différent du dossier de sortie
             exit /b 1
