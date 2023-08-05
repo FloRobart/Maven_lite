@@ -51,7 +51,7 @@ Il est possible de combiner les deux commandes en une seule :
 mvnl -s src -o bin -d lib -cp bin -m com.exemple.Main -cl
 ```
 
-Comme vous pouvez le voir, ça fait une commande assez longue à taper. C'est pour cela que vous pouvez créer un fichier de configuration 'config.txt' puis mettre les arguments dedans.
+Comme vous pouvez le voir, ça fait une commande assez longue à taper. C'est pour cela que vous pouvez créer un fichier de configuration, par exemple 'config.txt' puis mettre les arguments dedans.
 
 Le fichier de configuration doit contenir les options et argument de la commande. Soit une option avec son argument par ligne, soit plusieurs options et arguments sur la même ligne séparé par un espace.
 
@@ -60,8 +60,8 @@ Les options du fichier de configuration prévalent sur les options de la ligne d
 Exemple de fichier de configuration :
 
 ```txt
--s src -o bin -d lib
--cp bin -m com.exemple.Main
+-s src -o bin
+-d lib -cp bin -m com.exemple.Main
 ```
 
 - Une fois que vous avez créé le fichier de configuration, vous pouvez exécuter la commande suivante pour compiler et lancez le projet :
@@ -70,7 +70,7 @@ Exemple de fichier de configuration :
     mvnl -f config.txt -cl
     ```
 
-Je vous recommande de ne pas mettre les options '-c' et '-l' dans le fichier de configuration car vous n'avez pas besoin de compiler et lancer le projet à chaque fois. Cela vous permettra de les mettres dans la commande quand vous en aurez besoin.
+Je vous recommande de ne pas mettre les options '-c' et '-l' dans le fichier de configuration car vous n'avez pas besoin de compiler et lancer le projet à chaque fois. Cela vous permettra de les mettres dans la commande quand vous en aurez besoin. Malgré tout, vous pouvez les mettre dans le fichier de configuration si vous le souhaitez.
 
 - Pour compiler le projet, vous pouvez exécuter la commande suivante :
 
@@ -141,6 +141,8 @@ L'ordre des options n'a pas d'importance sauf les options -f et -h qui doivent �
     ```sh
     ./installer.sh
     ```
+
+- Une fois l'installation terminée, vous pouvez supprimer le dossier 'Maven_lite' si vous le souhaitez.
 
 ## Installation manuelle
 
