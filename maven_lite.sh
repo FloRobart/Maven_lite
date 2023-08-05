@@ -100,7 +100,7 @@ function help()
     echo ""
     echo ""
     echo ""
-    echo "Exemple d'utiliation : './mvn_lite.sh -s src -o ./bin -m \"controleur.Main\" -cl'"
+    echo "Exemple d'utiliation : 'mvnl -s src -o ./bin -m \"controleur.Main\" -cl'"
     echo "                       Cette ligne de commande va compiler et lancer le projet"
     echo "                       java contenu dans le dossier 'src' et lancer la classe"
     echo "                       'controleur.Main' avec le classpath './bin'."

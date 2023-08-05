@@ -69,6 +69,6 @@ Les options obligatoires pour la compilation et le lancement sont :
   -cl, --compile-launch  Compiler et lancer le projet. (équivalent à -c -l)
 
 
-Exemple d'utiliation : './mvn_lite.sh -s src -o ./bin -m "controleur.Main" -cl'
+Exemple d'utiliation : 'mvnl -s src -o ./bin -m "controleur.Main" -cl'
                        Cette ligne de commande va compiler et lancer le projet java contenu dans le dossier 'src' et lancer la classe 'controleur.Main' avec le classpath './bin'.
                        Tout les fichiers compilés seront dans le dossier 'bin'.
