@@ -188,7 +188,13 @@ function compilation()
 function lancement()
 {
     echo 'Lancement du programme...'
-    java -cp "$classpath:$dependencies" $main && { echo 'Fin de l'\''execution.'; } || { echo "Erreur lors du lancement du programme."; exit 1; }
+    commande="java -cp \"$classpath:$dependencies\" $main "
+    for arg in "${javaArgs[@]}"
+    do
+        commande+="\"$arg\" "
+    done
+
+    eval $commande && { echo 'Fin de l'\''execution.'; } || { echo "Erreur lors du lancement du programme."; exit 1; }
 }
 
 
@@ -200,8 +206,9 @@ function lancement()
 #-----------#
 extensionValide="java"
 nomFichierSortie="compile.list"
-dependencies=""
 encoding="UTF-8"
+dependencies=""
+javaArgsCount=0
 compilation=1
 lancement=1
 args=("$@")
@@ -261,6 +268,9 @@ do
 
         "-dt") verifArguments $arg "Aucun dossier de données donnée pour l'option '-dt'" && data=$arg ;;
         "--data") verifArguments $arg "Aucun dossier de données donnée pour l'option '--data'" && data=$arg ;;
+
+        "-arg") verifArguments $arg "Aucun argument donnée pour l'option '-arg'" && { javaArgs[$javaArgsCount]="$arg"; ((javaArgsCount++)); } ;;
+        "--argument") verifArguments $arg "Aucun argument donnée pour l'option '--argument'" && { javaArgs[$javaArgsCount]="$arg"; ((javaArgsCount++)); } ;;
 
         "-c") compilation=0 ;;
         "--compilation") compilation=0 ;;
