@@ -8,11 +8,11 @@ Le but est de pouvoir compiler et/ou lancer un projet java en une seule commande
 
 Maven Lite est plus simple que Maven car il ne gère pas les dépendances hors local, les plugins, les phases de build, etc. Il est donc adapté pour les projets simples qui ne nécessitent pas de gérer des dépendances externes. Pour des projets plus complexes, il est conseillé d'utiliser Maven.
 
-Il ne fait que compiler le projet dans un dossier target et gère les dépendances locales (fichier jar) et permet également de lancer le projet.
-L'intéret étant de fournir au programme un dossier avec toute les dépendances, se qui permettra de lancer le programme sans avoir à ajouter les dépendances dans le classpath.
-Voir le fichier help.txt pour plus d'informations sur les focntionnalités disponible.
+Maven lite permet de compiler le projet dans un dossier target, gèrer les dépendances locales (fichier jar) et éxecuter le projet.
 
-Les fichiers d'installation permettent d'installer Maven Lite sur votre ordinateur et de profiter de la commande 'mvnl'. Cela vous évitera de devoir copier le fichier mavenlite.jar dans chaque projet.
+L'intéret principale de maven lite dans la gestion des dépendances est de fournir au script un dossier qui contient toutes les dépendances, le script ajoutera automatiquement les dépendances dans le classpath.
+
+Les fichiers d'installation permettent d'installer Maven Lite sur votre ordinateur et de profiter de la commande 'mvnl'. Cela vous évitera de devoir copier le fichier maven_lite.XX dans chaque projet.
 
 ## Prérequis
 
