@@ -51,19 +51,19 @@ SETLOCAL ENABLEDELAYEDEXPANSION
     set "args=%args:'=%"
     for %%a in (%args%) do (
         if "!ancienArg!"=="-s" (
-            call :verifArguments %%a "Aucune source donnée pour l'option '-s'" && set "source=%%a" || ( echo erreur source & exit /b 1 )
+            call :verifArguments %%a "Aucune source donnée pour l'option '-s'" && set "source=%%a" || exit /b 1
         ) else if "!ancienArg!"=="--source" (
             call :verifArguments %%a "Aucune source donnée pour l'option '--source'" && set "source=%%a" || exit /b 1
         ) else if "!ancienArg!"=="-o" (
-            call :verifArguments %%a "Aucune sortie donnée pour l'option '-o'" && set "output=%%a" || ( echo erreur output & exit /b 1 )
+            call :verifArguments %%a "Aucune sortie donnée pour l'option '-o'" && set "output=%%a" || exit /b 1
         ) else if "!ancienArg!"=="--output" (
             call :verifArguments %%a "Aucune sortie donnée pour l'option '--output'" && set "output=%%a" || exit /b 1
         ) else if "!ancienArg!"=="-cp" (
-            call :verifArguments %%a "Aucun classpath donné pour l'option '-cp'" && set "classpath=%%a" || ( echo erreur cp & exit /b 1 )
+            call :verifArguments %%a "Aucun classpath donné pour l'option '-cp'" && set "classpath=%%a" || exit /b 1
         ) else if "!ancienArg!"=="--classpath" (
             call :verifArguments %%a "Aucun classpath donné pour l'option '--classpath'" && set "classpath=%%a" || exit /b 1
         ) else if "!ancienArg!"=="-d" (
-            call :verifArguments %%a "Aucune dépendance donnée pour l'option '-d'" && set "dependency=%%a" || ( echo erreur dependance & exit /b 1 )
+            call :verifArguments %%a "Aucune dépendance donnée pour l'option '-d'" && set "dependency=%%a" || exit /b 1
         ) else if "!ancienArg!"=="--dependency" (
             call :verifArguments %%a "Aucune dépendance donnée pour l'option '--dependency'" && set "dependency=%%a" || exit /b 1
         ) else if "!ancienArg!"=="-n" (
@@ -75,13 +75,17 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         ) else if "!ancienArg!"=="--encoding" (
             call :verifArguments %%a "Aucun encodage donné pour l'option '--encoding'" && set "encoding=%%a" || exit /b 1
         ) else if "!ancienArg!"=="-m" (
-            call :verifArguments %%a "Aucun fichier main donné pour l'option '-m'" && set "main=%%a" || ( echo erreur main & exit /b 1 )
+            call :verifArguments %%a "Aucun fichier main donné pour l'option '-m'" && set "main=%%a" || exit /b 1
         ) else if "!ancienArg!"=="--main" (
             call :verifArguments %%a "Aucun fichier main donné pour l'option '--main'" && set "main=%%a" || exit /b 1
         ) else if "!ancienArg!"=="-dt" (
-            call :verifArguments %%a "Aucun dossier de données donné pour l'option '-dt'" && set "data=%%a" || ( echo erreur data & exit /b 1 )
+            call :verifArguments %%a "Aucun dossier de données donné pour l'option '-dt'" && set "data=%%a" || exit /b 1
         ) else if "!ancienArg!"=="--data" (
             call :verifArguments %%a "Aucun dossier de données donné pour l'option '--data'" && set "data=%%a" || exit /b 1
+        ) else if "!ancienArg!"=="-arg" (
+            call :verifArguments %%a "Aucun argument donné pour l'option '-arg'" && set "arguments=!arguments!"%%a" " || exit /b 1
+        ) else if "!ancienArg!"=="--argument" (
+            call :verifArguments %%a "Aucun argument donné pour l'option '--argument'" && set "arguments=!arguments!"%%a" " || exit /b 1
         ) else if "!ancienArg!"=="-c" (
             set "compilation=0"
         ) else if "!ancienArg!"=="--compilation" (
@@ -105,6 +109,12 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         )
 
         set "ancienArg=%%a"
+    )
+
+    if "%compilation%" EQU "1" (
+        if "%lancement%" EQU "1" (
+            call :help 1 "Aucune action donnée"
+        )
     )
 
     :: Compilation ::
@@ -343,7 +353,8 @@ goto :eof
 ::====================::
 :lancement
     echo Lancement du programme...
-    call java -cp "%classpath%;%dependencies%" %main% && ( echo Fin de l'execution. & exit /b 0 ) || ( echo Erreur lors du lancement du programme. & exit /b 1 )
+    echo 'call java -cp "%classpath%;%dependencies%" %main% %arguments%'
+    call java -cp "%classpath%;%dependencies%" %main% %arguments% && ( echo Fin de l'execution. & exit /b 0 ) || ( echo Erreur lors du lancement du programme. & exit /b 1 )
 goto :eof
 
 
