@@ -242,6 +242,7 @@ fi
 
 
 args+=("-a")
+echo ${args[@]}
 for arg in "${args[@]}"
 do
     case "${ancienArg}" in
@@ -286,7 +287,6 @@ do
 
     ancienArg=$arg
 done
-
 
 if [ $compilation -eq 0 ]
 then
