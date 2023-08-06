@@ -17,7 +17,8 @@ L'intéret principale de maven lite dans la gestion des dépendances est de four
 Les fichiers d'installation permettent d'installer Maven Lite sur votre ordinateur et de profiter de la commande 'mvnl'. Cela vous évitera de devoir copier le fichier maven_lite.XX dans chaque projet.
 
 Il est possible que cette première version de Maven Lite contienne des bugs. Si vous en trouvez, n'hésitez pas à les signaler.
-Cette première version ne prend pas en charge les arguments des méthodes main. Cela sera ajouté dans une prochaine version.
+
+Cette première version prend en charge les arguments Java dans la ligne de commande et les arguments Java uniquement sans espace dans le fichier de configuration. Les arguments Java avec espace ne sont pas encore pris en charge s'ils sont données dans le fichier de configuration.
 
 ## Prérequis
 

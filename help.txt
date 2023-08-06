@@ -16,38 +16,41 @@ Les options qui sont utilisable avec -c ou -l sont utilisable avec -cl et -lc.
 
 Les arguments obligatoires pour les options longues le sont aussi pour les options courtes :
   
-  -s , --source          Dossier racine du projet à compiler.
+  -s  , --source          Dossier racine du projet à compiler.
+
+  -o  , --output          Dossier de sortie des fichiers compilés.
+
+  -cp , --classpath       Liste des fichiers jar et du dossier de sortie des fichiers compilés (le même dossier que pour l'option -o) à ajouter au classpath lors de la compilation et du lancement.
+                          Les fichiers jar doivent être séparés par des ':'. La valeur par defaut du classpath est le dossier de sortie des fichiers compilés si l'option -o est utilisé, sinon le classpath sera le dossier courent.
   
-  -o , --output          Dossier de sortie des fichiers compilés.
-  
-  -cp, --classpath       Liste des fichiers jar et du dossier de sortie des fichiers compilés (le même dossier que pour l'option -o) à ajouter au classpath lors de la compilation et du lancement.
-                         Les fichiers jar doivent être séparés par des ':'. La valeur par defaut du classpath est le dossier de sortie des fichiers compilés si l'option -o est utilisé, sinon le classpath sera le dossier courent.
-  
-  -d , --dependency      Dossier contenant les fichiers jar utiliser par le programme. Tout les fichiers jar seront ajoutés au classpath lors de la compilation et du lancement.
-  
-  -n , --name            Permet de changer le nom du fichier contenant les chemins des fichiers java à compiler. Le nom par defaut est 'compile.list'.
-                         Utilisable uniquement avec l'option -c.
-  
-  -e , --encoding        Permet de changer l'encodage des fichiers java à compiler. L'encodage par defaut est 'UTF-8'. Utilisable uniquement avec l'option -c.
-  
-  -m , --main            Classe principale à lancer. Utilisable uniquement avec l'option -l.
-  
-  -dt, --data            Dossier contenant les données du projet. Permet de copier le dossier de données dans le dossier de sortie. Utilisable uniquement avec l'option -c.
-  
-  -f , --file            Fichier de configuration. Permet de charger les options à partir d'un fichier de configuration, le séparateur sont l'espace et le retour à la ligne.
-                         Les options du fichier de configuration prédomine sur les options de la ligne de commande.
-                         L'option -f doit obligatoirement être la première option de la ligne de commande.
+  -d  , --dependency      Dossier contenant les fichiers jar utiliser par le programme. Tout les fichiers jar seront ajoutés au classpath lors de la compilation et du lancement.
+
+  -n  , --name            Permet de changer le nom du fichier contenant les chemins des fichiers java à compiler. Le nom par defaut est 'compile.list'.
+                          Utilisable uniquement avec l'option -c.
+
+  -e  , --encoding        Permet de changer l'encodage des fichiers java à compiler. L'encodage par defaut est 'UTF-8'. Utilisable uniquement avec l'option -c.
+
+  -m  , --main            Classe principale à lancer. Utilisable uniquement avec l'option -l.
+
+  -dt , --data            Dossier contenant les données du projet. Permet de copier le dossier de données dans le dossier de sortie. Utilisable uniquement avec l'option -c.
+
+  -arg, --arguments       Arguments à passer à la classe principale. Un argument par option, c'est à dire que si vous voulez passer deux arguments il faudra utiliser deux fois l'option -arg.
+                          Les arguments de la ligne de commande sont pris en compte avant les arguments du fichier de configuration. Utilisable uniquement avec l'option -l.
+
+  -f  , --file            Fichier de configuration. Permet de charger les options à partir d'un fichier de configuration, le séparateur sont l'espace et le retour à la ligne.
+                          Les options du fichier de configuration prédomine sur les options de la ligne de commande.
+                          L'option -f doit obligatoirement être la première option de la ligne de commande.
 
 
-  -c , --compilation     Compiler le projet.
-  
-  -l , --launch          Lancer le projet.
-  
-  -cl, --compile-launch  Compiler et lancer le projet. (équivalent à -c -l)
-  
-  -lc, --launch-compile  Compiler et lancer le projet. (équivalent à -c -l)
+  -c  , --compilation     Compiler le projet.
 
-  -h , --help            afficher l'aide et quitter.
+  -l  , --launch          Lancer le projet.
+
+  -cl , --compile-launch  Compiler et lancer le projet. (équivalent à -c -l)
+
+  -lc , --launch-compile  Compiler et lancer le projet. (équivalent à -c -l)
+
+  -h  , --help            afficher l'aide et quitter.
 
 
 Les options obligatoires pour la compilation sont :
