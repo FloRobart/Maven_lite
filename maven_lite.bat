@@ -408,6 +408,14 @@ goto :eof
     echo                          dans le dossier de sortie. Utilisable
     echo                          uniquement avec l'option -c.
     echo.
+    echo   -arg, --arguments      Arguments à passer à la classe principale.
+    echo                          Un argument par option, c'est à dire que si vous
+    echo                          voulez passer deux arguments il faudra utiliser
+    echo                          deux fois l'option -arg. Les arguments de la ligne
+    echo                          de commande sont pris en compte avant les arguments
+    echo                          du fichier de configuration. Utilisable uniquement
+    echo                          avec l'option -l.
+    echo.
     echo   -f , --file            Fichier de configuration. Permet de charger
     echo                          les options à partir d'un fichier de configuration,
     echo                          le séparateur sont l'espace et le retour à la ligne.
