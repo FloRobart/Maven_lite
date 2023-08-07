@@ -175,7 +175,9 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         )
 
         :: Copie du dossier de données
-        if not "%data%"=="" (
+        if "%data%"=="" (
+            echo data is undifined
+        ) else (
             if "%data:~-1%" == "\" set "data=%data:~0,-1%"
             if exist "!data!\" (
                 for %%f in ("!data!") do set "dataLastFolder=%%~nxf"
