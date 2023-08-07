@@ -178,7 +178,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         )
 
         :: Copie du dossier de données
-        if not "%data%"=="" (
+        if not "%data%" == "" (
             if "%data:~-1%" == "\" set "data=%data:~0,-1%"
             if exist "!data!\" (
                 for %%f in ("!data!") do set "dataLastFolder=%%~nxf"
@@ -191,6 +191,8 @@ SETLOCAL ENABLEDELAYEDEXPANSION
                 echo Le dossier de données '%data%' n'existe pas ou n'est pas un dossier
                 exit /b 1
             )
+        ) else (
+            echo aucun dossier de données donné
         )
 
         if "%classpath%"=="" set "classpath=%output%"
