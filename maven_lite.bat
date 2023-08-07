@@ -9,8 +9,10 @@ SETLOCAL ENABLEDELAYEDEXPANSION
     ::-----------::
     set "extensionValide=.java"
     set "nomFichierSortie=compile.list"
-    set "dependencies="
     set "encoding=UTF-8"
+    set "dependencies="
+    set "data="
+    set "arguments="
     set /a "compilation=1"
     set /a "lancement=1"
 
