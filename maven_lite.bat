@@ -175,18 +175,26 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         )
 
         :: Copie du dossier de données
-        if not "%data%" == "" (
-            if "%data:~-1%" == "\" set "data=%data:~0,-1%"
+        if not "%data%"=="" (
+            if "%data:~-1%" == "\" (
+                set "data=%data:~0,-1%"
+            )
+
             if exist "!data!\" (
                 for %%f in ("!data!") do set "dataLastFolder=%%~nxf"
                 if not exist "%output%\!dataLastFolder!" mkdir %output%\!dataLastFolder!
-                xcopy /E /Q /Y "%data%" "%output%\!dataLastFolder!" >nul 2>&1 || (
-                    echo Erreur lors de la copie du dossier '%data%' dans le dossier '%output%'
+                xcopy /E /Q /Y "!data!" "%output%\!dataLastFolder!" >nul 2>&1 || (
+                    echo Erreur lors de la copie du dossier '!data!' dans le dossier '%output%'
                     exit /b 1
                 )
             ) else (
-                echo Le dossier de données '%data%' n'existe pas ou n'est pas un dossier
-                exit /b 1
+                if exist "!data!" (
+                    echo Le dossier de données '!data!' n'est pas un dossier
+                    exit /b 1
+                ) else (
+                    echo Le dossier de données '!data!' n'existe pas
+                    exit /b 1
+                )
             )
         )
 
