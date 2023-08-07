@@ -119,9 +119,6 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         )
     )
 
-    echo data : "'%data%'"
-    echo data 2 : "'!data!'"
-
     :: Compilation ::
     if "%compilation%"=="0" (
         :: Vérification du dossier source
@@ -191,8 +188,6 @@ SETLOCAL ENABLEDELAYEDEXPANSION
                 echo Le dossier de données '%data%' n'existe pas ou n'est pas un dossier
                 exit /b 1
             )
-        ) else (
-            echo aucun dossier de données donné
         )
 
         if "%classpath%"=="" set "classpath=%output%"
