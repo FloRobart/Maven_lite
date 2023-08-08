@@ -85,9 +85,9 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         ) else if "!ancienArg!"=="--data" (
             call :verifArguments %%a "Aucun dossier de données donné pour l'option '--data'" && set "data=%%a" || exit /b 1
         ) else if "!ancienArg!"=="-arg" (
-            call :verifArguments %%a "Aucun argument donné pour l'option '-arg'" && set "arguments=%%a" || exit /b 1
+            call :verifArguments %%a "Aucun argument donné pour l'option '-arg'" && set "arguments=!arguments!"%%a" " || exit /b 1
         ) else if "!ancienArg!"=="--argument" (
-            call :verifArguments %%a "Aucun argument donné pour l'option '--argument'" && set "arguments=%%a" || exit /b 1
+            call :verifArguments %%a "Aucun argument donné pour l'option '--argument'" && set "arguments=!arguments!"%%a" " || exit /b 1
         ) else if "!ancienArg!"=="-c" (
             set "compilation=0"
         ) else if "!ancienArg!"=="--compilation" (
