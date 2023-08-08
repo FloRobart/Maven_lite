@@ -15,7 +15,9 @@ Les options qui sont utilisable avec -c ou -l sont utilisable avec -cl et -lc.
 
 
 Les arguments obligatoires pour les options longues le sont aussi pour les options courtes :
-  
+
+  -v  , --version         Afficher la version et quitter.
+
   -s  , --source          Dossier racine du projet à compiler.
 
   -o  , --output          Dossier de sortie des fichiers compilés.

@@ -14,7 +14,7 @@ function help()
     echo ""
     echo "Toutes les options prennent un seul argument sauf -c et -l qui n'en prennent aucun."
     echo ""
-    echo "L'ordre des options n'a pas d'importance sauf pour l'option -f"
+    echo "L'ordre des options n'a pas d'importance sauf pour l'option -f, -h et -v"
     echo "qui doit être la première option de la ligne de commande."
     echo "les guillements double ne sont pas obligatoires, sauf si l'argument contient un espace"
     echo ""
@@ -24,6 +24,8 @@ function help()
     echo "Les options qui sont utilisable avec -c ou -l sont utilisable avec -cl et -lc."
     echo ""
     echo "Les arguments obligatoires pour les options longues le sont aussi pour les options courtes :"
+    echo "  -v , --version         Afficher la version et quitter, actuellement en verion $version."
+    echo ""
     echo "  -s , --source          Dossier racine du projet à compiler."
     echo ""
     echo "  -o , --output          Dossier de sortie des fichiers compilés."
@@ -210,6 +212,7 @@ function lancement()
 #======#
 # Main #
 #======#
+version="1.1.0"
 #-----------#
 # Varaibles #
 #-----------#
@@ -231,6 +234,12 @@ ancienArg="a"
 if [ $1 = "-h" ] || [ $1 = "--help" ]
 then
     help 0
+fi
+
+if [ $1 = "-v" ] || [ $1 = "--version" ]
+then
+    echo "Maven Lite Version $version"
+    exit 0
 fi
 
 if [ $1 = "-f" ] || [ $1 = "--file" ]

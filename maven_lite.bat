@@ -7,6 +7,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
     ::-----------::
     :: Varaibles ::
     ::-----------::
+    set "version=1.1.0"
     set "extensionValide=.java"
     set "nomFichierSortie=compile.list"
     set "encoding=UTF-8"
@@ -36,6 +37,17 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
     if "%~1"=="--help" (
         call :help 0
+        exit /b 0
+    )
+
+    :: Version ::
+    if "%~1"=="-v" (
+        echo %version%
+        exit /b 0
+    )
+
+    if "%~1"=="--version" (
+        echo Maven Lite Version %version%
         exit /b 0
     )
 
@@ -382,7 +394,7 @@ goto :eof
     echo.
     echo Toutes les options prennent un seul argument sauf -c et -l qui n'en prennent aucun.
     echo.
-    echo L'ordre des options n'a pas d'importance sauf pour l'option -f
+    echo L'ordre des options n'a pas d'importance sauf pour l'option -f, -h et -v
     echo qui doit être la première option de la ligne de commande.
     echo les guillements double ne sont pas obligatoires, sauf si l'argument contient un espace
     echo.
@@ -392,6 +404,8 @@ goto :eof
     echo Les options qui sont utilisable avec -c ou -l sont utilisable avec -cl et -lc.
     echo.
     echo Les arguments obligatoires pour les options longues le sont aussi pour les options courtes :
+    echo   -v , --version         Affiche la version du script, actuellement en version %version%.
+    echo.
     echo   -s , --source          Dossier racine du projet à compiler.
     echo.
     echo   -o , --output          Dossier de sortie des fichiers compilés.
