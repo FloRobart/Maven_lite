@@ -18,7 +18,7 @@ Les fichiers d'installation permettent d'installer Maven Lite sur votre ordinate
 
 Il est possible que cette première version de Maven Lite contienne des bugs. Si vous en trouvez, n'hésitez pas à les signaler.
 
-Cette première version prend en charge les arguments Java dans la ligne de commande et les arguments Java uniquement sans espace dans le fichier de configuration. Les arguments Java avec espace ne sont pas encore pris en charge s'ils sont données dans le fichier de configuration.
+La version 1.1.0 prend en charge uniquement les arguments Java sans espace.
 
 ## Prérequis
 
