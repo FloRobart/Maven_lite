@@ -1,6 +1,6 @@
 # Maven Lite
 
-- Version : 1.0.0
+- Version : 1.1.0
 
 ## Description
 
@@ -92,7 +92,7 @@ Je vous recommande de ne pas mettre les options '-c' et '-l' dans le fichier de 
 
 Les options inutiles comme l'option -s pour lancer le projet seront ignorées, donc pas de problème si vous les laissez dans le fichier de configuration.
 
-L'ordre des options n'a pas d'importance sauf les options -f et -h qui doivent être la première option si elles sont utilisées.
+L'ordre des options n'a pas d'importance sauf les options -f, -h et -v qui doivent être la première option si elles sont utilisées.
 
 ## Installation automatique
 
