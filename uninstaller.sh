@@ -3,16 +3,11 @@
 #======#
 # Main #
 #======#
-fichier="maven_lite.sh"
-dossier="/home/$USER/.maven_lite"
-bashrc="/home/$USER/.bashrc"
+fichier="/bin/mvnl"
 
-rm -fr $dossier && {
-    sed -i '/# Maven Lite/,/# Fin Maven Lite/d' $bashrc && {
-        source $bashrc; echo "Maven Lite à bien été supprimé."
-    } || {
-        echo "Erreur lors la suppression de l'alias de Maven Lite dans le fichier '$bashrc'."
-    }
-} || {
-    echo "Erreur lors de la suppression du dossier '$dossier'."
+sudo rm $fichier || {
+    echo "Erreur lors de la suppression du fichier '$fichier'."
+    exit 1
 }
+
+echo 'Désinstallation terminée avec succès.'
