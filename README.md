@@ -2,6 +2,12 @@
 
 - Version : 1.1.0
 
+## Compatibilité
+
+- Windows 11
+- Linux (testé sur Ubuntu 22.04)
+- MacOS Mojave 10.14.6 et inférieur (non testé)
+
 ## Description
 
 Maven Lite est un système de gestion de projet java qui permet de compiler et lancer des projets java très simplement et rapidement.
