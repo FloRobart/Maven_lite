@@ -78,23 +78,23 @@ Exemple de fichier de configuration :
 
 - Une fois que vous avez créé le fichier de configuration, vous pouvez exécuter la commande suivante pour compiler et lancez le projet :
 
-    ```sh
-    mvnl -f config.txt -cl
-    ```
+  ```sh
+  mvnl -f config.txt -cl
+  ```
 
 Je vous recommande de ne pas mettre les options '-c' et '-l' dans le fichier de configuration car vous n'avez pas besoin de compiler et lancer le projet à chaque fois. Cela vous permettra de les mettres dans la commande quand vous en aurez besoin. Malgré tout, vous pouvez les mettre dans le fichier de configuration si vous le souhaitez.
 
 - Pour compiler le projet, vous pouvez exécuter la commande suivante :
 
-    ```sh
-    mvnl -f config.txt -c
-    ```
+  ```sh
+  mvnl -f config.txt -c
+  ```
 
 - Pour lancer le projet, vous pouvez exécuter la commande suivante :
 
-    ```sh
-    mvnl -f config.txt -l
-    ```
+  ```sh
+  mvnl -f config.txt -l
+  ```
 
 Les options inutiles comme l'option -s pour lancer le projet seront ignorées, donc pas de problème si vous les laissez dans le fichier de configuration.
 
@@ -108,21 +108,21 @@ L'ordre des options n'a pas d'importance sauf les options -f, -h et -v qui doive
 - Se placer dans le dossier de votre choix, par exemple 'C:\Users\user\Documents'
 - Clonez le dépôt git :
 
-    ```sh
-    git clone https://github.com/FloRobart/Maven_lite.git
-    ```
+  ```sh
+  git clone https://github.com/FloRobart/Maven_lite.git
+  ```
 
 - Se placer dans le dossier 'Maven_lite'
 
-    ```sh
-    cd Maven_lite
-    ```
+  ```sh
+  cd Maven_lite
+  ```
 
 - Exécutez le script d'installation :
 
-    ```sh
-    .\installer.bat
-    ```
+  ```sh
+  .\installer.bat
+  ```
 
 - Une fois l'installation terminée, vous pouvez supprimer le dossier 'Maven_lite' si vous le souhaitez.
 
@@ -138,21 +138,21 @@ L'ordre des options n'a pas d'importance sauf les options -f, -h et -v qui doive
 
 - Se placer dans le dossier 'Maven_lite'
 
-    ```sh
-    cd Maven_lite
-    ```
+  ```sh
+  cd Maven_lite
+  ```
 
 - Donnez les droits d'exécution au script d'installation :
 
-    ```sh
-    chmod +x installer.sh
-    ```
+  ```sh
+  chmod +x installer.sh
+  ```
 
 - Exécutez le script d'installation :
 
-    ```sh
-    ./installer.sh
-    ```
+  ```sh
+  ./installer.sh
+  ```
 
 - Une fois l'installation terminée, vous pouvez supprimer le dossier 'Maven_lite' si vous le souhaitez.
 
@@ -166,34 +166,59 @@ Si vous utilisez les mêmes chemins d'installation que dans les exemples, vous p
 - renommez le fichier 'maven_lite.bat' en 'mvnl.bat'
 - Ajoutez le dossier 'C:\Program Files\Maven_lite' dans la variable d'environnement utilisateur 'PATH' sois grace à l'interface graphique, sois en exécutant la commande suivante :
 
-    ```bat
-    setx path "%PATH%;C:\Program Files\Maven_Lite"
-    ```
+  ```bat
+  setx path "%PATH%;C:\Program Files\Maven_Lite"
+  ```
 
-### Linux
+### Linux Avec les droits administrateurs
 
-- copier le fichier 'maven_lite.sh' dans le dossier de votre choix, par exemple '/home/$USER/.maven_lite'
 - Ajoutez les droits d'exécution au fichier 'maven_lite.sh' :
 
-    ```sh
-    chmod +x /home/$USER/.maven_lite/maven_lite.sh
-    ```
+  ```sh
+  chmod +x /home/$USER/.maven_lite/maven_lite.sh
+  ```
+
+- copier le fichier 'maven_lite.sh' dans le dossier `/bin`
+
+  ```sh
+  sudo cp maven_lite.sh /bin/maven_lite.sh
+  ```
+
+- renommez le fichier 'maven_lite.sh' en 'mvnl'
+
+  ```sh
+  sudo mv /bin/maven_lite.sh /bin/mvnl
+  ```
+
+### Linux Sans les droits administrateurs
+
+- copier le fichier 'maven_lite.sh' dans le dossier de votre choix, par exemple '/home/$USER/.maven_lite'
+
+  ```sh
+  cp maven_lite.sh /home/$USER/.maven_lite/maven_lite.sh
+  ```
+
+- Ajoutez les droits d'exécution au fichier 'maven_lite.sh' :
+
+  ```sh
+  chmod +x /home/$USER/.maven_lite/maven_lite.sh
+  ```
 
 - Ajoutez une alias dans le fichier de configuration de votre shell, par exemple dans le fichier '.bashrc' :
 
-    ```sh
-    # Maven Lite
-    alias mvnl='bash /home/$USER/.maven_lite/maven_lite.sh'
-    # Fin Maven Lite
-    ```
+  ```sh
+  # Maven Lite
+  alias mvnl='bash /home/$USER/.maven_lite/maven_lite.sh'
+  # Fin Maven Lite
+  ```
 
 - Assurez-vous de bien mettre les commentaires comme dans l'exemple ci-dessus pour pouvoir désinstaller Maven Lite facilement en cas de besoins ou pour éviter les problèmes en cas d'éxecution du script d'installation.
 
 - Rechargez votre fichier de configuration de votre shell, par exemple en exécutant la commande suivante :
 
-    ```sh
-    source /home/$USER/.bashrc
-    ```
+  ```sh
+  source /home/$USER/.bashrc
+  ```
 
 ## Désinstallation automatique
 
@@ -208,17 +233,8 @@ Pour désinstaller Maven Lite, il suffit de suivre les instructions d'installati
 
 ### Linux
 
-- Supprimer le dossier d'installation de maven lite, par exemple '/home/$USER/.maven_lite'
-- Supprimer l'alias dans le fichier de configuration de votre shell, par exemple dans le fichier '.bashrc' :
+- Supprimer le fichier `/bin/mvnl`
 
-    ```sh
-    # Maven Lite
-    alias mvnl='bash /home/$USER/.maven_lite/maven_lite.sh'
-    # Fin Maven Lite
-    ```
-
-- Rechargez votre fichier de configuration de votre shell, par exemple en exécutant la commande suivante :
-
-    ```sh
-    source /home/$USER/.bashrc
-    ```
+  ```sh
+  sudo rm /bin/mvnl
+  ```
