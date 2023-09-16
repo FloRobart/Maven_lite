@@ -1,7 +1,7 @@
 #!/bin/bash
 
 fichierOrig="maven_lite.sh"
-fichierDest="/bin/mvnl"
+fichierDest="/usr/bin/mvnl"
 
 chmod +x $fichierOrig || {
     echo "Erreur lors du changement des droits du fichier 'maven_lite.sh'."
