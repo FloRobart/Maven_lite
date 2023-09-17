@@ -1,3 +1,5 @@
+.TH "Maven Lite" "1" "Septembre 2023" "Maven Lite Version 1.1.0" "Commandes Utilisateur"
+
 NOM
         Le nom de la commande ou de la fonction, suivi d'une description sur une ligne de ce qu'elle fait.
 SYNOPSIS
