@@ -120,4 +120,4 @@ Il y un seul bogue connu qui concerne les arguments avec des espaces, que se soi
 
 # RAPPORT DE BOGUES
 
-Reporter les bugs par mail à l'adresse <florisrobart.pro@gmail.com> en précisant le nom du programme concerné.
+Reporter les bogues par mail à l'adresse <florisrobart.pro@gmail.com> en précisant le nom du programme concerné.
