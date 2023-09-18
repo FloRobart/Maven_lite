@@ -30,10 +30,10 @@ do
     echo "manpageOrig=\'$manpageOrig\'"
     echo "manpageDest=\'$manpageDest\'"
 
-    sudo cp -f $manpageOrig $manpageDest || {
-        echo "Erreur lors de la copie du fichier '$manpageOrig'."
-        exit 1
-    }
+    #sudo cp -f $manpageOrig $manpageDest || {
+    #    echo "Erreur lors de la copie du fichier '$manpageOrig'."
+    #    exit 1
+    #}
 done
 
 echo 'Pages de manuel ajoutées avec succès.'
