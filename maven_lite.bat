@@ -227,7 +227,8 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
     :: Lancement ::
     if "%lancement%"=="0" (
-        if "%classpath%"=="" (
+        set "classpath=%classpath%;%output%"
+        if "%classpath%"==";" (
             call :help 1 "L'option -cp ou --classpath est obligatoire pour lancer le programme"
             exit /b 1
         )
@@ -375,7 +376,7 @@ goto :eof
 ::====================::
 :lancement
     echo Lancement du programme...
-    call java -cp "%classpath%;%dependencies%;%output%" %main% %arguments% && ( echo Fin de l'execution. & exit /b 0 ) || ( echo Erreur lors du lancement du programme. & exit /b 1 )
+    call java -cp "%classpath%;%dependencies%" %main% %arguments% && ( echo Fin de l'execution. & exit /b 0 ) || ( echo Erreur lors du lancement du programme. & exit /b 1 )
 goto :eof
 
 

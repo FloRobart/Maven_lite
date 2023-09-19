@@ -345,7 +345,6 @@ then
         [[ -d $data ]] && { cp -fr "$data" "$output" || { echo "Erreur lors de la copie du dossier '$data' dans le dossier '$output'"; exit 1; }; } || { echo "Le dossier de données '$data' n'existe pas"; exit 1; }
     fi
 
-    [[ -z $classpath ]] && classpath=$output
     listerdependencies $dependency
 
     ls $nomFichierSortie > /dev/null 2>&1 && { rm -f $nomFichierSortie || { echo "Erreur lors de la suppression du fichier '$nomFichierSortie'."; exit 1; } }
