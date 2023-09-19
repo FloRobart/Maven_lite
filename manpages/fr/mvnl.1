@@ -2,7 +2,7 @@
 .\"
 .TH "Maven Lite" "1" "Septembre 2023" "Maven Lite Version 1.1.0" "Commandes Utilisateur"
 .SH NOM
-mvnl \[en] Gestionnaire de projet Java simple et léger inspiré du
+mvnl - Gestionnaire de projet Java simple et léger inspiré du
 gestionnaire de projet \f[CR]Maven\f[R].
 .SH SYNOPSIS
 mvnl [OPTION]...
@@ -13,150 +13,151 @@ d'options et de manipulations.
 Facilite la compilation et le lancement d'un projet Java plus
 simplement que Maven.
 .PP
-Toutes les options prennent un seul argument sauf \[en]c et \[en]l qui n'en
+Toutes les options prennent un seul argument sauf -c et -l qui n'en
 prennent aucun.
 .PP
 L'ordre des options n'a pas d'importance sauf pour
-l'option \[en]f qui doit être la première option de la ligne de
+l'option -f qui doit être la première option de la ligne de
 commande.
 Les guillemets doubles ne sont pas obligatoires, sauf si l'argument
 contient un espace.
 .PP
-Les options qui sont utilisées avec \[en]c alors qu'elles sont utilisables
-uniquement avec \[en]l sont ignorées et inversement.
-Les options qui sont utilisables avec \[en]c ou \[en]l sont utilisables avec \[en]cl
-et \[en]lc.
+Les options qui sont utilisées avec -c alors qu'elles sont utilisables
+uniquement avec -l sont ignorées et inversement.
+Les options qui sont utilisables avec -c ou -l sont utilisables avec -cl
+et -lc.
 .PP
 Les arguments obligatoires pour les options longues le sont aussi pour
 les options courtes.
 .SH EXEMPLES
 .IP \[bu] 2
-\f[CR]mvnl \[en]s src \[en]o bin \[en]c \[en]e UTF\[en]8\f[R] \[en] \[en] compile le projet Java
-avec l'encodage UTF\[en]8 qui se trouve dans le dossier src et met les
+\f[CR]mvnl -s src -o bin -c -e UTF-8\f[R] --> compile le projet Java
+avec l'encodage UTF-8 qui se trouve dans le dossier src et met les
 fichiers compilés dans le dossier bin.
 .IP \[bu] 2
-\f[CR]mvnl \[en]s src \[en]o bin \[en]m package.Main \[en]cl\f[R] \[en] \[en] compile et
+\f[CR]mvnl -s src -o bin -m package.Main -cl\f[R] --> compile et
 lance le projet Java qui se trouve dans le dossier src et met les
 fichiers compilés dans le dossier bin, puis lance la classe
 package.Main.
 .IP \[bu] 2
-\f[CR]mvnl \[en]s src \[en]o bin \[en]m package.Main \[en]lc \[en]arg argument_1 \[en]arg argument_2\f[R]
-\[en] \[en] compile et lance le projet Java qui se trouve dans le dossier src
+\f[CR]mvnl -s src -o bin -m package.Main -lc -arg argument_1 -arg argument_2\f[R]
+--> compile et lance le projet Java qui se trouve dans le dossier src
 et met les fichiers compilés dans le dossier bin, puis lance la classe
 package.Main avec les arguments argument_1 et argument_2 dans
 l'ordre de passage à la commande.
 .IP \[bu] 2
-\f[CR]mvnl \[en]m package.Main \[en]l \[en]cp bin:lib\f[R] \[en] \[en] lance la classe
+\f[CR]mvnl -m package.Main -l -cp bin;lib\f[R] --> lance la classe
 package.Main en ajoutant le dossier bin et le dossier lib au classpath
-du projet.
+du projet. Attention, sous Linux, le séparateur de chemin est ':' et non
+';'.
 .IP \[bu] 2
-\f[CR]mvnl \[en]m Main \[en]d lib \[en]l\f[R] \[en] \[en] lance la classe Main en
+\f[CR]mvnl -m Main -d lib -l\f[R] --> lance la classe Main en
 ajoutant tous les fichiers JAR du dossier lib au classpath du projet.
 .IP \[bu] 2
-\f[CR]mvnl \[en]s src \[en]o bin \[en]m package.Main \[en]cl \[en]dt data\f[R] \[en] \[en] compile le projet Java qui se trouve dans le dossier src et met les
+\f[CR]mvnl -s src -o bin -m package.Main -cl -dt data\f[R] --> compile le projet Java qui se trouve dans le dossier src et met les
 fichiers compilés dans le dossier bin, puis lance la classe package.Main
 et copie le dossier data dans le dossier bin.
 .IP \[bu] 2
-\f[CR]mvnl \[en]f config.txt \[en]cl\f[R] \[en] \[en] charge les options à partir du
+\f[CR]mvnl -f config.txt -cl\f[R] --> charge les options à partir du
 fichier config.txt.
 Contenu du fichier config.txt :
-\f[CR]\[en]s src \[en]o bin \[en]m package.Main\f[R].
+\f[CR]-s src -o bin -m package.Main\f[R].
 Compile et lance le projet Java qui se trouve dans le dossier src et met
 les fichiers compilés dans le dossier bin, puis lance la classe
 package.Main.
 .SH COMPORTEMENT PAR DÉFAUT
 Par défaut, si aucune option n'est spécifiée, la commande
 \f[CR]mvnl\f[R] affiche la page d'aide qui est affichée avec
-l'option \f[CR]\[en]h\f[R] ou \f[CR]\[en]\[en]help\f[R].
+l'option \f[CR]-h\f[R] ou \f[CR]--help\f[R].
 Cette page d'aide est différente et plus simple que la page de manuel
 qui est affichée avec la commande \f[CR]man mvnl\f[R].
 .SH OPTIONS
 .SS Toutes les options
-\[en]v , \[en]\[en]version Afficher la version et quitter.
+-v , --version Afficher la version et quitter.
 .PP
-\[en]s , \[en]\[en]source Dossier racine du projet à compiler.
+-s , --source Dossier racine du projet à compiler.
 .PP
-\[en]o , \[en]\[en]output Dossier de sortie des fichiers compilés.
+-o , --output Dossier de sortie des fichiers compilés.
 .PP
-\[en]cp , \[en]\[en]classpath Liste des fichiers JAR et du dossier de sortie des
-fichiers compilés (le même dossier que pour l'option \[en]o) à ajouter
+-cp , --classpath Liste des fichiers JAR et du dossier de sortie des
+fichiers compilés (le même dossier que pour l'option -o) à ajouter
 au classpath lors de la compilation et du lancement.
 Les fichiers JAR doivent être séparés par des ':'.
 La valeur par défaut du classpath est le dossier de sortie des fichiers
-compilés si l'option \[en]o est utilisée, sinon le classpath sera le
+compilés si l'option -o est utilisée, sinon le classpath sera le
 dossier courant.
 .PP
-\[en]d , \[en]\[en]dependency Dossier contenant les fichiers JAR utilisés par le
+-d , --dependency Dossier contenant les fichiers JAR utilisés par le
 programme.
 Tous les fichiers JAR seront ajoutés au classpath lors de la compilation
 et du lancement.
 .PP
-\[en]n , \[en]\[en]name Permet de changer le nom du fichier contenant les chemins
+-n , --name Permet de changer le nom du fichier contenant les chemins
 des fichiers Java à compiler.
 Le nom par défaut est `compile.list'.
-Utilisable uniquement avec l'option \[en]c.
+Utilisable uniquement avec l'option -c.
 .PP
-\[en]e , \[en]\[en]encoding Permet de changer l'encodage des fichiers Java à
-compiler. L'encodage par défaut est `UTF\[en]8'.
-Utilisable uniquement avec l'option \[en]c.
+-e , --encoding Permet de changer l'encodage des fichiers Java à
+compiler. L'encodage par défaut est `UTF-8'.
+Utilisable uniquement avec l'option -c.
 .PP
-\[en]m , \[en]\[en]main Classe principale à lancer.
-Utilisable uniquement avec l'option \[en]l.
+-m , --main Classe principale à lancer.
+Utilisable uniquement avec l'option -l.
 .PP
-\[en]dt , \[en]\[en]data Dossier contenant les données du projet.
+-dt , --data Dossier contenant les données du projet.
 Permet de copier le dossier de données dans le dossier de sortie.
-Utilisable uniquement avec l'option \[en]c.
+Utilisable uniquement avec l'option -c.
 .PP
-\[en]arg , \[en]\[en]arguments Arguments à passer à la classe principale.
+-arg , --arguments Arguments à passer à la classe principale.
 Un argument par option, c'est-à-dire que si vous voulez passer deux
-arguments il faudra utiliser deux fois l'option \[en]arg.
+arguments il faudra utiliser deux fois l'option -arg.
 L'ordre des arguments passés à la classe principale est le même que
 l'ordre de passage à la commande.
 Les arguments de la ligne de commande sont pris en compte avant les
 arguments du fichier de configuration.
 Les arguments ne peuvent pas contenir d'espace sous peine de bug.
-Utilisable uniquement avec l'option \[en]l.
+Utilisable uniquement avec l'option -l.
 .PP
-\[en]f , \[en]\[en]file Fichier de configuration.
+-f , --file Fichier de configuration.
 Permet de charger les options à partir d'un fichier de
 configuration, les séparateurs sont l'espace et le retour à la ligne.
 Les options du fichier de configuration prédominent sur les options de la
 ligne de commande.
-L'option \[en]f doit obligatoirement être la première option de la ligne
+L'option -f doit obligatoirement être la première option de la ligne
 de commande.
 .PP
-\[en]c , \[en]\[en]compilation Compiler le projet.
+-c , --compilation Compiler le projet.
 .PP
-\[en]l , \[en]\[en]launch Lancer le projet.
+-l , --launch Lancer le projet.
 .PP
-\[en]cl , \[en]\[en]compile\[en]launch Compiler et lancer le projet.
-(équivalent à \[en]c \[en]l)
+-cl , --compile-launch Compiler et lancer le projet.
+(équivalent à -c -l)
 .PP
-\[en]lc , \[en]\[en]launch\[en]compile Compiler et lancer le projet.
-(équivalent à \[en]c \[en]l)
+-lc , --launch-compile Compiler et lancer le projet.
+(équivalent à -c -l)
 .PP
-\[en]h , \[en]\[en]help Afficher l'aide et quitter.
+-h , --help Afficher l'aide et quitter.
 .SS Les options obligatoires pour la compilation sont :
-\[en]s , \[en]\[en]source Dossier racine du projet à compiler.
+-s , --source Dossier racine du projet à compiler.
 .PP
-\[en]o , \[en]\[en]output Dossier de sortie des fichiers compilés.
+-o , --output Dossier de sortie des fichiers compilés.
 .PP
-\[en]c , \[en]\[en]compilation Compiler le projet.
+-c , --compilation Compiler le projet.
 .SS Les options obligatoires pour le lancement sont :
-\[en]m , \[en]\[en]main Classe principale à lancer.
+-m , --main Classe principale à lancer.
 .PP
-\[en]l , \[en]\[en]launch Lancer le projet.
+-l , --launch Lancer le projet.
 .PP
-\[en]cp , \[en]\[en]classpath Voir l'option \[en]cp dans la liste des options.
+-cp , --classpath Voir l'option -cp dans la liste des options.
 .SS Les options obligatoires pour la compilation et le lancement sont :
-\[en]s , \[en]\[en]source Dossier racine du projet à compiler.
+-s , --source Dossier racine du projet à compiler.
 .PP
-\[en]o , \[en]\[en]output Dossier de sortie des fichiers compilés.
+-o , --output Dossier de sortie des fichiers compilés.
 .PP
-\[en]m , \[en]\[en]main Classe principale à lancer.
+-m , --main Classe principale à lancer.
 .PP
-\[en]cl , \[en]\[en]compile\[en]launch Compiler et lancer le projet.
-(équivalent à \[en]c \[en]l)
+-cl , --compile-launch Compiler et lancer le projet.
+(équivalent à -c -l)
 .SH CODES DE RETOUR
 0 : Tout s'est bien passé.
 .PP
