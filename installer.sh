@@ -6,34 +6,39 @@ fichierDest="/usr/bin/mvnl"
 manpageLangages=("fr" "en")
 
 
-echo 'Installation de maven lite...'
-
-chmod +x $fichierOrig || {
-    echo "Erreur lors du changement des droits du fichier 'maven_lite.sh'."
-    exit 1
-}
-
-sudo cp -f $fichierOrig $fichierDest || {
-    echo "Erreur lors de la copie du fichier '$fichierOrig'."
-    exit 1
-}
-
-echo 'Installation de maven lite terminée avec succès.'
+#echo 'Installation de maven lite...'
+#
+#chmod +x $fichierOrig || {
+#    echo "Erreur lors du changement des droits du fichier 'maven_lite.sh'."
+#    exit 1
+#}
+#
+#sudo cp -f $fichierOrig $fichierDest || {
+#    echo "Erreur lors de la copie du fichier '$fichierOrig'."
+#    exit 1
+#}
+#
+#echo 'Installation de maven lite terminée avec succès.'
 echo 'Ajout des pages de manuel dans les différentes langues...'
 
 for langage in "${manpageLangages[@]}"
 do
-    # pas sur que ça marche
-    manpageOrig="manpages/${langage}/mvnl.1"
+    manpageOrig="manpages/${langage}/mvnl.1.gz"
     manpageDest="/usr/local/man/${langage}/man1/"
 
-    echo "manpageOrig=\'$manpageOrig\'"
-    echo "manpageDest=\'$manpageDest\'"
+    if [ ! -d "/usr/local/man/${langage}/man1/" ]
+    then
+        sudo mkdir -p "/usr/local/man/${langage}/man1/" && echo "le dossier /usr/local/man/${langage}/man1/ a été créé"
+    else
+        echo "le dossier /usr/local/man/${langage}/man1/ exist"
+    fi
 
-    #sudo cp -f $manpageOrig $manpageDest || {
-    #    echo "Erreur lors de la copie du fichier '$manpageOrig'."
-    #    exit 1
-    #}
+    sudo cp -f $manpageOrig $manpageDest || {
+        echo "Erreur lors de la copie du fichier '$manpageOrig'."
+        exit 1
+    }
+
+    echo -e "\n"
 done
 
 echo 'Pages de manuel ajoutées avec succès.'
