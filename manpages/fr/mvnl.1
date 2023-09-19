@@ -54,7 +54,8 @@ du projet. Attention, sous Linux, le séparateur de chemin est ':' et non
 \f[CR]mvnl -m Main -d lib -l\f[R] --> lance la classe Main en
 ajoutant tous les fichiers JAR du dossier lib au classpath du projet.
 .IP \[bu] 2
-\f[CR]mvnl -s src -o bin -m package.Main -cl -dt data\f[R] --> compile le projet Java qui se trouve dans le dossier src et met les
+\f[CR]mvnl -s src -o bin -m package.Main -cl -dt data\f[R] --> compile le
+projet Java qui se trouve dans le dossier src et met les
 fichiers compilés dans le dossier bin, puis lance la classe package.Main
 et copie le dossier data dans le dossier bin.
 .IP \[bu] 2
@@ -83,17 +84,16 @@ qui est affichée avec la commande \f[CR]man mvnl\f[R].
 au classpath lors de la compilation et du lancement.
 Les fichiers JAR doivent être séparés par des ':'.
 La valeur par défaut du classpath est le dossier de sortie des fichiers
-compilés si l'option -o est utilisée, sinon le classpath sera le
-dossier courant.
+compilés si l'option -o est utilisée, sinon le programme vous demandera de
+spécifier le classpath.
 .PP
 -d , --dependency Dossier contenant les fichiers JAR utilisés par le
 programme.
-Tous les fichiers JAR seront ajoutés au classpath lors de la compilation
-et du lancement.
+Tous les fichiers JAR présent à la racine de ce dossier seront ajoutés au
+classpath lors de la compilation et du lancement.
 .PP
 -n , --name Permet de changer le nom du fichier contenant les chemins
-des fichiers Java à compiler.
-Le nom par défaut est `compile.list'.
+des fichiers Java à compiler. Le nom par défaut est `compile.list'.
 Utilisable uniquement avec l'option -c.
 .PP
 -e , --encoding Permet de changer l'encodage des fichiers Java à
@@ -125,29 +125,29 @@ ligne de commande.
 L'option -f doit obligatoirement être la première option de la ligne
 de commande.
 .PP
--c , --compilation Compiler le projet.
+-c , --compilation Compile le projet.
 .PP
--l , --launch Lancer le projet.
+-l , --launch Lance le projet.
 .PP 
--cl , --compile-launch Compiler et lancer le projet.
+-cl , --compile-launch Compile puis lance le projet.
 (équivalent à -c -l)
 .PP
--lc , --launch-compile Compiler et lancer le projet.
-(équivalent à -c -l)
+-lc , --launch-compile Compile puis lance le projet.
+(équivalent à -l -c)
 .PP
--h , --help Afficher l'aide et quitter.
+-h , --help Affiche l'aide et quitter.
 .SS Les options obligatoires pour la compilation sont :
 -s , --source Dossier racine du projet à compiler.
 .PP
 -o , --output Dossier de sortie des fichiers compilés.
 .PP
--c , --compilation Compiler le projet.
+-c , --compilation Compile le projet.
 .SS Les options obligatoires pour le lancement sont :
 -m , --main Classe principale à lancer.
 .PP
--l , --launch Lancer le projet.
+-l , --launch Lance le projet.
 .PP
--cp , --classpath Voir l'option -cp dans la liste des options.
+-cp , --classpath Voir l'option -cp dans la liste des options ci-dessus.
 .SS Les options obligatoires pour la compilation et le lancement sont :
 -s , --source Dossier racine du projet à compiler.
 .PP
@@ -155,7 +155,7 @@ de commande.
 .PP
 -m , --main Classe principale à lancer.
 .PP
--cl , --compile-launch Compiler et lancer le projet.
+-cl , --compile-launch Compile et lance le projet.
 (équivalent à -c -l)
 .SH CODES DE RETOUR
 0 : Tout s'est bien passé.
