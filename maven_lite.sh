@@ -202,7 +202,7 @@ function compilation()
 function lancement()
 {
     echo 'Lancement du programme...'
-    commande="java -cp \"$classpath:$dependencies:$output\" $main "
+    commande="java -cp \"$classpath:$dependencies\" $main "
     for arg in "${javaArgs[@]}"
     do
         commande+="\"$arg\" "
@@ -345,6 +345,7 @@ then
         [[ -d $data ]] && { cp -fr "$data" "$output" || { echo "Erreur lors de la copie du dossier '$data' dans le dossier '$output'"; exit 1; }; } || { echo "Le dossier de données '$data' n'existe pas"; exit 1; }
     fi
 
+    [[ -z $classpath ]] && classpath=$output
     listerdependencies $dependency
 
     ls $nomFichierSortie > /dev/null 2>&1 && { rm -f $nomFichierSortie || { echo "Erreur lors de la suppression du fichier '$nomFichierSortie'."; exit 1; } }
@@ -355,7 +356,8 @@ fi
 
 
 [[ $lancement -eq 0 ]] && {
-    [[ -z $classpath ]] && { help 1 "L'option -cp ou --classpath est obligatoire pour lancer le programme"; }
+    classpath=$classpath:$output
+    [[ $classpath = ":" ]] && { help 1 "L'option -cp ou --classpath est obligatoire pour lancer le programme"; }
     [[ -z $main ]] && { help 1 "L'option -m ou --main est obligatoire pour lancer le programme"; }
     listerdependencies $dependency
     lancement
