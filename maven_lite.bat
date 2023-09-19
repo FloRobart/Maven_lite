@@ -375,7 +375,7 @@ goto :eof
 ::====================::
 :lancement
     echo Lancement du programme...
-    call java -cp "%classpath%;%dependencies%" %main% %arguments% && ( echo Fin de l'execution. & exit /b 0 ) || ( echo Erreur lors du lancement du programme. & exit /b 1 )
+    call java -cp "%classpath%;%dependencies%;%output%" %main% %arguments% && ( echo Fin de l'execution. & exit /b 0 ) || ( echo Erreur lors du lancement du programme. & exit /b 1 )
 goto :eof
 
 
