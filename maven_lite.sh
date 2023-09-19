@@ -202,7 +202,7 @@ function compilation()
 function lancement()
 {
     echo 'Lancement du programme...'
-    commande="java -cp \"$classpath:$dependencies\" $main "
+    commande="java -cp \"$classpath:$dependencies:$output\" $main "
     for arg in "${javaArgs[@]}"
     do
         commande+="\"$arg\" "
