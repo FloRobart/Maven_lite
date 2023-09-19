@@ -18,10 +18,9 @@ Toutes les options prennent un seul argument sauf -c et -l qui n'en
 prennent aucun.
 .PP
 L'ordre des options n'a pas d'importance sauf pour
-l'option -f qui doit être la première option de la ligne de
-commande.
-Les guillemets doubles ne sont pas obligatoires, sauf si l'argument
-contient un espace.
+l'option --file (-f) et --help (-h) qui doit être la première option de la ligne de
+commande s'ils sont utilisés.
+Les guillemets doubles ne sont pas obligatoires.
 .PP
 Les options qui sont utilisées avec -c alors qu'elles sont utilisables
 uniquement avec -l sont ignorées et inversement.
@@ -29,7 +28,7 @@ Les options qui sont utilisables avec -c ou -l sont utilisables avec -cl
 et -lc.
 .PP
 Les arguments obligatoires pour les options longues le sont aussi pour
-les options courtes.
+les options courtes. Par exemple, -s et --source sont équivalents.
 .SH EXEMPLES
 .IP \[bu] 2
 \f[CR]mvnl -s src -o bin -c -e UTF-8\f[R] --> compile le projet Java
@@ -74,14 +73,13 @@ Cette page d'aide est différente et plus simple que la page de manuel
 qui est affichée avec la commande \f[CR]man mvnl\f[R].
 .SH OPTIONS
 .SS Toutes les options
--v , --version Afficher la version et quitter.
+-v , --version Affiche la version et quitter.
 .PP
 -s , --source Dossier racine du projet à compiler.
 .PP
 -o , --output Dossier de sortie des fichiers compilés.
 .PP
--cp , --classpath Liste des fichiers JAR et du dossier de sortie des
-fichiers compilés (le même dossier que pour l'option -o) à ajouter
+-cp , --classpath Liste des fichiers JAR à ajouter
 au classpath lors de la compilation et du lancement.
 Les fichiers JAR doivent être séparés par des ':'.
 La valeur par défaut du classpath est le dossier de sortie des fichiers
