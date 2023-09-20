@@ -4,9 +4,10 @@
 
 ## Compatibilité
 
-- Windows 11
-- Linux (testé sur Ubuntu 22.04)
-- MacOS Mojave 10.14.6 et inférieur (non testé)
+- Windows 10 (Testé sur windows 10 22H2)
+- Windows 11 (Testé sur windows 11 22H2)
+- Linux possèdant `bash` (Testé sur Ubuntu 22.04 LTS)
+- MacOS Mojave 10.14.6 et inférieur (Non testé)
 
 ## Description
 
