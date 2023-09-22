@@ -168,6 +168,11 @@ function genererCompileList()
     done
 }
 
+function supprimerCompileList()
+{
+    ls $nomFichierSortie > /dev/null 2>&1 && { rm -f $nomFichierSortie || { echo "Erreur lors de la suppression du fichier '$nomFichierSortie'."; exit 1; } }
+}
+
 #=========================#
 # Liste les fichiers .jar #
 #=========================#
@@ -193,7 +198,7 @@ function listerdependencies()
 function compilation()
 {
     echo 'Compilation...'
-    javac -cp "$classpath:$dependencies" -encoding $encoding -d "$output" @$nomFichierSortie && { echo 'Fin de la compilation.'; } || { echo "Erreur lors de la compilation."; exit 1; }
+    javac -cp "$classpath:$dependencies" -encoding $encoding -d "$output" @$nomFichierSortie && { echo 'Fin de la compilation.'; } || { echo "Erreur lors de la compilation."; supprimerCompileList; exit 1; }
 }
 
 #====================#
@@ -348,10 +353,10 @@ then
     [[ -z $classpath ]] && classpath=$output
     listerdependencies $dependency
 
-    ls $nomFichierSortie > /dev/null 2>&1 && { rm -f $nomFichierSortie || { echo "Erreur lors de la suppression du fichier '$nomFichierSortie'."; exit 1; } }
+    supprimerCompileList
     genererCompileList $source; ls $nomFichierSortie > /dev/null 2>&1 || { echo "Erreur lors de la génération du fichier '$nomFichierSortie'."; exit 1; }
     compilation
-    ls $nomFichierSortie > /dev/null 2>&1 && { rm -f $nomFichierSortie || { echo "Erreur lors de la suppression du fichier '$nomFichierSortie'."; exit 1; } }
+    supprimerCompileList
 fi
 
 
