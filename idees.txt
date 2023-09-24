@@ -1,0 +1,2 @@
+faire une option pour conpiler en ignorant les warning ("-Xlint:unchecked" en java)
+faire ne sorte de détecter automatiquement le main
