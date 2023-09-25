@@ -1,6 +1,7 @@
 # Maven Lite
 
 - Version : 1.1.0
+- La version 2.0 est en préparation sous le nom de Java Builder
 
 ## Compatibilité
 
