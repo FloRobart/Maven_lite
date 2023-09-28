@@ -7,7 +7,7 @@
 
 - Windows 10 (Testé sur windows 10 22H2)
 - Windows 11 (Testé sur windows 11 22H2)
-- Linux possèdant `bash` (Testé sur Ubuntu 22.04 LTS)
+- Linux possèdant `bash` (Testé sur Ubuntu 22.04 LTS et Debian 12)
 - MacOS Mojave 10.14.6 et inférieur (Non testé)
 
 ## Description
