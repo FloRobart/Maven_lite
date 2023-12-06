@@ -7,7 +7,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
     ::-----------::
     :: Varaibles ::
     ::-----------::
-    set "version=1.1.0"
+    set "version=1.2.0"
     set "extensionValide=.java"
     set "nomFichierSortie=compile.list"
     set "encoding=UTF-8"
