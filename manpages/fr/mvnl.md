@@ -82,6 +82,10 @@ de manuel qui est affichée avec la commande `man mvnl`.
 
 -v , \--version Affiche la version et quitter.
 
+-cr , \--create Créer l'arborescence du projet ainsi qu'un fichier de
+config par défaut. Si le dossier de sortie n'est pas spécifié, le
+dossier par défaut est le dossier courant.
+
 -s , \--source Dossier racine du projet à compiler.
 
 -o , \--output Dossier de sortie des fichiers compilés.
@@ -195,5 +199,5 @@ ne faut donc pas mettre d\'espaces dans les arguments.
 # RAPPORT DE BOGUES
 
 Reporter les bogues par mail à l\'adresse \<florisrobart.pro@gmail.com\>
-en précisant quel est le bogue, comment puis-je le reproduire et qu\'il
-concerne Maven Lite.
+en précisant quel est le bogue, comment puis-je le reproduire, qu\'il
+concerne Maven Lite ainsi que la version utilisé.

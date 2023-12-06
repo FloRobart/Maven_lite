@@ -81,6 +81,10 @@ page is different and simpler than the manual page shown with the
 
 -v , \--version Display the version and exit.
 
+-cr , \--create Create the project tree as well as a file
+default config. If the output folder is not specified, the
+Default folder is the current folder.
+
 -s , \--source Root directory of the project to compile.
 
 -o , \--output Directory for compiled files output.
@@ -188,4 +192,4 @@ Written by Robart Floris.
 # BUG REPORTS
 
 Report bugs via email to \<florisrobart.pro@gmail.com\> specifying what
-the bug is, how I can reproduce it, and that it concerns Maven Lite.
+the bug is, how I can reproduce it, and that it concerns Maven Lite version X.X.X.
