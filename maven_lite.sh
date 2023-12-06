@@ -227,14 +227,14 @@ function createProjet
     mainFile="$projectFolder/src/Main.java"
     echo "public class Main {" >> $mainFile
     echo "    public static void main(String[] args) {" >> $mainFile
-    echo "        System.out.println("Le projet à été créé");" >> $mainFile
+    echo "        System.out.println(\"Le projet à été créé\");" >> $mainFile
     echo "    }" >> $mainFile
     echo "}" >> $mainFile
 
-    echo "--source $projectFolder\src" >> config
-    echo "--output $projectFolder\bin" >> config
-    echo "--main Main" >> config
-    echo "--compile-launch" >> config
+    echo "--source src" >> "$projectFolder/config"
+    echo "--output bin" >> "$projectFolder/config"
+    echo "--main Main" >> "$projectFolder/config"
+    echo "--compile-launch" >> "$projectFolder/config"
 
     exit 0
 }

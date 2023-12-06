@@ -427,10 +427,10 @@ goto :eof
     echo     }>> %mainFile%
     echo }>> %mainFile%
 
-    echo --source %projectFolder%\src>> config.txt
-    echo --output %projectFolder%\bin>> config.txt
-    echo --main Main>> config.txt
-    echo --compile-launch >> config.txt
+    echo --source src>> "%projectFolder%\config.txt"
+    echo --output bin>> "%projectFolder%\config.txt"
+    echo --main Main>> "%projectFolder%\config.txt"
+    echo --compile-launch >> "%projectFolder%\config.txt"
 goto :eof
 
 
