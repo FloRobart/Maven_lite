@@ -377,8 +377,20 @@ goto :eof
         set "projectFolder=."
     )
 
-    :: if exist
-    if not exist "%projectFolder%" (
+    if exist "%projectFolder%" (
+        :: demande si on veut écraser le dossier existant
+        set /p "reponse=Le dossier '%projectFolder%' existe déjà. Voulez-vous le remplacer ? (y/n) : "
+        echo !reponse! | findstr /irc:"^y" >nul 2>&1 && (
+            rmdir /S /Q "%projectFolder%" >nul 2>&1 && (
+                echo Le dossier '%projectFolder%' a été remplacé
+            ) || (
+                echo Erreur lors de la suppression du dossier '%projectFolder%'
+                exit /b 1
+            )
+        ) || (
+            echo Le dossier '%projectFolder%' n'a pas été écrasé
+        )
+    ) else (
         mkdir "%projectFolder%" >nul 2>&1 && (
             echo Le dossier '%projectFolder%' a été créé
         ) || (
