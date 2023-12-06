@@ -101,9 +101,9 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         ) else if "!ancienArg!"=="--argument" (
             call :verifArguments %%a "Aucun argument donné pour l'option '--argument'" && set "arguments=!arguments!"%%a" " || exit /b 1
         ) else if "!ancienArg!"=="--cr" (
-            set "createFolder=%%a"
+            call :createProjet %%a && exit /b 0 || exit /b 1
         ) else if "!ancienArg!"=="--create" (
-            set "createFolder=%%a"
+            call :createProjet %%a && exit /b 0 || exit /b 1
         ) else if "!ancienArg!"=="-c" (
             set "compilation=0"
         ) else if "!ancienArg!"=="--compilation" (
@@ -371,52 +371,52 @@ goto :eof
 ::====================================::
 :: 1 = dossier source du projet
 :createProjet
-    set "folderCreate=%~1"
+    set "projectFolder=%~1"
 
-    if "%folderCreate%"=="" (
-        set "folderCreate=."
+    if "%projectFolder%"=="" (
+        set "projectFolder=."
     )
 
     :: if exist
-    if not exist "%folderCreate%" (
-        mkdir "%folderCreate%" >nul 2>&1 && (
-            echo Le dossier '%folderCreate%' a été créé
+    if not exist "%projectFolder%" (
+        mkdir "%projectFolder%" >nul 2>&1 && (
+            echo Le dossier '%projectFolder%' a été créé
         ) || (
-            echo Erreur lors de la création du dossier '%folderCreate%'
+            echo Erreur lors de la création du dossier '%projectFolder%'
             exit /b 1
         )
     )
 
-    mkdir %folderCreate%\src >nul 2>&1 && (
-        echo Le dossier '%folderCreate%\src' a été créé
+    mkdir %projectFolder%\src >nul 2>&1 && (
+        echo Le dossier '%projectFolder%\src' a été créé
     ) || (
-        echo Erreur lors de la création du dossier '%folderCreate%\src'
+        echo Erreur lors de la création du dossier '%projectFolder%\src'
         exit /b 1
     )
 
-    mkdir %folderCreate%\bin >nul 2>&1 && (
-        echo Le dossier '%folderCreate%\bin' a été créé
+    mkdir %projectFolder%\bin >nul 2>&1 && (
+        echo Le dossier '%projectFolder%\bin' a été créé
     ) || (
-        echo Erreur lors de la création du dossier '%folderCreate%\bin'
+        echo Erreur lors de la création du dossier '%projectFolder%\bin'
         exit /b 1
     )
 
-    mkdir %folderCreate%\data >nul 2>&1 && (
-        echo Le dossier '%folderCreate%\data' a été créé
+    mkdir %projectFolder%\data >nul 2>&1 && (
+        echo Le dossier '%projectFolder%\data' a été créé
     ) || (
-        echo Erreur lors de la création du dossier '%folderCreate%\data'
+        echo Erreur lors de la création du dossier '%projectFolder%\data'
         exit /b 1
     )
 
-    set "mainFile=%folderCreate%\src\Main.java"
+    set "mainFile=%projectFolder%\src\Main.java"
     echo public class Main {>> %mainFile%
     echo     public static void main(String[] args) {>> %mainFile%
     echo         System.out.println("Le projet à été créé");>> %mainFile%
     echo     }>> %mainFile%
     echo }>> %mainFile%
 
-    echo --source %folderCreate%\src>> config.txt
-    echo --output %folderCreate%\bin>> config.txt
+    echo --source %projectFolder%\src>> config.txt
+    echo --output %projectFolder%\bin>> config.txt
     echo --main Main>> config.txt
     echo --compile-launch >> config.txt
 goto :eof
