@@ -100,6 +100,10 @@ SETLOCAL ENABLEDELAYEDEXPANSION
             call :verifArguments %%a "Aucun argument donné pour l'option '-arg'" && set "arguments=!arguments!"%%a" " || exit /b 1
         ) else if "!ancienArg!"=="--argument" (
             call :verifArguments %%a "Aucun argument donné pour l'option '--argument'" && set "arguments=!arguments!"%%a" " || exit /b 1
+        ) else if "!ancienArg!"=="--cr" (
+            set "createFolder=%%a"
+        ) else if "!ancienArg!"=="--create" (
+            set "createFolder=%%a"
         ) else if "!ancienArg!"=="-c" (
             set "compilation=0"
         ) else if "!ancienArg!"=="--compilation" (
@@ -362,6 +366,62 @@ goto :eof
 goto :eof
 
 
+::====================================::
+:: Creer larborescence du projet java ::
+::====================================::
+:: 1 = dossier source du projet
+:createProjet
+    set "folderCreate=%~1"
+
+    if "%folderCreate%"=="" (
+        set "folderCreate=."
+    )
+
+    :: if exist
+    if not exist "%folderCreate%" (
+        mkdir "%folderCreate%" >nul 2>&1 && (
+            echo Le dossier '%folderCreate%' a été créé
+        ) || (
+            echo Erreur lors de la création du dossier '%folderCreate%'
+            exit /b 1
+        )
+    )
+
+    mkdir %folderCreate%\src >nul 2>&1 && (
+        echo Le dossier '%folderCreate%\src' a été créé
+    ) || (
+        echo Erreur lors de la création du dossier '%folderCreate%\src'
+        exit /b 1
+    )
+
+    mkdir %folderCreate%\bin >nul 2>&1 && (
+        echo Le dossier '%folderCreate%\bin' a été créé
+    ) || (
+        echo Erreur lors de la création du dossier '%folderCreate%\bin'
+        exit /b 1
+    )
+
+    mkdir %folderCreate%\data >nul 2>&1 && (
+        echo Le dossier '%folderCreate%\data' a été créé
+    ) || (
+        echo Erreur lors de la création du dossier '%folderCreate%\data'
+        exit /b 1
+    )
+
+    set "mainFile=%folderCreate%\src\Main.java"
+    echo public class Main {>> %mainFile%
+    echo     public static void main(String[] args) {>> %mainFile%
+    echo         System.out.println("Le projet à été créé");>> %mainFile%
+    echo     }>> %mainFile%
+    echo }>> %mainFile%
+
+    echo --source %folderCreate%\src>> config.txt
+    echo --output %folderCreate%\bin>> config.txt
+    echo --main Main>> config.txt
+    echo --compile-launch >> config.txt
+goto :eof
+
+
 ::============================::
 :: Compile les fichiers .java ::
 ::============================::
@@ -406,6 +466,11 @@ goto :eof
     echo.
     echo Les arguments obligatoires pour les options longues le sont aussi pour les options courtes :
     echo   -v , --version         Affiche la version du script, actuellement en version %version%.
+    echo.
+    echo   -cr , --create          Creer l'arborescence du projet ainsi qu'un
+    echo                           fichier de config par défaut. Si le dossier
+    echo                           de sortie n'est pas spécifié, le dossier
+    echo                           par défaut est le dossier courant.
     echo.
     echo   -s , --source          Dossier racine du projet à compiler.
     echo.
