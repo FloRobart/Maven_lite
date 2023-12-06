@@ -18,6 +18,8 @@ Les arguments obligatoires pour les options longues le sont aussi pour les optio
 
   -v  , --version         Afficher la version et quitter.
 
+  -cr , --create          Créer l'arborescence du projet ainsi qu'un fichier de config par défaut. Si le dossier de sortie n'est pas spécifié, le dossier par défaut est le dossier courant.
+
   -s  , --source          Dossier racine du projet à compiler.
 
   -o  , --output          Dossier de sortie des fichiers compilés.
