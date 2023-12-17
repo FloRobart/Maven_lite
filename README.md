@@ -1,7 +1,7 @@
 # Maven Lite
 
-- Version : 1.1.0
-- La version 2.0 est en préparation sous le nom de Java Launcher Command (JLC)
+- Version : 1.2.0
+- La version 2.0 est en préparation
 
 ## Compatibilité
 
@@ -26,7 +26,7 @@ Les fichiers d'installation permettent d'installer Maven Lite sur votre ordinate
 
 Il est possible que cette première version de Maven Lite contienne des bugs. Si vous en trouvez, n'hésitez pas à les signaler.
 
-La version 1.1.0 prend en charge uniquement les arguments Java sans espace.
+La version 1.2.0 prend en charge uniquement les arguments Java sans espace.
 
 ## Prérequis
 
@@ -130,33 +130,15 @@ L'ordre des options n'a pas d'importance sauf les options -f, -h et -v qui doive
 
 ### Linux
 
+- Téléchargez le [fichier debian](https://github.com/FloRobart/Maven_lite/releases/download/v1.2.0/mavenLite_1.2-1_all.deb) dans la section 'Releases' du dépôt git
 - Ouvrir un terminal
-- Se placer dans le dossier de votre choix, par exemple '/home/user/Documents'
-- Clonez le dépôt git :
+- Installez le paquet :
 
   ```sh
-  git clone https://github.com/FloRobart/Maven_lite.git
+  sudo dpkg -i mavenLite_1.2-1_all.deb
   ```
 
-- Se placer dans le dossier 'Maven_lite'
-
-  ```sh
-  cd Maven_lite
-  ```
-
-- Donnez les droits d'exécution au script d'installation :
-
-  ```sh
-  chmod +x installer.sh
-  ```
-
-- Exécutez le script d'installation :
-
-  ```sh
-  ./installer.sh
-  ```
-
-- Une fois l'installation terminée, vous pouvez supprimer le dossier 'Maven_lite' si vous le souhaitez.
+- Une fois l'installation terminée, vous pouvez supprimer le fichier 'mavenLite_1.2-1_all.deb' si vous le souhaitez.
 
 ## Installation manuelle
 
@@ -224,7 +206,25 @@ Si vous utilisez les mêmes chemins d'installation que dans les exemples, vous p
 
 ## Désinstallation automatique
 
-Pour désinstaller Maven Lite, il suffit de suivre les instructions d'installation automatique mais en exécutant le script de désinstallation à la place du script d'installation.
+### Windows
+
+- Téléchargez le fichier de désinstallation `unistaller.bat`.
+- Exécutez le script de désinstallation :
+
+  ```batch
+  .\unistaller.bat
+  ```
+
+- Une fois la désinstallation terminée, vous pouvez supprimer le fichier 'unistaller.bat' si vous le souhaitez.
+
+### Linux
+
+- Ouvrir un terminal
+- Exécutez la commande suivante :
+
+  ```sh
+  mvnl-uninstall
+  ```
 
 ## Désinstallation manuelle
 
@@ -235,8 +235,14 @@ Pour désinstaller Maven Lite, il suffit de suivre les instructions d'installati
 
 ### Linux
 
-- Supprimer le fichier `/bin/mvnl`
+- Supprimer le fichier `/usr/bin/mvnl` et '/usr/bin/mvnl-uninstall'
 
   ```sh
-  sudo rm /bin/mvnl
+  sudo rm /usr/bin/mvnl /usr/bin/mvnl-uninstall
+  ```
+
+- Supprimer les pages de manuel
+
+  ```sh
+  sudo rm /usr/local/man/en/man1/mvnl.1.gz /usr/local/man/fr/man1/mvnl.1.gz
   ```
