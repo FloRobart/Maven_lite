@@ -4,6 +4,7 @@
 # Main #
 #======#
 fichier="/usr/bin/mvnl"
+uninstaller="/usr/bin/mvnl-uninstall"
 manpageLangages=("fr" "en")
 
 echo 'Désinstallation de maven lite...'
@@ -13,7 +14,7 @@ sudo rm -f $fichier && echo "le fichier ${fichier} a été supprimé" || {
     exit 1
 }
 
-echo 'Désinstallation de maven lite terminée avec succès.'
+echo 'Suppression du fichier "/usr/bin/mvnl" terminée avec succès.'
 echo 'Suppression des pages de manuel dans les différentes langues...'
 
 for langage in "${manpageLangages[@]}"
@@ -29,4 +30,11 @@ do
     fi
 done
 echo 'Pages de manuel supprimé avec succès.'
+
+sudo rm -f $uninstaller && echo "le fichier ${uninstaller} a été supprimé" || {
+    echo "Erreur lors de la suppression du fichier '$uninstaller'."
+    exit 1
+}
+
+echo 'Désinstallation de maven lite terminée avec succès.'
 exit 0

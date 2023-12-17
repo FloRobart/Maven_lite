@@ -26,6 +26,11 @@ function help()
     echo "Les arguments obligatoires pour les options longues le sont aussi pour les options courtes :"
     echo "  -v , --version         Afficher la version et quitter, actuellement en verion $version."
     echo ""
+    echo "  -cr, --create         Créer l'arborescence du projet ainsi qu'un"
+    echo "                        fichier de config par défaut. Si le dossier"
+    echo "                        de sortie n'est pas spécifié, le dossier"
+    echo "                        par défaut est le dossier courant."
+    echo ""
     echo "  -s , --source          Dossier racine du projet à compiler."
     echo ""
     echo "  -o , --output          Dossier de sortie des fichiers compilés."
@@ -191,6 +196,48 @@ function listerdependencies()
     fi
 }
 
+#====================================#
+# Creer larborescence du projet java #
+#====================================#
+# 1 = dossier source du projet
+function createProjet
+{
+    if [ -z $1 ]
+    then
+        projectFolder="."
+    else
+        projectFolder=$1
+    fi
+
+    # vérifie si le dossier existe
+    if [ -d $projectFolder ]
+    then
+        read -p "Le dossier '$projectFolder' existe déjà. Voulez-vous le supprimer ? (y/n) : " reponse
+        [[ ${reponse} =~ ^[yY]([eE][sS])?$ ]] && { rm -rf $projectFolder || { echo "Erreur lors de la suppression du dossier '$projectFolder'"; exit 1; } } || { echo "Le dossier '$projectFolder' n'a pas été supprimé"; exit 0; }
+    else
+        mkdir -p $projectFolder || { echo "Erreur lors de la création du dossier '$projectFolder'"; exit 1; }
+    fi
+
+    echo "Création de l'arborescence du projet..."
+    mkdir -p "$1/src" || { echo "Erreur lors de la création du dossier 'src'"; exit 1; }
+    mkdir -p "$1/bin" || { echo "Erreur lors de la création du dossier 'bin'"; exit 1; }
+    mkdir -p "$1/data" || { echo "Erreur lors de la création du dossier 'data'"; exit 1; }
+
+    echo "Création du fichier de configuration par défaut..."
+    mainFile="$projectFolder/src/Main.java"
+    echo "public class Main {" >> $mainFile
+    echo "    public static void main(String[] args) {" >> $mainFile
+    echo "        System.out.println(\"Le projet à été créé\");" >> $mainFile
+    echo "    }" >> $mainFile
+    echo "}" >> $mainFile
+
+    echo "--source src" >> "$projectFolder/config"
+    echo "--output bin" >> "$projectFolder/config"
+    echo "--main Main" >> "$projectFolder/config"
+    echo "--compile-launch" >> "$projectFolder/config"
+
+    exit 0
+}
 
 #============================#
 # Compile les fichiers .java #
@@ -220,7 +267,7 @@ function lancement()
 #======#
 # Main #
 #======#
-version="1.1.0"
+version="1.2.0"
 #-----------#
 # Varaibles #
 #-----------#
@@ -297,6 +344,9 @@ do
 
         "-arg") verifArguments $arg "Aucun argument donnée pour l'option '-arg'" && { javaArgs[$javaArgsCount]="$arg"; ((javaArgsCount++)); } ;;
         "--argument") verifArguments $arg "Aucun argument donnée pour l'option '--argument'" && { javaArgs[$javaArgsCount]="$arg"; ((javaArgsCount++)); } ;;
+
+        "-cr") createProjet $arg && exit 0 || exit 1 ;;
+        "--create") createProjet $arg && exit 0 || exit 1 ;;
 
         "-c") compilation=0 ;;
         "--compilation") compilation=0 ;;

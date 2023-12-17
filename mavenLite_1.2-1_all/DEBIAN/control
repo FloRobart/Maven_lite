@@ -3,3 +3,4 @@ Version: 1.2
 Architecture: all
 Maintainer: Floris Robart
 Description: Maven Lite
+depends: bash
