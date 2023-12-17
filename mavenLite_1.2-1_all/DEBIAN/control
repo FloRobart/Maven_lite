@@ -3,18 +3,4 @@ Version: 1.2
 Architecture: all
 Maintainer: Floris Robart
 depends: bash
-Description: Maven Lite est un système de gestion de projet java qui permet de compiler et lancer des projets java très simplement et rapidement.
-
-Le but est de pouvoir compiler et/ou lancer un projet java en une seule commande, comme maven mais en plus simple.
-
-Maven Lite est plus simple que Maven car il ne gère pas les dépendances hors local, les plugins, les phases de build, etc. Il est donc adapté pour les projets simples qui ne nécessitent pas de gérer des dépendances externes. Pour des projets plus complexes, il est conseillé d'utiliser Maven.
-
-Maven lite permet de compiler le projet dans un dossier target, gèrer les dépendances locales (fichier jar) et éxecuter le projet.
-
-L'intéret principale de maven lite dans la gestion des dépendances est de fournir au script un dossier qui contient toutes les dépendances, le script ajoutera automatiquement les dépendances dans le classpath.
-
-Les fichiers d'installation permettent d'installer Maven Lite sur votre ordinateur et de profiter de la commande 'mvnl'. Cela vous évitera de devoir copier le fichier maven_lite.XX dans chaque projet.
-
-Il est possible que cette première version de Maven Lite contienne des bugs. Si vous en trouvez, n'hésitez pas à les signaler.
-
-La version 1.2.0 prend en charge uniquement les arguments Java sans espace.
+Description: Maven Lite est un système de gestion de projet java qui permet de compiler et lancer des projets java très simplement et rapidement. Le but est de pouvoir compiler et/ou lancer un projet java en une seule commande, comme maven mais en plus simple. Maven Lite est plus simple que Maven car il ne gère pas les dépendances hors local, les plugins, les phases de build, etc. Il est donc adapté pour les projets simples qui ne nécessitent pas de gérer des dépendances externes. Pour des projets plus complexes, il est conseillé d'utiliser Maven. Maven lite permet de compiler le projet dans un dossier target, gèrer les dépendances locales (fichier jar) et éxecuter le projet. L'intéret principale de maven lite dans la gestion des dépendances est de fournir au script un dossier qui contient toutes les dépendances, le script ajoutera automatiquement les dépendances dans le classpath. Les fichiers d'installation permettent d'installer Maven Lite sur votre ordinateur et de profiter de la commande 'mvnl'. Cela vous évitera de devoir copier le fichier maven_lite.XX dans chaque projet. Il est possible que cette première version de Maven Lite contienne des bugs. Si vous en trouvez, n'hésitez pas à les signaler. La version 1.2.0 prend en charge uniquement les arguments Java sans espace.
