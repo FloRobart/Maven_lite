@@ -1,2 +1,0 @@
-faire une option pour ajouter des options supplémentaires (que je ne connais pas forcement)
-faire ne sorte de détecter automatiquement le main
