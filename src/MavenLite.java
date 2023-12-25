@@ -85,14 +85,18 @@ public class MavenLite
                         if (opt[4].equals("1") && (i+1 < args.length) && !args[i+1].startsWith("-"))
                             opt[5] = args[++i];
                     }
-                    else if (opt[3].equals("1") && !args[i + 1].startsWith("-"))
+                    else if (opt[3].equals("1"))
                     {
                         /* Parse les options qui ont obligatoirement un seul argument */
-                        if (i+1 < args.length)
-                            opt[5] = args[++i];
+                        if (i+1 < args.length && !args[i+1].startsWith("-"))
+                            opt[5] = args[++i].replace("\\", "");
                         else
                         {
                             System.out.println("L'option '" + args[i] + "' nécessite un argument.");
+
+                            if (i+1 < args.length && args[i+1].startsWith("-"))
+                                System.out.println("Veuillez échapé le caractère '-' avec deux '\\' comme ceci : '-arg \\\\" + args[i+1] + "'");
+
                             System.exit(0);
                         }
                     }
@@ -101,16 +105,17 @@ public class MavenLite
                         /* Parse les options qui peuvent avoir un nombre illimité d'argument */
                         String sArgs = "";
                         while (i + 1 < args.length && !args[i + 1].startsWith("-"))
-                            sArgs += "\"" + args[++i] + "\";";
+                            sArgs += "\"" + args[++i].replace("\\", "") + "\";";
 
                         opt[5] = sArgs;
                     }
                     else
                     {
+                        /* Parse les options qui ont un nombre d'argument défini autre que 0 et 1 */
                         /* Pour l'instant ce code n'est pas utilisé */
                         String sArgs = "";
                         for (int j = 0; j < Integer.parseInt(opt[3]) && i+1 < args.length; j++)
-                            sArgs += "\"" + args[++i] + "\";";
+                            sArgs += "\"" + args[++i].replace("\\", "") + "\";";
 
                         opt[5] = sArgs;
                     }
@@ -132,6 +137,7 @@ public class MavenLite
         }
     }
 
+
     /**
      * Initialise la liste des options.
      * <br />
@@ -150,8 +156,8 @@ public class MavenLite
     {
         List<String[]> lst = new ArrayList<String[]>();
 
-        /*                    nom               court   long                nb argument  nb argument  valeur               utilisé  description     */
-        /*                    0                 1       2                   3            4            5                    6        7               */
+        /*                    nom               court   long                nb argument  nb argument  valeur                utilisé  description     */
+        /*                    0                 1       2                   3            4            5                     6        7               */
         lst.add(new String[] {"version"       , "-v"   , "--version"       , "0"        , "0"        , MavenLite.VERSION  , "0", "Afficher la version et quitter."});
         lst.add(new String[] {"create"        , "-cr"  , "--create"        , "0"        , "1"        , "."                , "0", "Créer l'arborescence du projet ainsi qu'un fichier de config par défaut. Si le dossier de sortie n'est pas spécifié, le dossier par défaut est le dossier courant."});
         lst.add(new String[] {"source"        , "-s"   , "--source"        , "1"        , "1"        , MavenLite.SOURCE   , "0", "Dossier racine du projet à compiler."});
@@ -161,7 +167,7 @@ public class MavenLite
         lst.add(new String[] {"encoding"      , "-e"   , "--encoding"      , "1"        , "1"        , MavenLite.ENCODING , "0", "Permet de changer l'encodage des fichiers java à compiler. L'encodage par defaut est 'UTF-8'. Utilisable uniquement avec l'option -c."});
         lst.add(new String[] {"main"          , "-m"   , "--main"          , "1"        , "1"        , null               , "0", "Classe principale à lancer. Utilisable uniquement avec l'option -l."});
         lst.add(new String[] {"data"          , "-dt"  , "--data"          , "1"        , "1"        , MavenLite.DATA     , "0", "Dossier contenant les données du projet. Permet de copier le dossier de données dans le dossier de sortie. Utilisable uniquement avec l'option -c."});
-        lst.add(new String[] {"arguments"     , "-args", "--arguments"     , "unlimited", "unlimited", null               , "0", "Arguments à passer à la classe principale. Un argument par option, c'est à dire que si vous voulez passer deux arguments il faudra utiliser deux fois l'option -arg. Lordre des arguments passé à la classe principale est le même que l'ordre de passage à la commande. Les arguments de la ligne de commande sont pris en compte avant les arguments du fichier de configuration. Les arguments ne peuvent pas contenir d'espace sans peine de bug. Utilisable uniquement avec l'option -l."});
+        lst.add(new String[] {"arguments"     , "-args", "--arguments"     , "unlimited", "unlimited", null               , "0", "Arguments à passer à la classe principale. Si vous voulez passé un argument qui commencer par '-' parce qu'aucune erreur ne sera déclancher, il faut échapper le caractère '-' avec deux '\\' comme ceci : '-args \\\\-argument_pour_le_main'."});
         lst.add(new String[] {"argument"      , "-arg" , "--argument"      , "1"        , "1"        , null               , "0", "Argument unique"});
         lst.add(new String[] {"file"          , "-f"   , "--file"          , "0"        , "1"        , MavenLite.FILE     , "0", "Fichier de configuration. Permet de charger les options à partir d'un fichier de configuration, le séparateur sont l'espace et le retour à la ligne. Les options du fichier de configuration prédomine sur les options de la ligne de commande. L'option -f doit obligatoirement être la première option de la ligne de commande."});
         lst.add(new String[] {"compilation"   , "-c"   , "--compilation"   , "0"        , "0"        , null               , "0", "Compiler le projet."});
