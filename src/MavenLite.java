@@ -30,6 +30,8 @@ public class MavenLite
     /* Variables */
     private List<String[]> lstOptions;
     private int countArgs = 1;
+    private boolean compil = false;
+    private boolean launch = false;
 
 
 
@@ -45,7 +47,6 @@ public class MavenLite
         this.parseOptions(args);
 
         this.lstOptions = this.sortList(this.lstOptions);
-
         this.executeOption(this.lstOptions);
     }
 
@@ -72,9 +73,16 @@ public class MavenLite
     {
         List<String[]> lst = new ArrayList<String[]>();
 
-        /*                    nom               court   long                nb argument  nb argument  valeur                utilisé  description     */
-        /*                    0                 1       2                   3            4            5                     6        7               */
-        lst.add(new String[] {"version"       , "-v"   , "--version"       , "0"        , "0"        , MavenLite.VERSION  , "0", "Afficher la version et quitter."});
+        /*                    nom               court    long                nb argument  nb argument  valeur                utilisé  description     */
+        /*                    0                 1        2                   3            4            5                     6        7               */
+        lst.add(new String[] {"file"          , "-f"   , "--file"          , "0"        , "1"        , MavenLite.FILE     , "0", "Fichier de configuration. Permet de charger les options à partir d'un fichier de configuration, le séparateur sont l'espace et le retour à la ligne. Les options du fichier de configuration prédomine sur les options de la ligne de commande. L'option -f doit obligatoirement être la première option de la ligne de commande."});
+        lst.add(new String[] {"compilation"   , "-c"   , "--compilation"   , "0"        , "0"        , null               , "0", "Compiler le projet."});
+        lst.add(new String[] {"compile-launch", "-cl"  , "--compile-launch", "0"        , "0"        , null               , "0", "Compiler et lancer le projet. (équivalent à -c -l)"});
+        lst.add(new String[] {"launch-compile", "-lc"  , "--launch-compile", "0"        , "0"        , null               , "0", "Compiler et lancer le projet. (équivalent à -c -l)"});
+        lst.add(new String[] {"launch"        , "-l"   , "--launch"        , "0"        , "0"        , null               , "0", "Lancer le projet."});
+        /* Tous se qui est au dessus de cette ligne ne doit pas être déplacer, leur ordre est important */
+        lst.add(new String[] {"maven"         , "-mav" , "--maven"         , "0"        , "0"        , null               , "0", "Convertir le projet en projet maven."});
+        lst.add(new String[] {"export"        , "-ex"  , "--export"        , "0"        , "1"        , MavenLite.EXPORT   , "0", "Exporter le projet dans un fichier jar. Le fichier jar sera exporté dans le dossier de sortie. Le nom du fichier jar est le nom du dossier de sortie."});
         lst.add(new String[] {"create"        , "-cr"  , "--create"        , "0"        , "1"        , "."                , "0", "Créer l'arborescence du projet ainsi qu'un fichier de config par défaut. Si le dossier de sortie n'est pas spécifié, le dossier par défaut est le dossier courant."});
         lst.add(new String[] {"source"        , "-s"   , "--source"        , "1"        , "1"        , MavenLite.SOURCE   , "0", "Dossier racine du projet à compiler."});
         lst.add(new String[] {"output"        , "-o"   , "--output"        , "1"        , "1"        , null               , "0", "Dossier de sortie des fichiers compilés."});
@@ -83,16 +91,10 @@ public class MavenLite
         lst.add(new String[] {"encoding"      , "-e"   , "--encoding"      , "1"        , "1"        , MavenLite.ENCODING , "0", "Permet de changer l'encodage des fichiers java à compiler. L'encodage par defaut est 'UTF-8'. Utilisable uniquement avec l'option -c."});
         lst.add(new String[] {"main"          , "-m"   , "--main"          , "1"        , "1"        , null               , "0", "Classe principale à lancer. Utilisable uniquement avec l'option -l."});
         lst.add(new String[] {"data"          , "-dt"  , "--data"          , "1"        , "1"        , MavenLite.DATA     , "0", "Dossier contenant les données du projet. Permet de copier le dossier de données dans le dossier de sortie. Utilisable uniquement avec l'option -c."});
-        lst.add(new String[] {"arguments"     , "-args", "--arguments"     , "unlimited", "unlimited", null               , "0", "Arguments à passer à la classe principale. Si vous voulez passé un argument qui commencer par '-' parce qu'aucune erreur ne sera déclancher, il faut échapper le caractère '-' avec deux '\\' comme ceci : '-args \\\\-argument_pour_le_main'."});
         lst.add(new String[] {"argument"      , "-arg" , "--argument"      , "1"        , "1"        , null               , "0", "Argument unique"});
-        lst.add(new String[] {"file"          , "-f"   , "--file"          , "0"        , "1"        , MavenLite.FILE     , "0", "Fichier de configuration. Permet de charger les options à partir d'un fichier de configuration, le séparateur sont l'espace et le retour à la ligne. Les options du fichier de configuration prédomine sur les options de la ligne de commande. L'option -f doit obligatoirement être la première option de la ligne de commande."});
-        lst.add(new String[] {"compilation"   , "-c"   , "--compilation"   , "0"        , "0"        , null               , "0", "Compiler le projet."});
-        lst.add(new String[] {"launch"        , "-l"   , "--launch"        , "0"        , "0"        , null               , "0", "Lancer le projet."});
-        lst.add(new String[] {"compile-launch", "-cl"  , "--compile-launch", "0"        , "0"        , null               , "0", "Compiler et lancer le projet. (équivalent à -c -l)"});
-        lst.add(new String[] {"launch-compile", "-lc"  , "--launch-compile", "0"        , "0"        , null               , "0", "Compiler et lancer le projet. (équivalent à -c -l)"});
+        lst.add(new String[] {"arguments"     , "-args", "--arguments"     , "unlimited", "unlimited", null               , "0", "Arguments à passer à la classe principale. Si vous voulez passé un argument qui commencer par '-' parce qu'aucune erreur ne sera déclancher, il faut échapper le caractère '-' avec deux '\\' comme ceci : '-args \\\\-argument_pour_le_main'."});
+        lst.add(new String[] {"version"       , "-v"   , "--version"       , "0"        , "0"        , MavenLite.VERSION  , "0", "Afficher la version et quitter."});
         lst.add(new String[] {"help"          , "-h"   , "--help"          , "0"        , "0"        , null               , "0", "afficher l'aide et quitter."});
-        lst.add(new String[] {"export"        , "-ex"  , "--export"        , "0"        , "1"        , MavenLite.EXPORT   , "0", "Exporter le projet dans un fichier jar. Le fichier jar sera exporté dans le dossier de sortie. Le nom du fichier jar est le nom du dossier de sortie."});
-        lst.add(new String[] {"maven"         , "-mav" , "--maven"         , "0"        , "0"        , null               , "0", "Convertir le projet en projet maven."});
 
         return lst;
     }
@@ -108,8 +110,32 @@ public class MavenLite
         for (int i = 0; i < args.length; i++)
         {
             boolean bFound = false;
-            for (String[] opt : this.lstOptions)
+
+            /* Si l'option est "-f" ou "--file. Ne fonctionne qu'une seul fois */
+            if ((args[i].equals(this.lstOptions.get(0)[1]) || args[i].equals(this.lstOptions.get(0)[2])))
             {
+                if (!this.lstOptions.get(0)[6].equals("0"))
+                {
+                    if ((i+1 < args.length) && !args[i+1].startsWith("-"))
+                        i++;
+
+                    continue;
+                }
+
+                if ((i+1 < args.length) && !args[i+1].startsWith("-"))
+                    this.lstOptions.get(0)[5] = args[++i];
+
+                this.lstOptions.get(0)[6] = String.valueOf(1);
+                this.file(this.lstOptions.get(0)[5]);
+
+                this.lstOptions.remove(0);
+                bFound = true;
+            }
+
+            for (String[] opt : this.lstOptions.subList(1, this.lstOptions.size()))
+            {
+                if (bFound) break;
+
                 //System.out.println("'" + args[i] + "' == '" + opt[1] + "' || '" + args[i] + "' == '" + opt[2] + "' --> " + (args[i].equals(opt[1]) || args[i].equals(opt[2])));
                 if (args[i].equals(opt[1]) || args[i].equals(opt[2]))
                 {
@@ -137,7 +163,12 @@ public class MavenLite
                     else if (opt[3].equals("unlimited"))
                     {
                         /* Parse les options qui peuvent avoir un nombre illimité d'argument */
-                        String sArgs = "";
+                        String sArgs;
+                        if (opt[5] == null)
+                            sArgs = "";
+                        else
+                            sArgs = opt[5];
+
                         while (i + 1 < args.length && !args[i + 1].startsWith("-"))
                             sArgs += "\"" + args[++i].replace("\\", "") + "\";";
 
@@ -152,6 +183,9 @@ public class MavenLite
                             sArgs += "\"" + args[++i].replace("\\", "") + "\";";
 
                         opt[5] = sArgs;
+
+                        for (int j = i-Integer.parseInt(opt[3]); j < i+Integer.parseInt(opt[3]) && i+1 < args.length; j++)
+                            args = this.removeTabElement(args, i);
                     }
 
                     opt[6] = String.valueOf(this.countArgs);
@@ -195,16 +229,40 @@ public class MavenLite
     }
 
 
-    public List<String[]> sortAndRemoveUnusedOption(List<String[]> lst)
+    /**
+     * Trie la liste des options dans l'ordre de passage à la ligne de commande et supprime les options non utilisées
+     * @param lst
+     * @return
+     */
+    public List<String[]> removeUnusedOption(List<String[]> lst)
     {
         List<String[]> lstSorted = new ArrayList<String[]>();
 
-        for (int i = 1; i < lst.size(); i++)
-            for (int j = 0; j < lst.size(); j++)
-                if (lst.get(j)[6].equals(String.valueOf(i)))
-                    lstSorted.add(lst.get(j));
+        for (String[] opt : lst)
+            if (!opt[6].equals("0"))
+                lstSorted.add(opt);
 
         return lstSorted;
+    }
+
+
+    /**
+     * Supprime un élément d'un tableau
+     * @param tab le tableau à modifier
+     * @param index l'index de l'élément à supprimer
+     * @return le tableau modifié
+     */
+    public String[] removeTabElement(String[] tab, int index)
+    {
+        String[] newTab = new String[tab.length-1];
+
+        for (int i = 0; i < tab.length; i++)
+            if (i < index)
+                newTab[i] = tab[i];
+            else if (i > index)
+                newTab[i-1] = tab[i];
+        
+        return newTab;
     }
 
 
@@ -270,76 +328,101 @@ public class MavenLite
      */
     public void executeOption(List<String[]> lst)
     {
-        for (String[] opt : lst)
+        lst = this.removeUnusedOption(lst);
+        this.printLstTab(lst);
+        for (int i = 0; i < lst.size(); i++)
         {
+            String[] opt = lst.get(i);
             if (opt[6].equals("0"))
                 continue;
 
             switch (opt[0])
             {
                 case "version":
+                    lst.remove(i--);
                     this.version();
                     break;
                 case "create":
+                    lst.remove(i--);
                     this.create(opt[5]);
                     break;
                 case "source":
+                    lst.remove(i--);
                     this.source(opt[5]);
                     break;
                 case "output":
+                    lst.remove(i--);
                     this.output(opt[5]);
                     break;
                 case "classpath":
+                    lst.remove(i--);
                     this.classpath(opt[5]);
                     break;
                 case "dependency":
+                    lst.remove(i--);
                     this.dependency(opt[5]);
                     break;
                 case "encoding":
+                    lst.remove(i--);
                     this.encoding(opt[5]);
                     break;
                 case "main":
+                    lst.remove(i--);
                     this.main(opt[5]);
                     break;
                 case "data":
+                    lst.remove(i--);
                     this.data(opt[5]);
                     break;
                 case "arguments":
+                    lst.remove(i--);
                     this.arguments(opt[5]);
                     break;
                 case "argument":
+                    lst.remove(i--);
                     this.argument(opt[5]);
                     break;
-                case "file":
-                    this.file(opt[5]);
-                    break;
                 case "compilation":
-                    this.compilation();
+                    lst.remove(i--);
+                    this.compil = true;
                     break;
                 case "launch":
-                    this.launch();
+                    lst.remove(i--);
+                    this.launch = true;
                     break;
                 case "compile-launch":
-                    this.compileLaunch();
+                    lst.remove(i--);
+                    this.compil = true;
+                    this.launch = true;
                     break;
                 case "launch-compile":
-                    this.launchCompile();
+                    lst.remove(i--);
+                    this.compil = true;
+                    this.launch = true;
                     break;
                 case "help":
+                    lst.remove(i--);
                     this.help();
                     break;
                 case "export":
+                    lst.remove(i--);
                     this.export(opt[5]);
                     break;
                 case "maven":
+                    lst.remove(i--);
                     this.maven();
                     break;
                 default:
-                    System.out.println("Option '" + opt[0] + "' inconnue.");
-                    System.exit(0);
+                    System.out.println("Erreur lors de l'exécution de l'option '" + opt[0] + "'.");
                     break;
             }
         }
+
+        if (this.compil)
+            this.compilation();
+
+        if (this.launch)
+            this.launch();
     }
 
 
@@ -439,7 +522,7 @@ public class MavenLite
      */
     public void file(String pathFile)
     {
-        System.out.println("file");
+        System.out.println("file : " + pathFile);
         try
         {
             Scanner sc = new Scanner(new File(pathFile));
@@ -454,8 +537,6 @@ public class MavenLite
             System.out.println("Erreur lors de la lecture du fichier '" + pathFile + "'.");
             System.exit(0);
         }
-
-        this.lstOptions = this.sortAndRemoveUnusedOption(this.lstOptions);
     }
 
     /**
@@ -472,24 +553,6 @@ public class MavenLite
     public void launch()
     {
         System.out.println("Lancement du projet");
-    }
-
-    /**
-     * Compile et lance le projet.
-     */
-    public void compileLaunch()
-    {
-        this.compilation();
-        this.launch();
-    }
-
-    /**
-     * Compile et lance le projet.
-     */
-    public void launchCompile()
-    {
-        this.compilation();
-        this.launch();
     }
 
     /**
@@ -547,7 +610,7 @@ public class MavenLite
      */
     public void printLstTab(List<String[]> lst)
     {
-        for (String[] opt : this.lstOptions)
+        for (String[] opt : lst)
         {
             for (int i = 0; i < opt.length-1; i++)
                 System.out.print(String.format("%-15s", opt[i]) + " | ");

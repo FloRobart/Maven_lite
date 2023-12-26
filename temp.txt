@@ -1,0 +1,3 @@
+parse commande line --> if (-f) --> parse file --> fin parse commande line
+
+ça permet de pouvoir overwrite les options du fichier par la ligne de commande
