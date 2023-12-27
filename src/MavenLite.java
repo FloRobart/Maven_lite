@@ -1,6 +1,7 @@
 //!/usr/bin/env java
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -577,7 +578,11 @@ public class MavenLite
             Scanner sc = new Scanner(new File(opt[5]));
 
             while (sc.hasNextLine())
-                this.parseOptions(sc.nextLine().split(" "));
+            {
+                String line = sc.nextLine().replaceAll("^[\\u0009\\u0020]*", ""); // Supprime les espaces et les tabulations au début de la ligne
+                if (!line.startsWith("#") && !line.equals(""))
+                    this.parseOptions(line.split(" "));
+            }
 
             sc.close();
         }
@@ -595,7 +600,6 @@ public class MavenLite
     public void create(String[] opt)
     {
         /*
-
         ProjectName
         ├── config
         └── src
@@ -604,21 +608,117 @@ public class MavenLite
             │       └── App.java
             └── resources
                 └── lib
-
          */
+
+        List<String> lstFoldersProject = new ArrayList<String>();
+        List<String> lstFilesProject = new ArrayList<String>();
+
+        /* Création de la liste des dossiers du projet */
+        lstFoldersProject.add(opt[5]);
+        lstFoldersProject.add(opt[5] + File.separator + "src");
+        lstFoldersProject.add(opt[5] + File.separator + "src" + File.separator + "main");
+        lstFoldersProject.add(opt[5] + File.separator + "src" + File.separator + "main" + File.separator + "java");
+        lstFoldersProject.add(opt[5] + File.separator + "src" + File.separator + "main" + File.separator + "resources");
+        lstFoldersProject.add(opt[5] + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "lib");
+
+        /* Création de la liste des fichiers du projet */
+        lstFilesProject.add(opt[5] + File.separator + "config");
+        lstFilesProject.add(opt[5] + File.separator + "src/main/java/App.java");
     
 
         /* Création de l'arborescence */
-        File f = new File(opt[5]);
-        if (!f.exists())
-            f.mkdirs();
-        
-        f = new File(opt[5] + "/config");
-        if (!f.exists())
-            f.mkdirs();
+        for (String folder : lstFoldersProject)
+        {
+            File f = new File(folder);
+            if (!f.exists())
+                f.mkdirs();
+        }
 
-        
-    
+        /* Création des fichiers */
+        for (String file : lstFilesProject)
+        {
+            File f = new File(file);
+            if (!f.exists())
+            {
+                try
+                {
+                    f.createNewFile();
+                }
+                catch (IOException e)
+                {
+                    System.out.println("Erreur lors de la création du fichier '" + f.getName() + "'.");
+                    System.exit(0);
+                }
+            }
+        }
+
+        /* Écriture dans le fichier App.java */
+        try
+        {
+            String sApp = "";
+            sApp += "/**\n";
+            sApp += " * Hello world!\n";
+            sApp += " * @autor " + System.getProperty("user.name") + "\n";
+            sApp += " */\n";
+            sApp += "public class App\n";
+            sApp += "{\n";
+            sApp += "    public static void main(String[] args)\n";
+            sApp += "    {\n";
+            sApp += "        System.out.println(\"Hello World!\");\n";
+            sApp += "    }\n";
+            sApp += "}";
+
+            File f = new File(lstFilesProject.get(1));
+            
+            FileWriter fw = new FileWriter(f);
+            fw.write(sApp);
+            fw.close();
+        }
+        catch (Exception e)
+        {
+            System.out.println("Erreur lors de l'écriture dans le fichier '" + lstFilesProject.get(1) + "'.");
+            System.exit(0);
+        }
+
+
+        /* Écriture dans le fichier de configuration */
+        try
+        {
+            String sConfig = "";
+            sConfig += "# Fichier de configuration de Maven Lite\n";
+            sConfig += "# Les options sont séparés par des espaces et des retours à la ligne\n";
+            sConfig += "# Les options de la ligne de commande prédomine sur les options sur celle du fichier de configuration\n";
+            sConfig += "#\n";
+            sConfig += "# Dossier racine du projet à compiler\n";
+            sConfig += "# Par défaut : " + MavenLite.SOURCE + "\n";
+            sConfig += "# -s " + MavenLite.SOURCE + "\n";
+            sConfig += "#\n";
+            sConfig += "# Dossier de sortie des fichiers compilés\n";
+            sConfig += "# Par défaut : " + MavenLite.OUTPUT + "\n";
+            sConfig += "# -o " + MavenLite.OUTPUT + "\n";
+            sConfig += "#\n";
+            sConfig += "# Liste des fichiers jar et du dossier de sortie des fichiers compilés (le même dossier que pour l'option -o) à ajouter au classpath lors de la compilation et du lancement\n";
+            sConfig += "# Les fichiers jar doivent être séparés par des ':'\n";
+            sConfig += "# Par défaut : " + MavenLite.CLASSPATH + "\n";
+            sConfig += "# -cp " + MavenLite.CLASSPATH + "\n";
+            sConfig += "#\n";
+            sConfig += "# Dossier contenant les fichiers jar utiliser par le programme\n";
+            sConfig += "# Tout les fichiers jar seront ajoutés au classpath lors de la compilation et du lancement\n";
+            sConfig += "# -d " + MavenLite.DEPENDENCY + "\n";
+            sConfig += "#\n";
+            sConfig += "# Permet de changer l'encodage des fichiers java à compiler\n";
+            sConfig += "# L'encodage par defaut est 'UTF-8'\n";
+            sConfig += "# Utilisable uniquement avec l'option -c\n";
+            sConfig += "# -e " + MavenLite.ENCODING + "\n";
+            sConfig += "#\n";
+            sConfig += "# Classe principale à lancer\n";
+            sConfig += "# Utilisable uniquement avec l'option -l\n";
+        }
+        catch (Exception e)
+        {
+            System.out.println("Erreur lors de l'écriture dans le fichier '" + lstFilesProject.get(0) + "'.");
+            System.exit(0);
+        }
     }
 
     /**
