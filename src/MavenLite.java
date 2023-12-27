@@ -40,9 +40,6 @@ public class MavenLite
     private Map<String, String> hmArgs;
     private int countArgs = 1;
 
-    /* Copie de l'option du fichier de configuration (parce que l'options -f va être supprimée de la liste des options) */
-    private String[] fileConfig = null;
-
     /* Compilation et lancement */
     private boolean compil = false;
     private boolean launch = false;
@@ -111,7 +108,6 @@ public class MavenLite
         lst.add(new String[] {"help"          , "-h"   , "--help"          , "0"        , "0"        , null                , "0", "afficher l'aide et quitter."});
         /* Pour ajouter une option, il faut ajouter un tableau de String dans la liste lstOptions et ajouter l'option dans le switch de la méthode executeOption(). Il peut être nécessaire d'ajouter une méthode pour l'option. */
 
-        this.fileConfig = lst.get(0);
         return lst;
     }
 
@@ -152,7 +148,6 @@ public class MavenLite
             {
                 if (bFound) break;
 
-                //System.out.println("'" + args[i] + "' == '" + opt[1] + "' || '" + args[i] + "' == '" + opt[2] + "' --> " + (args[i].equals(opt[1]) || args[i].equals(opt[2])));
                 if (args[i].equals(opt[1]) || args[i].equals(opt[2]))
                 {
                     if (opt[3].equals("0"))
@@ -514,28 +509,30 @@ public class MavenLite
      */
     public void help(List<String[]> lst)
     {
-        // 40 caractères pour l'option + 40 caractères pour la description par ligne
-        String help = "Usage : java -jar maven_lite.jar [options]\n\n";
+        int optLength = 30;
+        int descLength = 50;
+        String help = "Usage : mvnl [options] [argument]\n\n";
         help += "Options :\n";
 
-        lst.add(this.fileConfig);
         for (String[] s : lst)
         {
-            String sOpt = "";
-            if (s[1] != null)
-                sOpt += s[1] + ", ";
-            if (s[2] != null)
-                sOpt += s[2];
+            help += String.format("%-" + optLength + "s", (String.format("%-5s, ", s[1]) + s[2]));
 
-            help += String.format("%-40s", sOpt);
-
-            String sDesc = s[7];
-            while (sDesc.length() > 40)
+            /* Écriture de la description */
+            int currentLineLength = 0;
+            for (String word : s[7].split(" "))
             {
-                help += sDesc.substring(0, 40).replaceFirst(" ", "") + String.format("\n%-40s", "");
-                sDesc = sDesc.substring(40);
+                if ((currentLineLength + word.length()) > descLength)
+                {
+                    help += "\n" + String.format("%-" + optLength + "s", "");
+                    currentLineLength = 0;
+                }
+                
+                help += word + " ";
+                currentLineLength = currentLineLength + word.length();
             }
-            help += sDesc + "\n\n";
+
+            help += "\n\n";
         }
 
         System.out.println(help);
