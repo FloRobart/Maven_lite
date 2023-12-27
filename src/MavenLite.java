@@ -29,7 +29,7 @@ public class MavenLite
     private static final String FILE            = "data/config-test.txt";
     private static final String EXPORT          = "run.java";
     private static final String DEPENDENCY      = "data/dependency";
-    private static final String CREATE          = ".";
+    private static final String CREATE          = "data/create";
     private static final String OUTPUT          = "bin";
 
     /* Couleurs et style */
@@ -594,7 +594,31 @@ public class MavenLite
      */
     public void create(String[] opt)
     {
-        System.out.println("create : " + opt[5]);
+        /*
+
+        ProjectName
+        ├── config
+        └── src
+            ├── main
+            │   └── java
+            │       └── App.java
+            └── resources
+                └── lib
+
+         */
+    
+
+        /* Création de l'arborescence */
+        File f = new File(opt[5]);
+        if (!f.exists())
+            f.mkdirs();
+        
+        f = new File(opt[5] + "/config");
+        if (!f.exists())
+            f.mkdirs();
+
+        
+    
     }
 
     /**
