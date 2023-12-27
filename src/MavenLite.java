@@ -21,16 +21,22 @@ public class MavenLite
     /* Constantes et valeurs par défauts */
     /*-----------------------------------*/
     private static final String AUTHOR          = "Floris Robart";
-    private static final String MAVEN_LITE_HOME = "/usr/share/maven_lite ?";
     private static final String VERSION         = "2.0.0";
     private static final String SOURCE          = "src";
     private static final String CLASSPATH       = "bin";
     private static final String ENCODING        = "UTF-8";
     private static final String FILE            = "data/config-test.txt";
     private static final String EXPORT          = "run.java";
-    private static final String DEPENDENCY      = "lib";
+    private static final String DEPENDENCY      = "data/dependency";
     private static final String CREATE          = ".";
     private static final String OUTPUT          = "bin";
+
+    /* Couleurs et style */
+    private static final String DEFAULT         = "\u001B[0m";
+    private static final String GREEN_BOLD      = "\u001B[1;32m";
+    private static final String GREEN           = "\u001B[32m";
+    private static final String BOLD           = "\u001B[1m";
+
 
     /*-----------*/
     /* Variables */
@@ -51,6 +57,7 @@ public class MavenLite
     /*==============*/
     /**
      * Coeur du programme
+     * @param args les arguments passés au programme
      */
     public MavenLite(String[] args)
     {
@@ -60,6 +67,14 @@ public class MavenLite
 
         this.lstOptions = this.sortList(this.lstOptions);
         this.executeOption(this.lstOptions);
+    }
+
+    /**
+     * Constructeur qui permet uniquement de charger la liste des options.
+     */
+    public MavenLite()
+    {
+        this.lstOptions = this.initOptions();
     }
 
 
@@ -99,7 +114,7 @@ public class MavenLite
         lst.add(new String[] {"source"        , "-s"   , "--source"        , "1"        , "1"        , MavenLite.SOURCE    , "0", "Dossier racine du projet à compiler."});
         lst.add(new String[] {"output"        , "-o"   , "--output"        , "1"        , "1"        , MavenLite.OUTPUT    , "0", "Dossier de sortie des fichiers compilés."});
         lst.add(new String[] {"classpath"     , "-cp"  , "--classpath"     , "1"        , "1"        , MavenLite.CLASSPATH , "0", "Liste des fichiers jar et du dossier de sortie des fichiers compilés (le même dossier que pour l'option -o) à ajouter au classpath lors de la compilation et du lancement. Les fichiers jar doivent être séparés par des ':'. La valeur par defaut du classpath est le dossier de sortie des fichiers compilés si l'option -o est utilisé, sinon le classpath sera le dossier courent."});
-        lst.add(new String[] {"dependency"    , "-d"   , "--dependency"    , "1"        , "1"        , MavenLite.DEPENDENCY, "0", "Dossier contenant les fichiers jar utiliser par le programme. Tout les fichiers jar seront ajoutés au classpath lors de la compilation et du lancement."});
+        lst.add(new String[] {"dependency"    , "-d"   , "--dependency"    , "0"        , "1"        , MavenLite.DEPENDENCY, "0", "Dossier contenant les fichiers jar utiliser par le programme. Tout les fichiers jar seront ajoutés au classpath lors de la compilation et du lancement."});
         lst.add(new String[] {"encoding"      , "-e"   , "--encoding"      , "1"        , "1"        , MavenLite.ENCODING  , "0", "Permet de changer l'encodage des fichiers java à compiler. L'encodage par defaut est 'UTF-8'. Utilisable uniquement avec l'option -c."});
         lst.add(new String[] {"main"          , "-m"   , "--main"          , "1"        , "1"        , null                , "0", "Classe principale à lancer. Utilisable uniquement avec l'option -l."});
         lst.add(new String[] {"argument"      , "-arg" , "--argument"      , "1"        , "1"        , null                , "0", "Argument unique"});
@@ -350,7 +365,7 @@ public class MavenLite
             {
                 case "version":
                     lst.remove(i--);
-                    this.version();
+                    this.version("");
                     break;
                 case "create":
                     lst.remove(i--);
@@ -370,7 +385,7 @@ public class MavenLite
                     break;
                 case "dependency":
                     lst.remove(i--);
-                    this.dependency(opt);
+                    this.hmArgs.put(opt[0], this.dependency(opt));
                     break;
                 case "encoding":
                     lst.remove(i--);
@@ -436,76 +451,25 @@ public class MavenLite
     /* Méthodes correspondants aux options */
     /*=====================================*/
     /**
-     * Affiche la version du programme.
+     * Affiche la version, le nom de l'auteur et des informations sur l'environnement d'exécution.
+     * @param phraseAuteur la phrase à afficher après la version
      */
-    public void version()
+    public void version(String phraseAuteur)
     {
-        System.out.println("\u001B[1mMaven Lite " + MavenLite.VERSION + "\u001B[0m");
-        System.out.println("Maven Lite home : " + MavenLite.MAVEN_LITE_HOME);
-        System.out.println("Java version : " + System.getProperty("java.version") + ", vendor : " + System.getProperty("java.vendor") + ", runtime : " + System.getProperty("java.runtime.name"));
-        System.out.println("Default locale : " + System.getProperty("user.language") + "_" + System.getProperty("user.country") + ", platform encoding : " + System.getProperty("file.encoding"));
-        System.out.println("OS name : \"" + System.getProperty("os.name") + "\", version : \"" + System.getProperty("os.version") + "\", architecture : \"" + System.getProperty("os.arch") + "\"");
+        String version = "";
+
+        version += MavenLite.BOLD + "Maven Lite " + MavenLite.VERSION + MavenLite.DEFAULT + " " + MavenLite.GREEN_BOLD + phraseAuteur + MavenLite.DEFAULT + "\n";
+        version += "Maven Lite home : " + new File(".").getAbsolutePath().substring(0, new File(".").getAbsolutePath().length()-2) + "\n";
+        version += "Java version : " + System.getProperty("java.version") + ", vendor : " + System.getProperty("java.vendor") + ", runtime : " + System.getProperty("java.runtime.name") + "\n";
+        version += "Default locale : " + System.getProperty("user.language") + "_" + System.getProperty("user.country") + ", platform encoding : " + System.getProperty("file.encoding") + "\n";
+        version += "OS name : \"" + System.getProperty("os.name") + "\", version : \"" + System.getProperty("os.version") + "\", architecture : \"" + System.getProperty("os.arch") + "\"";
+    
+        System.out.println(version);
     }
 
     /**
-     * Créer l'arborescence du projet ainsi qu'un fichier de config par défaut.
-     */
-    public void create(String[] opt)
-    {
-        System.out.println("create : " + opt[5]);
-    }
-
-    /**
-     * Permet de spécifier le dossier contenant les fichiers jar utiliser par le programme.
-     */
-    public void dependency(String[] opt)
-    {
-        String dependency = "";
-
-        File f = new File(opt[5]);
-        if (f.exists() && f.isDirectory())
-        {
-            File[] lstFiles = f.listFiles();
-            for (File file : lstFiles)
-                if (file.isFile() && file.getName().endsWith(".jar"))
-                    dependency += file.getName() + ":";
-        }
-        else
-        {
-            System.out.println("Le dossier '" + opt[5] + "' n'existe pas ou n'est pas un dossier.");
-            System.exit(0);
-        }
-
-        if (dependency.length() > 0)
-            dependency = dependency.substring(0, dependency.length() - 1);
-        
-        this.hmArgs.put("dependency", dependency);
-    }
-
-    /**
-     * Utilise le fichier de configuration.
-     */
-    public void file(String[] opt)
-    {
-        System.out.println("file : " + opt[5]);
-        try
-        {
-            Scanner sc = new Scanner(new File(opt[5]));
-
-            while (sc.hasNextLine())
-                this.parseOptions(sc.nextLine().split(" "));
-
-            sc.close();
-        }
-        catch (Exception e)
-        {
-            System.out.println("Erreur lors de la lecture du fichier '" + opt[5] + "'.");
-            System.exit(0);
-        }
-    }
-
-    /**
-     * Affiche l'aide
+     * Permet d'afficher l'aide à partir de la liste des options.
+     * @param lst la liste des options
      */
     public void help(List<String[]> lst)
     {
@@ -534,23 +498,92 @@ public class MavenLite
             }
 
             if (s[3].equals(s[4]))
-                help += String.format("\n%-" + optLength + "s", "") + "Nombre de paramètre : \u001B[1m" + s[3] + "\u001B[0m.";
+                help += String.format("\n%-" + optLength + "s", "") + "Nombre de paramètre : " + MavenLite.BOLD + s[3] + MavenLite.DEFAULT + ".";
             else
-                help += String.format("\n%-" + optLength + "s", "") + "Nombre de paramètre : de \u001B[1m" + s[3] + "\u001B[0m à \u001B[1m" + s[4] + "\u001B[0m.";
+                help += String.format("\n%-" + optLength + "s", "") + "Nombre de paramètre : de " + MavenLite.BOLD + s[3] + MavenLite.DEFAULT + " à " + MavenLite.BOLD + s[4] + MavenLite.DEFAULT + ".";
             
             if (s[5] != null)
-                help += String.format("\n%-" + optLength + "s", "") + "Valeur par défaut   : \u001B[1m" + s[5] + "\u001B[0m.";
+                help += String.format("\n%-" + optLength + "s", "") + "Valeur par défaut   : " + MavenLite.BOLD + s[5] + MavenLite.DEFAULT + ".";
 
             help += "\n\n";
         }
 
         System.out.println(help);
+    }    
+
+    /**
+     * Permet de spécifier le dossier contenant les fichiers jar utiliser par le programme.
+     * Tout les fichiers jar seront ajoutés au classpath lors de la compilation et du lancement.
+     * @param opt Ligne de la liste des options correspondant à l'option -d (--dependency)
+     */
+    public String dependency(String[] opt)
+    {
+        String dependency = "";
+
+        File f = new File(opt[5]);
+        if (f.exists() && f.isDirectory())
+        {
+            File[] lstFiles = f.listFiles();
+            for (File file : lstFiles)
+            {
+                if (file.isFile())
+                {
+                    if (file.getName().endsWith(".jar"))
+                        dependency += file.getName() + ":";
+                }
+                else if (file.isDirectory())
+                {
+                    dependency += this.dependency(new String[] {"", "", "", "0", "1", file.getAbsolutePath() + "/"});
+                }
+            }
+        }
+        else
+        {
+            System.out.println("Le dossier '" + opt[5] + "' n'existe pas ou n'est pas un dossier.");
+            System.exit(0);
+        }
+
+        return dependency;
+    }
+
+    /**
+     * Permet de charger les options à partir d'un fichier de configuration.
+     * Le séparateur sont l'espace et le retour à la ligne.
+     * Les options de la ligne de commande prédomine sur les options sur celle du fichier de configuration.
+     * @param opt Ligne de liste des options correspondant à l'option -f
+     */
+    public void file(String[] opt)
+    {
+        try
+        {
+            Scanner sc = new Scanner(new File(opt[5]));
+
+            while (sc.hasNextLine())
+                this.parseOptions(sc.nextLine().split(" "));
+
+            sc.close();
+        }
+        catch (Exception e)
+        {
+            System.out.println("Erreur lors de la lecture du fichier '" + opt[5] + "'.");
+            System.exit(0);
+        }
+    }
+
+    /**
+     * Créer l'arborescence du projet ainsi qu'un fichier de config par défaut.
+     * @param opt Ligne de la liste des options correspondant à l'option -cr
+     */
+    public void create(String[] opt)
+    {
+        System.out.println("create : " + opt[5]);
     }
 
     /**
      * Exporte le projet dans un fichier jar.
      * Le fichier jar sera exporté dans le dossier de sortie.
      * Le nom du fichier jar est le nom du dossier de sortie.
+     * @param opt Ligne de la liste des options correspondant à l'option -ex
      */
     public void export(String[] opt)
     {
@@ -582,6 +615,27 @@ public class MavenLite
         System.out.println("Lancement du projet");
     }
 
+    /**
+     * Permets d'afficher le nom du programme en ascii art, la version, l'auteur et une phrase d'aide.
+     */
+    private void defaultAffichage()
+    {
+        String helpStyle = "\n";
+
+        /* Écriture de 'MVNL' en ascii art */
+        helpStyle += "        __  ___                          __    _ __      \n";
+        helpStyle += "       /  |/  /___ __   _____  ____     / /   (_) /____   \n";
+        helpStyle += "      / /|_/ / __ `/ | / / _ \\/ __ \\   / /   / / __/ _ \\  \n";
+        helpStyle += "     / /  / / /_/ /| |/ /  __/ / / /  / /___/ / /_/  __/  \n";
+        helpStyle += "    /_/  /_/\\__,_/ |___/\\___/_/ /_/  /_____/_/\\__/\\___/   \n\n";
+
+
+
+        System.out.println(helpStyle);
+        this.version("Par " + MavenLite.AUTHOR);
+        System.out.println("\n    " + MavenLite.BOLD + "Utiliser la commande '" + MavenLite.DEFAULT + MavenLite.GREEN_BOLD + "mvnl -h" + MavenLite.DEFAULT + MavenLite.BOLD + "' ou '" + MavenLite.DEFAULT + MavenLite.GREEN_BOLD + "mvnl --help" + MavenLite.DEFAULT + MavenLite.BOLD + "' pour afficher l'aide." + MavenLite.DEFAULT + "\n");
+    }
+
 
 
     /*======*/
@@ -589,9 +643,9 @@ public class MavenLite
     /*======*/
     public static void main(String[] args)
     {
-        if (args.length < -1)
+        if (args.length < 1)
         {
-            System.out.println("Help");
+            new MavenLite().defaultAffichage();
             System.exit(0);
         }
 
@@ -607,7 +661,7 @@ public class MavenLite
      * Pour le débogage uniquement
      * Affiche les options et leurs arguments associés
      */
-    public void printLstTab(List<String[]> lst)
+    private void printLstTab(List<String[]> lst)
     {
         for (String[] opt : lst)
         {
