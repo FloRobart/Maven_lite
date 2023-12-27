@@ -511,26 +511,35 @@ public class MavenLite
     {
         int optLength = 30;
         int descLength = 50;
-        String help = "Usage : mvnl [options] [argument]\n\n";
+        String help = "\nUsage : mvnl [options] [argument]\n\n";
         help += "Options :\n";
 
         for (String[] s : lst)
         {
-            help += String.format("%-" + optLength + "s", (String.format("%-5s, ", s[1]) + s[2]));
+            help += String.format("  %-" + (optLength-2) + "s", (String.format("%-5s, ", s[1]) + s[2]));
 
             /* Écriture de la description */
+            String sDesc = s[7];
             int currentLineLength = 0;
-            for (String word : s[7].split(" "))
+            for (String word : sDesc.split(" "))
             {
                 if ((currentLineLength + word.length()) > descLength)
                 {
                     help += "\n" + String.format("%-" + optLength + "s", "");
                     currentLineLength = 0;
                 }
-                
+
                 help += word + " ";
                 currentLineLength = currentLineLength + word.length();
             }
+
+            if (s[3].equals(s[4]))
+                help += String.format("\n%-" + optLength + "s", "") + "Nombre de paramètre : \u001B[1m" + s[3] + "\u001B[0m.";
+            else
+                help += String.format("\n%-" + optLength + "s", "") + "Nombre de paramètre : de \u001B[1m" + s[3] + "\u001B[0m à \u001B[1m" + s[4] + "\u001B[0m.";
+            
+            if (s[5] != null)
+                help += String.format("\n%-" + optLength + "s", "") + "Valeur par défaut   : \u001B[1m" + s[5] + "\u001B[0m.";
 
             help += "\n\n";
         }
