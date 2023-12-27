@@ -20,16 +20,17 @@ public class MavenLite
     /*-----------------------------------*/
     /* Constantes et valeurs par défauts */
     /*-----------------------------------*/
-    private static final String AUTHOR     = "Floris Robart";
-    private static final String VERSION    = "2.0.0";
-    private static final String SOURCE     = "src";
-    private static final String CLASSPATH  = "bin";
-    private static final String ENCODING   = "UTF-8";
-    private static final String FILE       = "data/config-test.txt";
-    private static final String EXPORT     = "run.java";
-    private static final String DEPENDENCY = "lib";
-    private static final String CREATE     = ".";
-    private static final String OUTPUT     = "bin";
+    private static final String AUTHOR          = "Floris Robart";
+    private static final String MAVEN_LITE_HOME = "/usr/share/maven_lite ?";
+    private static final String VERSION         = "2.0.0";
+    private static final String SOURCE          = "src";
+    private static final String CLASSPATH       = "bin";
+    private static final String ENCODING        = "UTF-8";
+    private static final String FILE            = "data/config-test.txt";
+    private static final String EXPORT          = "run.java";
+    private static final String DEPENDENCY      = "lib";
+    private static final String CREATE          = ".";
+    private static final String OUTPUT          = "bin";
 
     /*-----------*/
     /* Variables */
@@ -444,7 +445,11 @@ public class MavenLite
      */
     public void version()
     {
-        System.out.println("Maven Lite version " + MavenLite.VERSION);
+        System.out.println("\u001B[1mMaven Lite " + MavenLite.VERSION + "\u001B[0m");
+        System.out.println("Maven Lite home : " + MavenLite.MAVEN_LITE_HOME);
+        System.out.println("Java version : " + System.getProperty("java.version") + ", vendor : " + System.getProperty("java.vendor") + ", runtime : " + System.getProperty("java.runtime.name"));
+        System.out.println("Default locale : " + System.getProperty("user.language") + "_" + System.getProperty("user.country") + ", platform encoding : " + System.getProperty("file.encoding"));
+        System.out.println("OS name : \"" + System.getProperty("os.name") + "\", version : \"" + System.getProperty("os.version") + "\", architecture : \"" + System.getProperty("os.arch") + "\"");
     }
 
     /**
