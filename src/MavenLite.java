@@ -1,6 +1,7 @@
 //!/usr/bin/env java
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +23,7 @@ public class MavenLite
     /*-----------------------------------*/
     private static final String AUTHOR          = "Floris Robart";
     private static final String VERSION         = "2.0.0";
-    private static final String SOURCE          = "src";
+    private static final String SOURCE          = "data/javaProject";
     private static final String CLASSPATH       = "bin";
     private static final String ENCODING        = "UTF-8";
     private static final String FILE            = "data/config-test.txt";
@@ -35,7 +36,7 @@ public class MavenLite
     private static final String DEFAULT         = "\u001B[0m";
     private static final String GREEN_BOLD      = "\u001B[1;32m";
     private static final String GREEN           = "\u001B[32m";
-    private static final String BOLD           = "\u001B[1m";
+    private static final String BOLD            = "\u001B[1m";
 
 
     /*-----------*/
@@ -122,6 +123,7 @@ public class MavenLite
         lst.add(new String[] {"version"       , "-v"   , "--version"       , "0"        , "0"        , MavenLite.VERSION   , "0", "Afficher la version et quitter."});
         lst.add(new String[] {"help"          , "-h"   , "--help"          , "0"        , "0"        , null                , "0", "afficher l'aide et quitter."});
         /* Pour ajouter une option, il faut ajouter un tableau de String dans la liste lstOptions et ajouter l'option dans le switch de la méthode executeOption(). Il peut être nécessaire d'ajouter une méthode pour l'option. */
+        lst.add(new String[] {"test"          , "-t"   , "--test"          , "0"        , "0"        , null                , "0", "Permet de tester des méhodes."});
 
         return lst;
     }
@@ -314,9 +316,20 @@ public class MavenLite
                         while (sc.hasNextLine())
                         {
                             String sLine = sc.nextLine();
-                            if (sLine.contains("public static void main"))
+                            if (sLine.replaceAll(" ", "").contains("public static void main(String[]".replaceAll(" ", "")))
                             {
-                                sMain = file.getName().substring(0, file.getName().length() - 5);
+                                /* Récupération du package */
+                                Scanner sc2 = new Scanner(file);
+                                while (sc2.hasNextLine())
+                                {
+                                    String sLine2 = sc2.nextLine().replaceAll("^[\\u0009\\u0020]*", "");
+                                    if (sLine2.contains("package"))
+                                    {
+                                        sMain = sLine2.split(" ")[1].replace(";", "") + "." + file.getName().replace(".java", "");
+                                        break;
+                                    }
+                                }
+                                sc2.close();
                                 break;
                             }
                         }
@@ -433,6 +446,10 @@ public class MavenLite
                     lst.remove(i--);
                     this.maven();
                     break;
+                case "test":
+                    lst.remove(i--);
+                    this.test();
+                    break;
                 default:
                     System.out.println("Erreur lors de l'exécution de l'option '" + opt[0] + "'.");
                     break;
@@ -515,6 +532,7 @@ public class MavenLite
      * Permet de spécifier le dossier contenant les fichiers jar utiliser par le programme.
      * Tout les fichiers jar seront ajoutés au classpath lors de la compilation et du lancement.
      * @param opt Ligne de la liste des options correspondant à l'option -d (--dependency)
+     * @return la liste des fichiers jar depuis la racine du projet à ajouter au classpath sous la forme d'une chaine de caractère séparé par des ':'
      */
     public String dependency(String[] opt)
     {
@@ -529,11 +547,11 @@ public class MavenLite
                 if (file.isFile())
                 {
                     if (file.getName().endsWith(".jar"))
-                        dependency += file.getName() + ":";
+                        dependency += file.getPath() + ":";
                 }
                 else if (file.isDirectory())
                 {
-                    dependency += this.dependency(new String[] {"", "", "", "0", "1", file.getAbsolutePath() + "/"});
+                    dependency += this.dependency(new String[] {"", "", "", "0", "1", file.getPath() + "/"});
                 }
             }
         }
@@ -670,5 +688,13 @@ public class MavenLite
 
             System.out.println();
         }
+    }
+
+    /**
+     * Pour le débogage uniquement
+     */
+    private void test()
+    {
+        System.out.println(this.getMainClassName(new File(MavenLite.SOURCE)));
     }
 }
