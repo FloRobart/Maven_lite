@@ -1,3 +1,0 @@
--v
--l -s source -arg argument
--args args1 args2 args3
