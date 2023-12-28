@@ -404,11 +404,17 @@ public class MavenLite
                     }
                 }
             }
-        } else {
-            System.out.println(MavenLite.ERROR + "Le dossier '" + source + "' n'existe pas ou n'est pas un dossier.");
+        }
+        else
+        {
+            if (source.isFile())
+                System.out.println(MavenLite.ERROR + "Le fichier '" + source + "' n'est pas un dossier !");
+            else
+                System.out.println(MavenLite.ERROR + "Le dossier '" + source + "' n'existe pas !");
+
             System.exit(0);
         }
-    
+
         return sCompileList.toString();
     }
     
@@ -813,7 +819,7 @@ public class MavenLite
     public void compilation()
     {
         //this.hmArgs.put("main", this.getMainClassName(new File(MavenLite.SOURCE)));
-        System.out.println(this.genererCompileList(new File(this.hmArgs.get("source"))));
+        System.out.println(this.genererCompileList(new File("TestApp2" + File.separator + this.hmArgs.get("source"))));
     }
 
     /**
