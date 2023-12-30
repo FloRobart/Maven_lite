@@ -1,8 +1,10 @@
 //!/usr/bin/env java
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,14 +21,14 @@ import java.util.Scanner;
  */
 public class MavenLite 
 {
-    /*-----------------------------------*/
+    /*===================================*/
     /* Constantes et valeurs par défauts */
-    /*-----------------------------------*/
+    /*===================================*/
     private static final String AUTHOR          = "Floris Robart";
     private static final String VERSION         = "2.0.0";
     private static final String ENCODING        = "UTF-8";
     private static final String EXPORT          = "run.java";
-    private static final String OUTPUT          = "bin";
+    private static final String OUTPUT          = "bin"; // TODO : L'output doit être modifier quand les options -cr ou -s sont utilisées
     private static final String CREATE          = "data/create";
     private static final String FILE            = "config";
     private static final String SOURCE          = "src" + File.separator + "main" + File.separator + "java";
@@ -48,16 +50,18 @@ public class MavenLite
     private static final String YELLOW_BOLD     = "\u001B[1;33m";
     private static final String ORANGE          = "\u001B[38;5;208m";
     private static final String ORANGE_BOLD     = "\u001B[38;5;208;1m";
+    private static final String FULL_GREEN_BOLD = "\u001B[38;5;46;1m";
 
     /* Messages */
-    private static final String ERROR           = "[" + MavenLite.RED_BOLD + "ERROR" + MavenLite.DEFAULT + "] ";
-    private static final String WARNING         = "[" + MavenLite.YELLOW_BOLD + "WARNING" + MavenLite.DEFAULT + "] ";
+    private static final String SUCCESS         = "[" + MavenLite.FULL_GREEN_BOLD + "SUCCESS" + MavenLite.DEFAULT + "] ";
     private static final String INFO            = "[" + MavenLite.BLUE_BOLD + "INFO" + MavenLite.DEFAULT + "] ";
+    private static final String WARNING         = "[" + MavenLite.YELLOW_BOLD + "WARNING" + MavenLite.DEFAULT + "] ";
+    private static final String ERROR           = "[" + MavenLite.RED_BOLD + "ERROR" + MavenLite.DEFAULT + "] ";
 
 
-    /*-----------*/
+    /*===========*/
     /* Variables */
-    /*-----------*/
+    /*===========*/
     /* Parse et exécution des options */
     private List<String[]> lstOptions;
     private Map<String, String> hmArgs;
@@ -113,7 +117,9 @@ public class MavenLite
      *   <li>2 : nom long de l'option</li>
      *   <li>3 : nombre d'argument de l'option minimum</li>
      *   <li>4 : nombre d'argument de l'option maximum</li>
-     *   <li>5 : description de l'option</li>
+     *   <li>5 : valeur par défaut de l'option</li>
+     *   <li>6 : numéro d'ordonnancement de l'option</li>
+     *   <li>7 : description de l'option</li>
      * </ul>
      * @return la liste des options possible
      */
@@ -215,11 +221,7 @@ public class MavenLite
                     else if (opt[3].equals("unlimited"))
                     {
                         /* Parse les options qui peuvent avoir un nombre illimité d'argument */
-                        String sArgs;
-                        if (opt[5] == null)
-                            sArgs = "";
-                        else
-                            sArgs = opt[5];
+                        String sArgs = this.hmArgs.get(opt[0]) == null ? opt[5] : "";
 
                         while (i + 1 < args.length && !args[i + 1].startsWith("-"))
                             sArgs += "\"" + args[++i].replace("\\", "") + "\";";
@@ -318,6 +320,10 @@ public class MavenLite
     }
 
 
+
+    /*===================*/
+    /* Méthodes générale */
+    /*===================*/
     /**
      * Permet de détecter automatiquement le fichier main à lancer
      * @param f le dossier à parcourir
@@ -420,7 +426,68 @@ public class MavenLite
 
         return sCompileList.toString();
     }
-    
+
+
+    /**
+     * Permet d'éxecuter une commande
+     * @param commande la commande à exécuter
+     */
+    public void executCommande(String commande)
+    {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        String shell;
+        String shellOption;
+
+        if (System.getProperty("os.name").toLowerCase().startsWith("windows"))
+        {
+            shell = "cmd.exe";
+            shellOption = "/c";
+        }
+        else
+        {
+            shell = "bash";
+            shellOption = "-c";
+        }
+
+        /* Préparation de la commande */
+        processBuilder.command(shell, shellOption, commande);
+
+        try
+        {
+            /* Exécution de la commande */
+            Process        process = processBuilder.start();
+            StringBuilder  output  = new StringBuilder();
+            BufferedReader reader  = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+            String line;
+            while ((line = reader.readLine()) != null)
+                output.append(line + "\n");
+
+            int exitCode = process.waitFor();
+            if (exitCode == 0)
+            {
+                System.out.println(output);
+                System.out.println(MavenLite.SUCCESS + "La commande '" + commande + "' à réussi.");
+            }
+            else
+            {
+                System.out.println(MavenLite.ERROR + "La commande '" + commande + "' à échoué.");
+                System.exit(1);
+            }
+        }
+        catch (Exception e) { e.printStackTrace(); }
+    }
+
+
+    /**
+     * Permet de supprimer le fichier contenant la liste des fichiers à compiler
+     */
+    public void removeCompilList()
+    {
+        File f = new File(MavenLite.COMPILE_LIST_NAME);
+        if (f.exists())
+            f.delete();
+    }
 
 
     /*=======================================*/
@@ -528,7 +595,15 @@ public class MavenLite
         }
 
         if (create != null)
+        {
+            if (this.hmArgs.get("source") != null)
+                this.hmArgs.put("source", create[5] + File.separator + this.hmArgs.get("source"));
+            
+            if (this.hmArgs.get("output") != null)
+                this.hmArgs.put("output", create[5] + File.separator + this.hmArgs.get("output"));
+
             this.create(create);
+        }
         else
             this.hmArgs.put("create", null);
 
@@ -824,15 +899,50 @@ public class MavenLite
      */
     public void compilation()
     {
-        //this.hmArgs.put("main", this.getMainClassName(new File(MavenLite.SOURCE)));
-        String rootProject = this.hmArgs.get("source");
+        /* Variables */
+        StringBuilder command = new StringBuilder();
+        String rootProject;
+
         if (this.hmArgs.get("create") != null)
+        {
             rootProject = this.hmArgs.get("create") + File.separator + this.hmArgs.get("source");
+            this.hmArgs.put("output", this.hmArgs.get("create") + File.separator + this.hmArgs.get("output"));
+        }
+        else
+            rootProject = new File(this.hmArgs.get("source")).getAbsolutePath();
+
+        try
+        {
+            FileWriter fw = new FileWriter(new File(MavenLite.COMPILE_LIST_NAME));
+            fw.write(this.genererCompileList(new File(rootProject)));
+            fw.close();
+        }
+        catch (Exception e)
+        {
+            System.out.println(MavenLite.ERROR + "L'écriture dans le fichier '" + MavenLite.COMPILE_LIST_NAME + "' à échoué.");
+            System.exit(0);
+        }
 
         this.hmArgs.put("main", this.getMainClassName(new File(rootProject)));
-        System.out.println(this.hmArgs.get("main"));
+        
+        /* Compilation */
+        System.out.println("Compilation du projet : " + rootProject);
+        System.out.println("output : " + this.hmArgs.get("output"));
+        System.out.println("Classpath : " + this.hmArgs.get("classpath"));
+        System.out.println("Encoding : " + this.hmArgs.get("encoding"));
 
 
+        command.append("javac -d ");
+        command.append(this.hmArgs.get("output"));
+        command.append(" -cp ");
+        command.append(this.hmArgs.get("output"));
+        command.append(":");
+        command.append(this.hmArgs.get("classpath"));
+        command.append(" -encoding ");
+        command.append(this.hmArgs.get("encoding"));
+        command.append(" @");
+        command.append(MavenLite.COMPILE_LIST_NAME);
+        this.executCommande(command.toString());
     }
 
     /**
@@ -905,6 +1015,7 @@ public class MavenLite
      */
     private void test()
     {
-        System.out.println(this.getMainClassName(new File(MavenLite.SOURCE)));
+        System.out.println("Test");
     }
 }
+
