@@ -1,5 +1,6 @@
 #!/bin/bash
 # Maven Lite post-installation script
+exit 0
 
 mvnlHome="/home/${USER}/.mavenLite"
 mvnlFile="MavenLite.class"

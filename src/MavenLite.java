@@ -13,11 +13,10 @@ import java.util.Scanner;
 
 /**
  * MavenLite est un programme qui permet de compiler et de lancer un projet java
- * sans avoir à utiliser Maven.
  * @author Floris Robart
  * @version 2.0.0
  * @since 1.0.0
- * @see <a href="https://github.com/FloRobart/Maven_lite/blob/master/maven_lite.sh">maven_lite.sh</a>
+ * @see <a href="https://github.com/FloRobart/Maven_lite/blob/master/maven_lite.sh">maven-lite</a>
  */
 public class MavenLite 
 {
@@ -41,17 +40,11 @@ public class MavenLite
     /* Couleurs et style */
     private static final String DEFAULT         = "\u001B[0m";
     private static final String GREEN_BOLD      = "\u001B[1;32m";
-    private static final String GREEN           = "\u001B[32m";
-    private static final String BOLD            = "\u001B[1m";
-    private static final String RED             = "\u001B[31m";
-    private static final String RED_BOLD        = "\u001B[1;31m";
-    private static final String BLUE            = "\u001B[34m";
-    private static final String BLUE_BOLD       = "\u001B[1;34m";
-    private static final String YELLOW          = "\u001B[33m";
-    private static final String YELLOW_BOLD     = "\u001B[1;33m";
-    private static final String ORANGE          = "\u001B[38;5;208m";
-    private static final String ORANGE_BOLD     = "\u001B[38;5;208;1m";
     private static final String FULL_GREEN_BOLD = "\u001B[38;5;46;1m";
+    private static final String BOLD            = "\u001B[1m";
+    private static final String RED_BOLD        = "\u001B[1;31m";
+    private static final String BLUE_BOLD       = "\u001B[1;34m";
+    private static final String YELLOW_BOLD     = "\u001B[1;33m";
 
     /* Messages */
     private static final String SUCCESS         = "[" + MavenLite.FULL_GREEN_BOLD + "SUCCESS" + MavenLite.DEFAULT + "] ";
@@ -152,7 +145,7 @@ public class MavenLite
         /* 20 */ lst.add(new String[] {"rmjp"             , "-rmjp", "--remove-java-print"    , "0"        , "0"        , null                , "0", "Créer l'arborescence du projet ainsi qu'un fichier de config par défaut. Si le dossier de sortie n'est pas spécifié, le dossier par défaut est le dossier courant."});
         /* 21 */ lst.add(new String[] {"root-project"     , "-rp"  , "--root-project"         , "1"        , "1"        , MavenLite.ROOT_PROJECT, "0", "Dossier racine du projet."});
         /* Pour ajouter une option, il faut ajouter un tableau de String dans la liste lstOptions et ajouter l'option dans le switch de la méthode executeOption(). Il peut être nécessaire d'ajouter une méthode pour l'option. */
-        /* 21 */ lst.add(new String[] {"test"          , "-t"   , "--test"                 , "0"        , "0"        , null                , "0", "Permet de tester des méhodes."});
+        /* 21 */ lst.add(new String[] {"test"             , "-t"   , "--test"                 , "0"        , "0"        , null                , "0", "Permet de tester des méhodes."});
 
         return lst;
     }
