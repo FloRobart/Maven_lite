@@ -1,3 +1,10 @@
+@import "{{ site.theme }}";
+
 a {
     color : rgb(103, 234, 169);
 }
+
+body {
+    background-color : rgb(0, 0, 0);
+}
+
