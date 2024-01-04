@@ -3,6 +3,29 @@
 - Version : 1.2.0
 - La version 2.0 est en préparation
 
+## Table des matières
+
+- [Maven Lite](#maven-lite)
+  - [Table des matières](#table-des-matières)
+  - [Compatibilité](#compatibilité)
+  - [Description](#description)
+  - [Prérequis](#prérequis)
+  - [Utilisation](#utilisation)
+    - [Exemple, fonctionnaliés et limites](#exemple-fonctionnaliés-et-limites)
+  - [Installation automatique](#installation-automatique)
+    - [Windows](#windows)
+    - [Linux](#linux)
+  - [Installation manuelle](#installation-manuelle)
+    - [Windows](#windows-1)
+    - [Linux Avec les droits administrateurs](#linux-avec-les-droits-administrateurs)
+    - [Linux Sans les droits administrateurs](#linux-sans-les-droits-administrateurs)
+  - [Désinstallation automatique](#désinstallation-automatique)
+    - [Windows](#windows-2)
+    - [Linux](#linux-1)
+  - [Désinstallation manuelle](#désinstallation-manuelle)
+    - [Windows](#windows-3)
+    - [Linux](#linux-2)
+
 ## Compatibilité
 
 - Windows 10 (Testé sur windows 10 22H2)
