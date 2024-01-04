@@ -1,0 +1,10 @@
+# Source du projet
+--source src/main/java
+
+# Dossier de sortie des fichiers compilés
+--output bin
+
+# Liste des libraries à ajouter au classpath
+--libraries src/main/resources/lib
+
+# Compiler et lancer le projet grâce à la commande 'mvnl -f -cl'
