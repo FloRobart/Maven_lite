@@ -120,7 +120,7 @@ public class MavenLite
         /*                             0                    1        2                          3            4            5                       6          7                 */
         /* 0  */ lst.add(new String[] {"file"             , "-f"   , "--file"                 , "0"        , "1"        , MavenLite.FILE        , "0", "Permet de charger les options à partir d'un fichier de configuration. En savoir plus : "});
         /* 1  */ lst.add(new String[] {"create"           , "-cr"  , "--create"               , "0"        , "1"        , MavenLite.CREATE      , "0", "Créer l'arborescence du projet ainsi qu'un fichier de config par défaut."});
-        /* 2  */ lst.add(new String[] {"mvc"              , "-mvc" , "--model-view-controller", "0"        , "0"        , null                  , "0", "Permet de spécifier à l'option '" + this.lstOptions.get(1)[2] + "' de créer l'arborescence d'un projet MVC."});
+        /* 2  */ lst.add(new String[] {"mvc"              , "-mvc" , "--model-view-controller", "0"        , "0"        , null                  , "0", "Permet de spécifier à l'option '" + lst.get(1)[2] + "' de créer l'arborescence d'un projet MVC."});
         /* 3  */ lst.add(new String[] {"compilation"      , "-c"   , "--compilation"          , "0"        , "0"        , null                  , "0", "Compile le projet."});
         /* 4  */ lst.add(new String[] {"launch"           , "-l"   , "--launch"               , "0"        , "0"        , null                  , "0", "Lance le projet."});
         /* 5  */ lst.add(new String[] {"compile-launch"   , "-cl"  , "--compile-launch"       , "0"        , "0"        , null                  , "0", "Compiler et lancer le projet. (équivalent à -c -l)"});
@@ -587,12 +587,12 @@ public class MavenLite
             }
 
             if (s[3].equals(s[4]))
-                help += String.format("\n%-" + optLength + "s", "") + "Nombre de paramètre : " + MavenLite.BOLD + s[3] + MavenLite.DEFAULT + ".";
+                help += String.format("\n%-" + optLength + "s", "") + "Nombre de d'argument  : " + MavenLite.BOLD + s[3] + MavenLite.DEFAULT + ".";
             else
-                help += String.format("\n%-" + optLength + "s", "") + "Nombre de paramètre : de " + MavenLite.BOLD + s[3] + MavenLite.DEFAULT + " à " + MavenLite.BOLD + s[4] + MavenLite.DEFAULT + ".";
+                help += String.format("\n%-" + optLength + "s", "") + "Nombre de d'arguments : de " + MavenLite.BOLD + s[3] + MavenLite.DEFAULT + " à " + MavenLite.BOLD + s[4] + MavenLite.DEFAULT + ".";
             
             if (s[5] != null)
-                help += String.format("\n%-" + optLength + "s", "") + "Valeur par défaut   : " + MavenLite.BOLD + s[5] + MavenLite.DEFAULT + ".";
+                help += String.format("\n%-" + optLength + "s", "") + "Valeur par défaut     : " + MavenLite.BOLD + s[5] + MavenLite.DEFAULT + ".";
 
             help += "\n\n";
         }
