@@ -70,7 +70,7 @@ public class MavenLite
      * Coeur du programme
      * @param args les arguments passés au programme
      */
-    public MavenLite(String[] args)
+    private MavenLite(String[] args)
     {
         this.lstOptions = this.initOptions();
         this.hmArgs = new HashMap<String, String>();
@@ -85,7 +85,7 @@ public class MavenLite
     /**
      * Constructeur qui permet uniquement de charger la liste des options.
      */
-    public MavenLite()
+    private MavenLite()
     {
         this.lstOptions = this.initOptions();
     }
@@ -111,41 +111,41 @@ public class MavenLite
      * </ul>
      * @return la liste des options possible
      */
-    public List<String[]> initOptions()
+    private List<String[]> initOptions()
     {
         List<String[]> lst = new ArrayList<String[]>();
 
-        /*                             nom                  court    long                       nb argument  nb argument  valeur                utilisé    description       */
-        /*                             0                    1        2                          3            4            5                     6          7                 */
-        /* 0  */ lst.add(new String[] {"file"             , "-f"   , "--file"                 , "0"        , "1"        , MavenLite.FILE      , "0", "Fichier de configuration. Permet de charger les options à partir d'un fichier de configuration, le séparateur sont l'espace et le retour à la ligne. Les options du fichier de configuration prédomine sur les options de la ligne de commande. L'option -f doit obligatoirement être la première option de la ligne de commande."});
-        /* 1  */ lst.add(new String[] {"create"           , "-cr"  , "--create"               , "0"        , "1"        , MavenLite.CREATE    , "0", "Créer l'arborescence du projet ainsi qu'un fichier de config par défaut. Si le dossier de sortie n'est pas spécifié, le dossier par défaut est le dossier courant."});
-        /* 2  */ lst.add(new String[] {"compilation"      , "-c"   , "--compilation"          , "0"        , "0"        , null                , "0", "Compiler le projet."});
-        /* 3  */ lst.add(new String[] {"launch"           , "-l"   , "--launch"               , "0"        , "0"        , null                , "0", "Lancer le projet."});
-        /* 4  */ lst.add(new String[] {"compile-launch"   , "-cl"  , "--compile-launch"       , "0"        , "0"        , null                , "0", "Compiler et lancer le projet. (équivalent à -c -l)"});
-        /* 5  */ lst.add(new String[] {"launch-compile"   , "-lc"  , "--launch-compile"       , "0"        , "0"        , null                , "0", "Compiler et lancer le projet. (équivalent à -c -l)"});
-        /* 6  */ lst.add(new String[] {"mvc"              , "-mvc" , "--model-view-controller", "0"        , "0"        , null                , "0", "Permet de créer l'arborescence d'un projet MVC."});
+        /*                             nom                  court    long                       nb argument  nb argument  valeur                  utilisé    description       */
+        /*                             0                    1        2                          3            4            5                       6          7                 */
+        /* 0  */ lst.add(new String[] {"file"             , "-f"   , "--file"                 , "0"        , "1"        , MavenLite.FILE        , "0", "Fichier de configuration. Permet de charger les options à partir d'un fichier de configuration, le séparateur sont l'espace et le retour à la ligne. Les options du fichier de configuration prédomine sur les options de la ligne de commande. L'option -f doit obligatoirement être la première option de la ligne de commande."});
+        /* 1  */ lst.add(new String[] {"create"           , "-cr"  , "--create"               , "0"        , "1"        , MavenLite.CREATE      , "0", "Créer l'arborescence du projet ainsi qu'un fichier de config par défaut. Si le dossier de sortie n'est pas spécifié, le dossier par défaut est le dossier courant."});
+        /* 2  */ lst.add(new String[] {"compilation"      , "-c"   , "--compilation"          , "0"        , "0"        , null                  , "0", "Compiler le projet."});
+        /* 3  */ lst.add(new String[] {"launch"           , "-l"   , "--launch"               , "0"        , "0"        , null                  , "0", "Lancer le projet."});
+        /* 4  */ lst.add(new String[] {"compile-launch"   , "-cl"  , "--compile-launch"       , "0"        , "0"        , null                  , "0", "Compiler et lancer le projet. (équivalent à -c -l)"});
+        /* 5  */ lst.add(new String[] {"launch-compile"   , "-lc"  , "--launch-compile"       , "0"        , "0"        , null                  , "0", "Compiler et lancer le projet. (équivalent à -c -l)"});
+        /* 6  */ lst.add(new String[] {"mvc"              , "-mvc" , "--model-view-controller", "0"        , "0"        , null                  , "0", "Permet de créer l'arborescence d'un projet MVC."});
         /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
         /* Tous se qui est au dessus de cette ligne ne doit pas être déplacer, leur ordre est important */
         
         /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
         /* Tous se qui est au dessus de cette ligne ne doit pas être déplacer en dehors des commentaires qui les entours mais peux être interchanger entre eux */
-        /* 7  */ lst.add(new String[] {"verbose"          , "-v"   , "--verbose"              , "0"        , "0"        , null                , "0", "Permet d'afficher les commandes exécutées."});
-        /* 8  */ lst.add(new String[] {"maven"            , "-mvn" , "--maven"                , "0"        , "0"        , null                , "0", "Convertir le projet en projet maven."});
-        /* 9  */ lst.add(new String[] {"export"           , "-ex"  , "--export"               , "0"        , "1"        , MavenLite.EXPORT    , "0", "Exporter le projet dans un fichier jar. Le fichier jar sera exporté dans le dossier de sortie. Le nom du fichier jar est le nom du dossier de sortie."});
-        /* 10 */ lst.add(new String[] {"source"           , "-s"   , "--source"               , "1"        , "1"        , MavenLite.SOURCE    , "0", "Dossier racine du projet à compiler."});
-        /* 11 */ lst.add(new String[] {"output"           , "-o"   , "--output"               , "1"        , "1"        , MavenLite.OUTPUT    , "0", "Dossier de sortie des fichiers compilés."});
-        /* 12 */ lst.add(new String[] {"classpath"        , "-cp"  , "--classpath"            , "1"        , "1"        , null                , "0", "Liste des fichiers jar et du dossier de sortie des fichiers compilés (le même dossier que pour l'option -o) à ajouter au classpath lors de la compilation et du lancement. Les fichiers jar doivent être séparés par des ':'. La valeur par defaut du classpath est le dossier de sortie des fichiers compilés si l'option -o est utilisé, sinon le classpath sera le dossier courent."});
-        /* 13 */ lst.add(new String[] {"libraries"        , "-lib" , "--libraries"            , "0"        , "1"        , MavenLite.LIBRARIES , "0", "Dossier contenant les fichiers jar utiliser par le programme. Tout les fichiers jar seront ajoutés au classpath lors de la compilation et du lancement."});
-        /* 14 */ lst.add(new String[] {"encoding"         , "-e"   , "--encoding"             , "1"        , "1"        , MavenLite.ENCODING  , "0", "Permet de changer l'encodage des fichiers java à compiler. L'encodage par defaut est 'UTF-8'. Utilisable uniquement avec l'option -c."});
-        /* 15 */ lst.add(new String[] {"main"             , "-m"   , "--main"                 , "1"        , "1"        , MavenLite.MAIN      , "0", "Classe principale à lancer. Utilisable uniquement avec l'option -l."});
-        /* 16 */ lst.add(new String[] {"argument"         , "-arg" , "--argument"             , "1"        , "1"        , null                , "0", "Argument unique"});
-        /* 17 */ lst.add(new String[] {"arguments"        , "-args", "--arguments"            , "unlimited", "unlimited", null                , "0", "Arguments à passer à la classe principale. Si vous voulez passé un argument qui commencer par '-' parce qu'aucune erreur ne sera déclancher, il faut échapper le caractère '-' avec deux '\\' comme ceci : '-args \\\\-argument_pour_le_main'."});
-        /* 18 */ lst.add(new String[] {"version"          , "-V"   , "--version"              , "0"        , "0"        , MavenLite.VERSION   , "0", "Afficher la version et quitter."});
-        /* 19 */ lst.add(new String[] {"help"             , "-h"   , "--help"                 , "0"        , "0"        , null                , "0", "afficher l'aide et quitter."});
-        /* 20 */ lst.add(new String[] {"rmjp"             , "-rmjp", "--remove-java-print"    , "0"        , "0"        , null                , "0", "Créer l'arborescence du projet ainsi qu'un fichier de config par défaut. Si le dossier de sortie n'est pas spécifié, le dossier par défaut est le dossier courant."});
+        /* 7  */ lst.add(new String[] {"verbose"          , "-v"   , "--verbose"              , "0"        , "0"        , null                  , "0", "Permet d'afficher les commandes exécutées."});
+        /* 8  */ lst.add(new String[] {"maven"            , "-mvn" , "--maven"                , "0"        , "0"        , null                  , "0", "Convertir le projet en projet maven."});
+        /* 9  */ lst.add(new String[] {"export"           , "-ex"  , "--export"               , "0"        , "1"        , MavenLite.EXPORT      , "0", "Exporter le projet dans un fichier jar. Le fichier jar sera exporté dans le dossier de sortie. Le nom du fichier jar est le nom du dossier de sortie."});
+        /* 10 */ lst.add(new String[] {"source"           , "-s"   , "--source"               , "1"        , "1"        , MavenLite.SOURCE      , "0", "Dossier racine du projet à compiler."});
+        /* 11 */ lst.add(new String[] {"output"           , "-o"   , "--output"               , "1"        , "1"        , MavenLite.OUTPUT      , "0", "Dossier de sortie des fichiers compilés."});
+        /* 12 */ lst.add(new String[] {"classpath"        , "-cp"  , "--classpath"            , "1"        , "1"        , null                  , "0", "Liste des fichiers jar et du dossier de sortie des fichiers compilés (le même dossier que pour l'option -o) à ajouter au classpath lors de la compilation et du lancement. Les fichiers jar doivent être séparés par des ':'. La valeur par defaut du classpath est le dossier de sortie des fichiers compilés si l'option -o est utilisé, sinon le classpath sera le dossier courent."});
+        /* 13 */ lst.add(new String[] {"libraries"        , "-lib" , "--libraries"            , "0"        , "1"        , MavenLite.LIBRARIES   , "0", "Dossier contenant les fichiers jar utiliser par le programme. Tout les fichiers jar seront ajoutés au classpath lors de la compilation et du lancement."});
+        /* 14 */ lst.add(new String[] {"encoding"         , "-e"   , "--encoding"             , "1"        , "1"        , MavenLite.ENCODING    , "0", "Permet de changer l'encodage des fichiers java à compiler. L'encodage par defaut est 'UTF-8'. Utilisable uniquement avec l'option -c."});
+        /* 15 */ lst.add(new String[] {"main"             , "-m"   , "--main"                 , "1"        , "1"        , MavenLite.MAIN        , "0", "Classe principale à lancer. Utilisable uniquement avec l'option -l."});
+        /* 16 */ lst.add(new String[] {"argument"         , "-arg" , "--argument"             , "1"        , "1"        , null                  , "0", "Argument unique"});
+        /* 17 */ lst.add(new String[] {"arguments"        , "-args", "--arguments"            , "unlimited", "unlimited", null                  , "0", "Arguments à passer à la classe principale. Si vous voulez passé un argument qui commencer par '-' parce qu'aucune erreur ne sera déclancher, il faut échapper le caractère '-' avec deux '\\' comme ceci : '-args \\\\-argument_pour_le_main'."});
+        /* 18 */ lst.add(new String[] {"version"          , "-V"   , "--version"              , "0"        , "0"        , MavenLite.VERSION     , "0", "Afficher la version et quitter."});
+        /* 19 */ lst.add(new String[] {"help"             , "-h"   , "--help"                 , "0"        , "0"        , null                  , "0", "afficher l'aide et quitter."});
+        /* 20 */ lst.add(new String[] {"rmjp"             , "-rmjp", "--remove-java-print"    , "0"        , "0"        , null                  , "0", "Créer l'arborescence du projet ainsi qu'un fichier de config par défaut. Si le dossier de sortie n'est pas spécifié, le dossier par défaut est le dossier courant."});
         /* 21 */ lst.add(new String[] {"root-project"     , "-rp"  , "--root-project"         , "1"        , "1"        , MavenLite.ROOT_PROJECT, "0", "Dossier racine du projet."});
         /* Pour ajouter une option, il faut ajouter un tableau de String dans la liste lstOptions et ajouter l'option dans le switch de la méthode executeOption(). Il peut être nécessaire d'ajouter une méthode pour l'option. */
-        /* 21 */ lst.add(new String[] {"test"             , "-t"   , "--test"                 , "0"        , "0"        , null                , "0", "Permet de tester des méhodes."});
+        /* 23 */ lst.add(new String[] {"test"             , "-t"   , "--test"                 , "0"        , "0"        , null                  , "0", "Permet de tester des méhodes."});
 
         return lst;
     }
@@ -156,10 +156,11 @@ public class MavenLite
      * Si une option est passée plusieurs fois, seule la dernière sera prise en compte.
      * @param args les arguments à parser 
      */
-    public void parseOptions(String[] args)
+    private void parseOptions(String[] args)
     {
         for (int i = 0; i < args.length; i++)
         {
+            System.out.println("args[" + i + "] = " + args[i]); // debug
             boolean bFound = false;
 
             /* Si l'option est "-f" ou "--file. Ne fonctionne qu'une seul fois */
@@ -264,7 +265,7 @@ public class MavenLite
      * @param lst la liste des options à trier
      * @return la liste des options triées
      */
-    public List<String[]> sortList(List<String[]> lst)
+    private List<String[]> sortList(List<String[]> lst)
     {
         List<String[]> lstSorted = new ArrayList<String[]>(lst.size());
 
@@ -286,7 +287,7 @@ public class MavenLite
      * @param lst
      * @return
      */
-    public List<String[]> removeUnusedOption(List<String[]> lst)
+    private List<String[]> removeUnusedOption(List<String[]> lst)
     {
         List<String[]> lstSorted = new ArrayList<String[]>();
 
@@ -304,7 +305,7 @@ public class MavenLite
      * @param index l'index de l'élément à supprimer
      * @return le tableau modifié
      */
-    public String[] removeTabElement(String[] tab, int index)
+    private String[] removeTabElement(String[] tab, int index)
     {
         String[] newTab = new String[tab.length-1];
 
@@ -327,7 +328,7 @@ public class MavenLite
      * @param f le dossier à parcourir
      * @return le nom de la classe principale
      */
-    public String getMainClassName(File f)
+    private String getMainClassName(File f)
     {
         String sMain = "";
 
@@ -391,7 +392,7 @@ public class MavenLite
      * @param source le dossier à parcourir
      * @return la liste des fichiers à compiler
      */
-    public String genererCompileList(File source)
+    private String genererCompileList(File source)
     {
         StringBuilder sCompileList = new StringBuilder();
     
@@ -431,7 +432,7 @@ public class MavenLite
      * Permet d'éxecuter une commande
      * @param commande la commande à exécuter
      */
-    public int executCommande(String commande)
+    private int executCommande(String commande)
     {
         ProcessBuilder processBuilder = new ProcessBuilder();
         String shell;
@@ -477,7 +478,7 @@ public class MavenLite
     /**
      * Permet de supprimer le fichier contenant la liste des fichiers à compiler
      */
-    public void removeCompilList()
+    private void removeCompilList()
     {
         File f = new File(MavenLite.COMPILE_LIST_NAME);
         if (f.exists())
@@ -495,7 +496,7 @@ public class MavenLite
      * Execute les options passées en paramètre
      * @param map les options à exécuter avec leurs arguments associés
      */
-    public void executeOption(List<String[]> lst)
+    private void executeOption(List<String[]> lst)
     {
         lst = this.removeUnusedOption(lst);
         for (int i = 0; i < lst.size(); i++)
@@ -520,6 +521,9 @@ public class MavenLite
                     break;
                 case "maven":
                     System.exit(this.maven());
+                    break;
+                case "uninstall":
+                    this.uninstall();
                     break;
                 case "test":
                     this.test();
@@ -549,7 +553,7 @@ public class MavenLite
      * Affiche la version, le nom de l'auteur et des informations sur l'environnement d'exécution.
      * @param phraseAuteur la phrase à afficher après la version
      */
-    public void version(String phraseAuteur)
+    private void version(String phraseAuteur)
     {
         String version = "";
 
@@ -566,7 +570,7 @@ public class MavenLite
      * Permet d'afficher l'aide à partir de la liste des options.
      * @param lst la liste des options
      */
-    public void help(List<String[]> lst)
+    private void help(List<String[]> lst)
     {
         int optLength = 30;
         int descLength = 50;
@@ -612,7 +616,7 @@ public class MavenLite
      * @param opt Ligne de la liste des options correspondant à l'option -lib (--libraries)
      * @return la liste des fichiers jar depuis la racine du projet à ajouter au classpath sous la forme d'une chaine de caractère séparé par des ':'
      */
-    public String libraries(String fileName)
+    private String libraries(String fileName)
     {
         StringBuilder libraries = new StringBuilder();
 
@@ -652,20 +656,24 @@ public class MavenLite
      * Les options de la ligne de commande prédomine sur les options sur celle du fichier de configuration.
      * @param opt Ligne de liste des options correspondant à l'option -f
      */
-    public void file(String fileName)
+    private void file(String fileName)
     {
         try
         {
+            StringBuilder sFile = new StringBuilder();
             Scanner sc = new Scanner(new File(fileName));
 
             while (sc.hasNextLine())
             {
                 String line = sc.nextLine().replaceAll("^[\\u0009\\u0020]*", ""); // Supprime les espaces et les tabulations au début de la ligne
                 if (!line.startsWith("#") && !line.equals(""))
-                    this.parseOptions(line.split(" "));
+                    sFile.append(line).append(" ");
             }
 
             sc.close();
+
+            System.out.println("contenue du fichier de configuration : " + sFile.toString()); // debug
+            this.parseOptions(sFile.toString().split(" "));
         }
         catch (Exception e)
         {
@@ -678,7 +686,7 @@ public class MavenLite
      * Créer l'arborescence du projet ainsi qu'un fichier de config par défaut.
      * @param opt Ligne de la liste des options correspondant à l'option -cr
      */
-    public void create(String projectName)
+    private void create(String projectName)
     {
         /*
         ProjectName
@@ -809,7 +817,7 @@ public class MavenLite
     /**
      * Compile le projet.
      */
-    public void compilation()
+    private void compilation()
     {
         /* Variables */
         StringBuilder command = new StringBuilder();
@@ -864,7 +872,7 @@ public class MavenLite
     /**
      * Lance le projet.
      */
-    public void launch()
+    private void launch()
     {
         /* Variables */
         StringBuilder command = new StringBuilder();
@@ -913,7 +921,7 @@ public class MavenLite
      * Le nom du fichier jar est le nom du dossier de sortie.
      * @param opt Ligne de la liste des options correspondant à l'option -ex
      */
-    public void export(String[] opt)
+    private void export(String[] opt)
     {
         System.out.println("Exportation du projet : " + opt[5]);
         // TODO : Exporter le projet dans un fichier .class
@@ -923,12 +931,63 @@ public class MavenLite
      * Converti le projet en projet maven.
      * @return 0 si la conversion à réussi, 1 sinon
      */
-    public int maven()
+    private int maven()
     {
         System.out.println("Conversion du projet en projet maven");
         // TODO : Convertir le projet en projet maven
 
         return 0;
+    }
+
+    /**
+     * Permet de désinstaller les pages de manuel de Maven Lite.
+     * @return 0 si la désinstallation à réussi, 1 si une erreur est survenue, 2 si l'utilisateur à annulé la désinstallation
+     */
+    private int uninstall()
+    {
+        // Variables
+        String[] manPageLangages = {"fr", "en"};
+
+        System.out.print(MavenLite.WARNING + MavenLite.RED_BOLD + "Attention" + MavenLite.DEFAULT + ", vous êtes sur le point de désinstaller Maven Lite. Êtes-vous sûr de vouloir continuer ? (y/n) : ");
+        Scanner sc = new Scanner(System.in);
+        String reponse = sc.nextLine().toLowerCase();
+        sc.close();
+
+        if (!reponse.matches("^[yY]([eE][sS])?$"))
+        {
+            System.out.println(MavenLite.INFO + "Désinstallation annulée.");
+            return 2;
+        }
+
+        System.out.println(MavenLite.INFO + "Désinstallation de Maven Lite...");
+
+        // Suppression des pages de manuel
+        System.out.println(MavenLite.INFO + "Suppression des pages de manuel dans les différentes langues...");
+        for (String langage : manPageLangages)
+        {
+            String manPageFile = "/usr/local/man/" + langage + "/man1/mvnl.1.gz";
+            if (!deleteFile(manPageFile))
+            {
+                System.out.println(MavenLite.ERROR + "Erreur lors de la suppression du fichier " + MavenLite.BLUE_BOLD + manPageFile + MavenLite.DEFAULT + ".");
+                return 1;
+            }
+            else
+                System.out.println(MavenLite.INFO + "Le fichier " + MavenLite.BLUE_BOLD + manPageFile + MavenLite.DEFAULT + " a été supprimé avec succès.");
+        }
+        System.out.println(MavenLite.SUCCESS + "Pages de manuel supprimées avec succès.");
+
+        return 0;
+    }
+
+    /**
+     * Supprime un fichier
+     * @param filePath le chemin du fichier à supprimer
+     * @return true si le fichier a été supprimé, false sinon
+     */
+    private static boolean deleteFile(String filePath)
+    {
+        File file = new File(filePath);
+        return file.delete();
     }
 
     /**
@@ -963,6 +1022,10 @@ public class MavenLite
         {
             new MavenLite().defaultAffichage();
             System.exit(0);
+        }
+        else if (args.length == 1 && args[0].equals("uninstall_from_mvnl-uninstall"))
+        {
+            System.exit(new MavenLite().uninstall());
         }
 
         new MavenLite(args);
