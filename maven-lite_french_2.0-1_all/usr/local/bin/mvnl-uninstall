@@ -4,8 +4,8 @@
 # Main #
 #======#
 # Constantes
-SUCCES="[SUCCESS]"
-ERROR="[ERROR]"
+SUCCES="[SUCCES]"
+ERROR="[ERREUR]"
 
 
 # Variables
@@ -22,22 +22,22 @@ if [ $exitCode -gt 0 ]; then
 fi
 
 # Suppression du fichier shell
-sudo rm -f ${shellFile} && echo "${SUCCES} Le fichier '${shellFile}' a été supprimé avec succès" || {
+sudo rm -f ${shellFile} && echo "${SUCCES} Le fichier '${shellFile}' a été supprimé avec succès." || {
     echo "${ERROR} Erreur lors de la suppression du fichier '${shellFile}'."
     exit 1
 }
 
 # Suppression du fichier class
-sudo rm -f ${classFile} && echo "${SUCCES} Le fichier '${classFile}' a été supprimé avec succès" || {
+sudo rm -f ${classFile} && echo "${SUCCES} Le fichier '${classFile}' a été supprimé avec succès." || {
     echo "${ERROR} Erreur lors de la suppression du fichier '${classFile}'."
     exit 1
 }
 
 # Suppression du fichier uninstaller
-sudo rm -f ${uninstaller} && echo "${SUCCES} Le fichier '${uninstaller}' a été supprimé avec succès" || {
+sudo rm -f ${uninstaller} && echo "${SUCCES} Le fichier '${uninstaller}' a été supprimé avec succès." || {
     echo "${ERROR} Erreur lors de la suppression du fichier '${uninstaller}'."
     exit 1
 }
 
-echo -e "\n${SUCCES} Désinstallation de maven lite terminée avec succès."
+echo -e "\n${SUCCES} Désinstallation de Maven Lite terminée avec succès."
 exit 0
