@@ -14,13 +14,14 @@ import java.util.Scanner;
  * @author Floris Robart
  * @version 2.0.0
  * @since 1.0.0
- * @see <a href="https://github.com/FloRobart/Maven_lite/blob/master/maven_lite.sh">maven-lite</a>
+ * @see <a href="https://florobart.github.io/mavenlite.github.io/">Maven Lite documentation</a>
  */
 public class MavenLite 
 {
-    /*===================================*/
-    /* Constantes et valeurs par défauts */
-    /*===================================*/
+    /*============*/
+    /* Constantes */
+    /*============*/
+    /* Valeurs par défauts */
     private static final String PROJECT_NAME    = System.getProperty("user.dir").substring(System.getProperty("user.dir").lastIndexOf(File.separator)+1);
     private static final String AUTHOR          = "Floris Robart";
     private static final String VERSION         = "2.0.0";
@@ -64,7 +65,7 @@ public class MavenLite
     /* Constructeur */
     /*==============*/
     /**
-     * Coeur du programme
+     * Constructeur qui permet de lancer le programme.
      * @param args les arguments passés au programme
      */
     private MavenLite(String[] args)
@@ -83,6 +84,7 @@ public class MavenLite
 
     /**
      * Constructeur qui permet uniquement de charger la liste des options.
+     * Elle est utilisé uniquement pour afficher une petite aide stylisé et pour désinstaller Maven Lite.
      */
     private MavenLite()
     {
@@ -96,7 +98,6 @@ public class MavenLite
     /*==========================================*/
     /**
      * Initialise la liste des options.
-     * <br />
      * Les options sont sous la forme d'un tableau de String.
      * <ul>
      *   <li>0 : nom de l'option</li>
@@ -108,7 +109,7 @@ public class MavenLite
      *   <li>6 : numéro d'ordonnancement de l'option</li>
      *   <li>7 : description de l'option</li>
      * </ul>
-     * @return la liste des options possible
+     * @return la liste des options utilisables
      */
     private List<String[]> initOptions()
     {
@@ -149,8 +150,8 @@ public class MavenLite
 
     /**
      * Parse les arguments passés au programme.
-     * Si une option est passée plusieurs fois, seule la dernière sera prise en compte.
-     * @param args les arguments à parser 
+     * Si une option est passée plusieurs fois, seule la dernière sera prise en compte. sauf pour les options qui peuvent avoir un nombre illimité d'argument.
+     * @param args les arguments à parser
      */
     private void parseOptions(String[] args)
     {
@@ -256,9 +257,9 @@ public class MavenLite
     }
 
     /**
-     * Trie la liste des options dans l'ordre de passage à la ligne de commande et supprime les options non utilisées
-     * @param lst
-     * @return
+     * Supprime les options inutilisées de la liste passée en paramètre (qui doit être une copie de la liste des options)
+     * @param lst la liste dans laquelle supprimer les options inutilisées
+     * @return la liste sans les options inutilisées
      */
     private List<String[]> removeUnusedOption(List<String[]> lst)
     {
@@ -277,9 +278,9 @@ public class MavenLite
     /* Méthodes générale */
     /*===================*/
     /**
-     * Permet de détecter automatiquement le fichier main à lancer
-     * @param f le dossier à parcourir
-     * @return le nom de la classe principale
+     * Permet de détecter automatiquement le Main à lancer
+     * @param directory le dossier à parcourir (source du projet java)
+     * @return le nom avec le package de la classe principale à lancer. Format : "package.name.MainClass"
      */
     private String getMainClassName(File directory)
     {
@@ -337,7 +338,7 @@ public class MavenLite
     /**
      * Permet de récupérer le nom du package d'un fichier java
      * @param javaFile le fichier java à analyser
-     * @return le nom du package au format "package.name."
+     * @return le nom du package au format "package.name.". Si le fichier ne contient pas de package, une chaine de caractère vide est retournée.
      */
     private String getPackageName(File javaFile)
     {
@@ -372,8 +373,8 @@ public class MavenLite
 
     /**
      * Génère la liste des fichiers à compiler
-     * @param source le dossier à parcourir
-     * @return la liste des fichiers à compiler
+     * @param source le dossier à parcourir (source du projet java)
+     * @return la liste des fichiers à compiler séparé par des retours à la ligne (\n)
      */
     private String genererCompileList(File source)
     {
@@ -418,8 +419,9 @@ public class MavenLite
     }
 
     /**
-     * Permet d'éxecuter une commande
+     * Permet d'éxecuter une commande dans le terminal (bash / cmd)
      * @param commande la commande à exécuter
+     * @return le code de retour de la commande. 0 si la commande s'est bien exécutée, 1 sinon.
      */
     private int executCommande(String commande)
     {
@@ -479,8 +481,8 @@ public class MavenLite
     /* Méthodes pour l'exécution des options */
     /*=======================================*/
     /**
-     * Execute les options passées en paramètre
-     * @param map les options à exécuter avec leurs arguments associés
+     * Execute les options passées en paramètre si elles ont besoin d'être exécutées.
+     * @param lst la liste des options à exécuter
      */
     private void executeOption(List<String[]> lst)
     {
@@ -504,7 +506,7 @@ public class MavenLite
                     System.exit(0);
                     break;
                 case "export":
-                    this.export(opt);
+                    this.export();
                     break;
                 case "maven":
                     System.exit(this.maven());
@@ -561,6 +563,7 @@ public class MavenLite
     /**
      * Permet d'afficher l'aide à partir de la liste des options.
      * @param lst la liste des options
+     * @return l'aide sous la forme d'une chaine de caractère formaté
      */
     private String help(List<String[]> lst)
     {
@@ -605,7 +608,7 @@ public class MavenLite
     /**
      * Permet de spécifier le dossier contenant les fichiers jar utiliser par le programme.
      * Tout les fichiers jar seront ajoutés au classpath lors de la compilation et du lancement.
-     * @param opt Ligne de la liste des options correspondant à l'option -lib (--libraries)
+     * @param fileName le nom du dossier contenant les fichiers jar
      * @return la liste des fichiers jar depuis la racine du projet à ajouter au classpath sous la forme d'une chaine de caractère séparé par des ':'
      */
     private String libraries(String fileName)
@@ -698,7 +701,7 @@ public class MavenLite
 
     /**
      * Créer l'arborescence du projet ainsi qu'un fichier de config par défaut.
-     * @param opt Ligne de la liste des options correspondant à l'option -cr
+     * @param projectName le nom du projet
      */
     private void create(String projectName)
     {
@@ -926,12 +929,10 @@ public class MavenLite
     /**
      * Exporte le projet dans un fichier jar.
      * Le fichier jar sera exporté dans le dossier de sortie.
-     * Le nom du fichier jar est le nom du dossier de sortie.
-     * @param opt Ligne de la liste des options correspondant à l'option -ex
      */
-    private void export(String[] opt)
+    private void export()
     {
-        System.out.println("Exportation du projet : " + opt[5]);
+        System.out.println("Exportation du projet");
         // TODO : Exporter le projet dans un fichier .class
     }
 
