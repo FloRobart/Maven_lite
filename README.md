@@ -9,7 +9,7 @@
   - [Compatibilité](#compatibilité)
   - [Description](#description)
   - [Prérequis](#prérequis)
-  - [Installation](#installation)
+  - [Installation et désinstallation](#installation-et-désinstallation)
     - [Windows](#windows)
       - [Installation automatique - Windows](#installation-automatique---windows)
       - [Installation manuelle - Windows](#installation-manuelle---windows)
@@ -69,7 +69,7 @@ Il est possible que cette deuxième version de Maven Lite contienne des bugs. Si
 
 Si vous ne disposez pas des droits administrateurs, vous pouvez installer maven lite manuellement en suivant les instructions de la partie 'Installation manuelle'.
 
-## Installation
+## Installation et désinstallation
 
 ### Windows
 
