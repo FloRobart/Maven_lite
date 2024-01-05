@@ -1,8 +1,8 @@
 # Maven Lite
 
-- Version : 2.0.0
+Version anglaise
 
-Voir la [documentation en anglais](./readme_en.md)
+- Version : 2.0.0
 
 ## Table des matières
 
