@@ -18,9 +18,9 @@ import java.util.Scanner;
  */
 public class MavenLite 
 {
-    /*===================================*/
-    /* Constantes et valeurs par défauts */
-    /*===================================*/
+    /*============*/
+    /* Constantes */
+    /*============*/
     /* Valeurs par défauts */
     private static final String PROJECT_NAME    = System.getProperty("user.dir").substring(System.getProperty("user.dir").lastIndexOf(File.separator)+1);
     private static final String AUTHOR          = "Floris Robart";
@@ -202,10 +202,10 @@ public class MavenLite
                             this.hmArgs.put(opt[0], args[++i].replace("\\", ""));
                         else
                         {
-                            System.out.println(MavenLite.WARNING + "L'option '" + MavenLite.YELLOW_BOLD + args[i] + MavenLite.DEFAULT + "' nécessite un argument.");
+                            System.out.println(MavenLite.WARNING + "The option '" + MavenLite.YELLOW_BOLD + args[i] + MavenLite.DEFAULT + "' requires an argument.");
 
                             if (i+1 < args.length && args[i+1].startsWith("-"))
-                                System.out.println(MavenLite.WARNING + "Si l'argument commence par le caractère '-' veuillez échapé le caractère '-' avec deux '\\' comme ceci : '" + MavenLite.YELLOW_BOLD + args[i] + " \\\\" + args[i+1] + MavenLite.DEFAULT + "'");
+                                System.out.println(MavenLite.WARNING + "If the argument starts with the '-' character, please escape the '-' character with two '\\' like this : '" + MavenLite.YELLOW_BOLD + args[i] + " \\\\" + args[i+1] + MavenLite.DEFAULT + "'.");
 
                             System.exit(0);
                         }
@@ -246,7 +246,7 @@ public class MavenLite
 
             if (!bFound)
             {
-                System.out.println(MavenLite.ERROR + "Option '" + MavenLite.RED_BOLD + args[i] + MavenLite.DEFAULT + "' inconnue.");
+                System.out.println(MavenLite.ERROR + "Unknown option '" + MavenLite.RED_BOLD + args[i] + MavenLite.DEFAULT + "'.");
                 System.exit(1);
             }
             else
@@ -310,7 +310,7 @@ public class MavenLite
                         }
                         catch (IOException e)
                         {
-                            System.out.println(MavenLite.ERROR + "La lecture du fichier '" + MavenLite.RED_BOLD + file.getName() + MavenLite.DEFAULT + "' a échoué.");
+                            System.out.println(MavenLite.ERROR + "Reading the file '" + MavenLite.RED_BOLD + file.getName() + MavenLite.DEFAULT + "' failed.");
                             System.exit(1);
                         }
                     }
@@ -328,7 +328,11 @@ public class MavenLite
         }
         else
         {
-            System.out.println(MavenLite.ERROR + "Le fichier '" + MavenLite.RED_BOLD + directory.getName() + MavenLite.DEFAULT + "' n'existe pas ou n'est pas un dossier.");
+            if (!directory.isDirectory())
+                System.out.println(MavenLite.ERROR + "The file '" + MavenLite.RED_BOLD + directory.getName() + MavenLite.DEFAULT + "' is not a directory.");
+            else
+                System.out.println(MavenLite.ERROR + "The folder '" + MavenLite.RED_BOLD + directory.getName() + MavenLite.DEFAULT + "' does not exist.");
+
             System.exit(1);
         }
 
@@ -364,7 +368,7 @@ public class MavenLite
         }
         catch (IOException e)
         {
-            System.out.println(MavenLite.ERROR + "La lecture du fichier '" + MavenLite.RED_BOLD + javaFile.getName() + MavenLite.DEFAULT + "' a échoué.");
+            System.out.println(MavenLite.ERROR + "Reading the file '" + MavenLite.RED_BOLD + javaFile.getName() + MavenLite.DEFAULT + "' failed.");
             System.exit(1);
         }
 
@@ -400,10 +404,10 @@ public class MavenLite
         }
         else
         {
-            if (source.isFile())
-                System.out.println(MavenLite.ERROR + "Le fichier '" + MavenLite.RED_BOLD + source + MavenLite.DEFAULT + "' n'est pas un dossier !");
+            if (!source.isDirectory())
+                System.out.println(MavenLite.ERROR + "The file '" + MavenLite.RED_BOLD + source + MavenLite.DEFAULT + "' is not a directory.");
             else
-                System.out.println(MavenLite.ERROR + "Le dossier '" + MavenLite.RED_BOLD + source + MavenLite.DEFAULT + "' n'existe pas !");
+                System.out.println(MavenLite.ERROR + "The folder '" + MavenLite.RED_BOLD + source + MavenLite.DEFAULT + "' does not exist.");
 
             System.exit(1);
         }
@@ -458,7 +462,7 @@ public class MavenLite
         }
         catch (Exception e)
         {
-            System.out.println(MavenLite.ERROR + "L'exécution de la commande '" + MavenLite.RED_BOLD + shell + " " + shellOption + " " + commande + MavenLite.DEFAULT + "' a échoué.");
+            System.out.println(MavenLite.ERROR + "The execution of the command '" + MavenLite.RED_BOLD + shell + " " + shellOption + " " + commande + MavenLite.DEFAULT + "' failed.");
             System.exit(1);
         }
 
@@ -635,9 +639,9 @@ public class MavenLite
         else
         {
             if (!f.isDirectory())
-                System.out.println(MavenLite.ERROR + "Le fichier '" + MavenLite.RED_BOLD + fileName + MavenLite.DEFAULT + "' n'est pas un dossier.");
+                System.out.println(MavenLite.ERROR + "The file '" + MavenLite.RED_BOLD + fileName + MavenLite.DEFAULT + "' is not a directory.");
             else
-                System.out.println(MavenLite.ERROR + "Le dossier '" + MavenLite.RED_BOLD + fileName + MavenLite.DEFAULT + "' n'existe pas.");
+                System.out.println(MavenLite.ERROR + "The folder '" + MavenLite.RED_BOLD + fileName + MavenLite.DEFAULT + "' does not exist.");
 
             System.exit(1);
         }
@@ -660,9 +664,9 @@ public class MavenLite
         else
         {
             if (!f.isDirectory())
-                System.out.println(MavenLite.ERROR + "Le fichier '" + MavenLite.RED_BOLD + f.getName() + MavenLite.DEFAULT + "' n'est pas un dossier.");
+                System.out.println(MavenLite.ERROR + "The file '" + MavenLite.RED_BOLD + f.getName() + MavenLite.DEFAULT + "' is not a directory.");
             else
-                System.out.println(MavenLite.ERROR + "Le dossier '" + MavenLite.RED_BOLD + f.getName() + MavenLite.DEFAULT + "' n'existe pas.");
+                System.out.println(MavenLite.ERROR + "The folder '" + MavenLite.RED_BOLD + f.getName() + MavenLite.DEFAULT + "' does not exist.");
 
             System.exit(1);
         }
@@ -694,7 +698,7 @@ public class MavenLite
         }
         catch (Exception e)
         {
-            System.out.println(MavenLite.ERROR + "La lecture du fichier '" + MavenLite.RED_BOLD + fileName + MavenLite.DEFAULT + "' a échoué.");
+            System.out.println(MavenLite.ERROR + "Reading the file '" + MavenLite.RED_BOLD + fileName + MavenLite.DEFAULT + "' failed.");
             System.exit(1);
         }
     }
@@ -767,7 +771,7 @@ public class MavenLite
                 }
                 catch (IOException e)
                 {
-                    System.out.println(MavenLite.ERROR + "La création du fichier '" + MavenLite.RED_BOLD + f.getName() + MavenLite.DEFAULT + "' a échoué.");
+                    System.out.println(MavenLite.ERROR + "The creation of the file '" + MavenLite.RED_BOLD + f.getName() + MavenLite.DEFAULT + "' failed.");
                     System.exit(1);
                 }
             }
@@ -799,7 +803,7 @@ public class MavenLite
         }
         catch (Exception e)
         {
-            System.out.println(MavenLite.ERROR + "L'écriture dans le fichier '" + MavenLite.RED_BOLD + lstFilesProject.get(0) + MavenLite.DEFAULT + "' à échoué.");
+            System.out.println(MavenLite.ERROR + "Writing to the file '" + MavenLite.RED_BOLD + lstFilesProject.get(0) + MavenLite.DEFAULT + "' failed.");
             System.exit(1);
         }
 
@@ -825,15 +829,15 @@ public class MavenLite
         }
         catch (Exception e)
         {
-            System.out.println(MavenLite.ERROR + "L'écriture dans le fichier '" + MavenLite.RED_BOLD + lstFilesProject.get(1) + MavenLite.DEFAULT + "' à échoué.");
+            System.out.println(MavenLite.ERROR + "Writing to the file '" + MavenLite.RED_BOLD + lstFilesProject.get(1) + MavenLite.DEFAULT + "' failed.");
             System.exit(1);
         }
 
         this.executCommande("cd ./" + projectName);
-        System.out.println("\n" + MavenLite.SUCCESS + "Le projet '" + projectName + "' a été créé avec succès.\n");
-        System.out.println(MavenLite.INFO    + "Pour " + MavenLite.BLUE_BOLD + "compiler" + MavenLite.DEFAULT + " le projet, exécuter la commande : '" + MavenLite.BLUE_BOLD + "mvnl -c" + MavenLite.DEFAULT + "'.");
-        System.out.println(MavenLite.INFO    + "Pour " + MavenLite.BLUE_BOLD + "lancer  " + MavenLite.DEFAULT + " le projet, exécuter la commande : '" + MavenLite.BLUE_BOLD + "mvnl -l" + MavenLite.DEFAULT + "'.");
-        System.out.println(MavenLite.INFO    + "Pour " + MavenLite.BLUE_BOLD + "compiler et lancer" + MavenLite.DEFAULT + " le projet à partir des données du fichier de configuration, exécuter la commande : '" + MavenLite.BLUE_BOLD + "mvnl -f -cl" + MavenLite.DEFAULT + "'.\n");
+        System.out.println("\n" + MavenLite.SUCCESS + "The project '" + projectName + "' was created successfully.\n");
+        System.out.println(MavenLite.INFO    + "To " + MavenLite.BLUE_BOLD + "compile " + MavenLite.DEFAULT + " the project, execute the command : '" + MavenLite.BLUE_BOLD + "mvnl -c" + MavenLite.DEFAULT + "'.");
+        System.out.println(MavenLite.INFO    + "To " + MavenLite.BLUE_BOLD + "launch  " + MavenLite.DEFAULT + " the project, execute the command : '" + MavenLite.BLUE_BOLD + "mvnl -l" + MavenLite.DEFAULT + "'.");
+        System.out.println(MavenLite.INFO    + "To " + MavenLite.BLUE_BOLD + "compile et launch" + MavenLite.DEFAULT + " the project using the configuration file data, execute the command : '" + MavenLite.BLUE_BOLD + "mvnl -f -cl" + MavenLite.DEFAULT + "'.\n");
     }
 
     /**
@@ -852,7 +856,7 @@ public class MavenLite
         }
         catch (Exception e)
         {
-            System.out.println(MavenLite.ERROR + "L'écriture dans le fichier '" + MavenLite.RED_BOLD + MavenLite.COMPILE_LIST_NAME + MavenLite.DEFAULT + "' à échoué.");
+            System.out.println(MavenLite.ERROR + "Writing to the file '" + MavenLite.RED_BOLD + MavenLite.COMPILE_LIST_NAME + MavenLite.DEFAULT + "' failed.");
             System.exit(1);
         }
 
@@ -873,15 +877,15 @@ public class MavenLite
         if (this.hmArgs.get(this.lstOptions.get(8)[0]) != null)
             System.out.println(MavenLite.INFO + MavenLite.BLUE_BOLD + command.toString() + MavenLite.DEFAULT);
 
-        System.out.println(MavenLite.INFO + "Compilation du projet '" + MavenLite.BLUE_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "'...");
+        System.out.println(MavenLite.INFO + "Compilation of the project '" + MavenLite.BLUE_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "'...");
         if (this.executCommande(command.toString()) != 0)
         {
-            System.out.println(MavenLite.ERROR + "La compilation du projet '" + MavenLite.RED_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "' à échoué.");
+            System.out.println(MavenLite.ERROR + "The compilation of the project '" + MavenLite.RED_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "' failed.");
             this.removeCompilList();
             System.exit(1);
         }
         
-        System.out.println(MavenLite.SUCCESS + "Compilation du projet '" + MavenLite.GREEN_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "' terminé avec succès.");
+        System.out.println(MavenLite.SUCCESS + "Compilation of the project '" + MavenLite.GREEN_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "' completed successfully.");
         this.removeCompilList();
     }
 
@@ -915,15 +919,15 @@ public class MavenLite
         if (this.hmArgs.get(this.lstOptions.get(8)[0]) != null)
             System.out.println(MavenLite.INFO + MavenLite.BLUE_BOLD + command.toString() + MavenLite.DEFAULT);
 
-        System.out.println(MavenLite.INFO + "Lancement du projet '" + MavenLite.BLUE_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "'...");
+        System.out.println(MavenLite.INFO + "Launching the project. '" + MavenLite.BLUE_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "'...");
         if (this.executCommande(command.toString()) != 0)
         {
-            System.out.println(MavenLite.ERROR + "Le lancement du projet '" + MavenLite.RED_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "' à échoué.");
+            System.out.println(MavenLite.ERROR + "The launch of the project '" + MavenLite.RED_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "' failed.");
             this.removeCompilList();
             System.exit(1);
         }
         
-        System.out.println(MavenLite.SUCCESS + "Lancement du projet '" + MavenLite.GREEN_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "' terminé avec succès.");
+        System.out.println(MavenLite.SUCCESS + "Launching the project '" + MavenLite.GREEN_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "' completed successfully.");
     }
 
     /**
@@ -957,33 +961,33 @@ public class MavenLite
         // Variables
         String[] manPageLangages = {"fr", "en"};
 
-        System.out.print(MavenLite.WARNING + MavenLite.RED_BOLD + "Attention" + MavenLite.DEFAULT + ", vous êtes sur le point de désinstaller Maven Lite. Êtes-vous sûr de vouloir continuer ? (y/n) : ");
+        System.out.print(MavenLite.WARNING + MavenLite.RED_BOLD + "ATTENTION" + MavenLite.DEFAULT + ", you are about to uninstall Maven Lite. Are you sure you want to continue? (y/n) : ");
         Scanner sc = new Scanner(System.in);
         String reponse = sc.nextLine().toLowerCase();
         sc.close();
 
         if (!reponse.matches("^[yY]([eE][sS])?$"))
         {
-            System.out.println(MavenLite.INFO + "Désinstallation annulée.");
+            System.out.println(MavenLite.INFO + "Uninstallation canceled.");
             return 2;
         }
 
-        System.out.println(MavenLite.INFO + "Désinstallation de Maven Lite...");
+        System.out.println(MavenLite.INFO + "Uninstalling Maven Lite...");
 
         // Suppression des pages de manuel
-        System.out.println(MavenLite.INFO + "Suppression des pages de manuel dans les différentes langues...");
+        System.out.println(MavenLite.INFO + "Removing manual pages in various languages...");
         for (String langage : manPageLangages)
         {
             String manPageFile = "/usr/local/man/" + langage + "/man1/mvnl.1.gz";
             if (!deleteFile(manPageFile))
             {
-                System.out.println(MavenLite.ERROR + "Erreur lors de la suppression du fichier '" + MavenLite.RED_BOLD + manPageFile + MavenLite.DEFAULT + "'.");
+                System.out.println(MavenLite.ERROR + "Error occurred while deleting the file '" + MavenLite.RED_BOLD + manPageFile + MavenLite.DEFAULT + "'.");
                 return 1;
             }
             else
-                System.out.println(MavenLite.INFO + "Le fichier " + MavenLite.BLUE_BOLD + manPageFile + MavenLite.DEFAULT + " a été supprimé avec succès.");
+                System.out.println(MavenLite.INFO + "The file '" + MavenLite.BLUE_BOLD + manPageFile + MavenLite.DEFAULT + "' has been successfully deleted.");
         }
-        System.out.println(MavenLite.SUCCESS + "Pages de manuel supprimées avec succès.");
+        System.out.println(MavenLite.SUCCESS + "Manual pages successfully deleted.");
 
         return 0;
     }
@@ -1016,8 +1020,8 @@ public class MavenLite
 
 
         System.out.println(helpStyle);
-        this.version("Par " + MavenLite.AUTHOR);
-        System.out.println("\n    " + MavenLite.BOLD + "Utiliser la commande '" + MavenLite.DEFAULT + MavenLite.GREEN_BOLD + "mvnl -h" + MavenLite.DEFAULT + MavenLite.BOLD + "' ou '" + MavenLite.DEFAULT + MavenLite.GREEN_BOLD + "mvnl --help" + MavenLite.DEFAULT + MavenLite.BOLD + "' pour afficher l'aide." + MavenLite.DEFAULT + "\n");
+        this.version("By " + MavenLite.AUTHOR);
+        System.out.println("\n    " + MavenLite.BOLD + "Use the command '" + MavenLite.DEFAULT + MavenLite.GREEN_BOLD + "mvnl -h" + MavenLite.DEFAULT + MavenLite.BOLD + "' or '" + MavenLite.DEFAULT + MavenLite.GREEN_BOLD + "mvnl --help" + MavenLite.DEFAULT + MavenLite.BOLD + "' to display the help." + MavenLite.DEFAULT + "\n");
     }
 
 

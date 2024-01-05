@@ -328,7 +328,11 @@ public class MavenLite
         }
         else
         {
-            System.out.println(MavenLite.ERROR + "Le fichier '" + MavenLite.RED_BOLD + directory.getName() + MavenLite.DEFAULT + "' n'existe pas ou n'est pas un dossier.");
+            if (directory.exists())
+                System.out.println(MavenLite.ERROR + "Le fichier '" + MavenLite.RED_BOLD + directory.getName() + MavenLite.DEFAULT + "' n'est pas un dossier.");
+            else
+                System.out.println(MavenLite.ERROR + "Le dossier '" + MavenLite.RED_BOLD + directory.getName() + MavenLite.DEFAULT + "' n'existe pas.");
+
             System.exit(1);
         }
 
@@ -400,10 +404,10 @@ public class MavenLite
         }
         else
         {
-            if (source.isFile())
-                System.out.println(MavenLite.ERROR + "Le fichier '" + MavenLite.RED_BOLD + source + MavenLite.DEFAULT + "' n'est pas un dossier !");
+            if (source.exists())
+                System.out.println(MavenLite.ERROR + "Le fichier '" + MavenLite.RED_BOLD + source + MavenLite.DEFAULT + "' n'est pas un dossier.");
             else
-                System.out.println(MavenLite.ERROR + "Le dossier '" + MavenLite.RED_BOLD + source + MavenLite.DEFAULT + "' n'existe pas !");
+                System.out.println(MavenLite.ERROR + "Le dossier '" + MavenLite.RED_BOLD + source + MavenLite.DEFAULT + "' n'existe pas.");
 
             System.exit(1);
         }
@@ -634,7 +638,7 @@ public class MavenLite
         }
         else
         {
-            if (!f.isDirectory())
+            if (f.exists())
                 System.out.println(MavenLite.ERROR + "Le fichier '" + MavenLite.RED_BOLD + fileName + MavenLite.DEFAULT + "' n'est pas un dossier.");
             else
                 System.out.println(MavenLite.ERROR + "Le dossier '" + MavenLite.RED_BOLD + fileName + MavenLite.DEFAULT + "' n'existe pas.");
@@ -659,7 +663,7 @@ public class MavenLite
         }
         else
         {
-            if (!f.isDirectory())
+            if (f.exists())
                 System.out.println(MavenLite.ERROR + "Le fichier '" + MavenLite.RED_BOLD + f.getName() + MavenLite.DEFAULT + "' n'est pas un dossier.");
             else
                 System.out.println(MavenLite.ERROR + "Le dossier '" + MavenLite.RED_BOLD + f.getName() + MavenLite.DEFAULT + "' n'existe pas.");
@@ -957,7 +961,7 @@ public class MavenLite
         // Variables
         String[] manPageLangages = {"fr", "en"};
 
-        System.out.print(MavenLite.WARNING + MavenLite.RED_BOLD + "Attention" + MavenLite.DEFAULT + ", vous êtes sur le point de désinstaller Maven Lite. Êtes-vous sûr de vouloir continuer ? (y/n) : ");
+        System.out.print(MavenLite.WARNING + MavenLite.RED_BOLD + "ATTENTION" + MavenLite.DEFAULT + ", vous êtes sur le point de désinstaller Maven Lite. Êtes-vous sûr de vouloir continuer ? (y/n) : ");
         Scanner sc = new Scanner(System.in);
         String reponse = sc.nextLine().toLowerCase();
         sc.close();
@@ -981,7 +985,7 @@ public class MavenLite
                 return 1;
             }
             else
-                System.out.println(MavenLite.INFO + "Le fichier " + MavenLite.BLUE_BOLD + manPageFile + MavenLite.DEFAULT + " a été supprimé avec succès.");
+                System.out.println(MavenLite.INFO + "Le fichier '" + MavenLite.BLUE_BOLD + manPageFile + MavenLite.DEFAULT + "'' a été supprimé avec succès.");
         }
         System.out.println(MavenLite.SUCCESS + "Pages de manuel supprimées avec succès.");
 
