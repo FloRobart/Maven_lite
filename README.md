@@ -9,52 +9,97 @@
   - [Compatibilité](#compatibilité)
   - [Description](#description)
   - [Prérequis](#prérequis)
+  - [Installation](#installation)
+    - [Windows](#windows)
+      - [Installation automatique - Windows](#installation-automatique---windows)
+      - [Installation manuelle - Windows](#installation-manuelle---windows)
+      - [Désinstallation automatique - Windows](#désinstallation-automatique---windows)
+      - [Désinstallation manuelle - Windows](#désinstallation-manuelle---windows)
+    - [Linux](#linux)
+      - [Installation automatique - Linux](#installation-automatique---linux)
+      - [Installation manuelle - Linux](#installation-manuelle---linux)
+      - [Désinstallation automatique - Linux](#désinstallation-automatique---linux)
+      - [Désinstallation manuelle - Linux](#désinstallation-manuelle---linux)
+    - [MacOs](#macos)
+      - [Installation automatique - MacOs](#installation-automatique---macos)
+      - [Installation manuelle - MacOs](#installation-manuelle---macos)
+      - [Désinstallation automatique - MacOs](#désinstallation-automatique---macos)
+      - [Désinstallation manuelle - MacOs](#désinstallation-manuelle---macos)
   - [Utilisation](#utilisation)
     - [Exemple, fonctionnaliés et limites](#exemple-fonctionnaliés-et-limites)
   - [Installation automatique](#installation-automatique)
-    - [Windows](#windows)
-    - [Linux](#linux)
-  - [Installation manuelle](#installation-manuelle)
     - [Windows](#windows-1)
+    - [Linux](#linux-1)
+  - [Installation manuelle](#installation-manuelle)
+    - [Windows](#windows-2)
     - [Linux Avec les droits administrateurs](#linux-avec-les-droits-administrateurs)
     - [Linux Sans les droits administrateurs](#linux-sans-les-droits-administrateurs)
   - [Désinstallation automatique](#désinstallation-automatique)
-    - [Windows](#windows-2)
-    - [Linux](#linux-1)
-  - [Désinstallation manuelle](#désinstallation-manuelle)
     - [Windows](#windows-3)
     - [Linux](#linux-2)
+  - [Désinstallation manuelle](#désinstallation-manuelle)
+    - [Windows](#windows-4)
+    - [Linux](#linux-3)
 
 ## Compatibilité
 
-- Windows 10 (Testé sur windows 10 22H2)
-- Windows 11 (Testé sur windows 11 22H2)
-- Linux possèdant `bash` (Testé sur Ubuntu 22.04 LTS et Debian 12)
+- Windows 10 (Non testé)
+- Windows 11 (Non testé)
+- Linux possèdant `bash` (Testé sur Ubuntu 23.10 Mantic Minotaur)
 - MacOS Mojave 10.14.6 et inférieur (Non testé)
+- MacOS Catalina 10.15 et supérieur à condition d'avoir installé `bash` (Non testé)
 
 ## Description
 
 Maven Lite est un système de gestion de projet java qui permet de compiler et lancer des projets java très simplement et rapidement.
 
-Le but est de pouvoir compiler et/ou lancer un projet java en une seule commande, comme maven mais en plus simple.
+Le but est de pouvoir compiler et/ou lancer un projet java en une seule courte commande, comme maven mais en plus simple.
 
-Maven Lite est plus simple que Maven car il ne gère pas les dépendances hors local, les plugins, les phases de build, etc. Il est donc adapté pour les projets simples qui ne nécessitent pas de gérer des dépendances externes. Pour des projets plus complexes, il est conseillé d'utiliser Maven.
+Maven Lite est plus simple que Maven car il ne gère pas les dépendances hors local, les plugins, les phases de build, les déployements automatique, etc. Il est donc adapté pour les projets simples qui ne nécessitent pas de gérer des dépendances externes, cependant Maven Lite gère les dépendance local sous forme de fichier jar. Pour des projets plus complexes, il est conseillé d'utiliser Maven.
 
 Maven lite permet de compiler le projet dans un dossier target, gèrer les dépendances locales (fichier jar) et éxecuter le projet.
 
-L'intéret principale de maven lite dans la gestion des dépendances est de fournir au script un dossier qui contient toutes les dépendances, le script ajoutera automatiquement les dépendances dans le classpath.
+L'intéret principale de maven lite dans la gestion des dépendances est de fournir un dossier qui contient toutes les dépendances, le script ajoutera automatiquement toutes les dépendances dans le classpath.
 
-Les fichiers d'installation permettent d'installer Maven Lite sur votre ordinateur et de profiter de la commande 'mvnl'. Cela vous évitera de devoir copier le fichier maven_lite.XX dans chaque projet.
-
-Il est possible que cette première version de Maven Lite contienne des bugs. Si vous en trouvez, n'hésitez pas à les signaler.
-
-La version 1.2.0 prend en charge uniquement les arguments Java sans espace.
+Il est possible que cette deuxième version de Maven Lite contienne des bugs. Si vous en trouvez, n'hésitez pas à les signaler.
 
 ## Prérequis
 
 - Disposer des droits administrateurs si vous voulez utiliser les installations automatiques.
 
 Si vous ne disposez pas des droits administrateurs, vous pouvez installer maven lite manuellement en suivant les instructions de la partie 'Installation manuelle'.
+
+## Installation
+
+### Windows
+
+#### Installation automatique - Windows
+
+#### Installation manuelle - Windows
+
+#### Désinstallation automatique - Windows
+
+#### Désinstallation manuelle - Windows
+
+### Linux
+
+#### Installation automatique - Linux
+
+#### Installation manuelle - Linux
+
+#### Désinstallation automatique - Linux
+
+#### Désinstallation manuelle - Linux
+
+### MacOs
+
+#### Installation automatique - MacOs
+
+#### Installation manuelle - MacOs
+
+#### Désinstallation automatique - MacOs
+
+#### Désinstallation manuelle - MacOs
 
 ## Utilisation
 
@@ -123,6 +168,8 @@ Je vous recommande de ne pas mettre les options '-c' et '-l' dans le fichier de 
 Les options inutiles comme l'option -s pour lancer le projet seront ignorées, donc pas de problème si vous les laissez dans le fichier de configuration.
 
 L'ordre des options n'a pas d'importance sauf les options -f, -h et -v qui doivent être la première option si elles sont utilisées.
+
+===========================================================================================================================================================================================
 
 ## Installation automatique
 
