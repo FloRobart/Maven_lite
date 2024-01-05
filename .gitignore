@@ -1,6 +1,2 @@
-# Fichier Java compiler 
-./bin/
-.class
-
 # Fichier de développement
-/dev_compile_pack_install.sh
+dev_compile_pack_install.sh
