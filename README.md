@@ -10,16 +10,21 @@
   - [Description](#description)
   - [Prérequis](#prérequis)
   - [Installation et désinstallation](#installation-et-désinstallation)
+    - [Debian et dérivés](#debian-et-dérivés)
+      - [Installation automatique - Debian](#installation-automatique---debian)
+      - [Installation manuelle - Debian](#installation-manuelle---debian)
+      - [Désinstallation automatique - Debian](#désinstallation-automatique---debian)
+      - [Désinstallation manuelle - Debian](#désinstallation-manuelle---debian)
+    - [Autres distributions Linux](#autres-distributions-linux)
+      - [Installation automatique - Linux](#installation-automatique---linux)
+      - [Installation manuelle - Linux](#installation-manuelle---linux)
+      - [Désinstallation automatique - Linux](#désinstallation-automatique---linux)
+      - [Désinstallation manuelle - Linux](#désinstallation-manuelle---linux)
     - [Windows](#windows)
       - [Installation automatique - Windows](#installation-automatique---windows)
       - [Installation manuelle - Windows](#installation-manuelle---windows)
       - [Désinstallation automatique - Windows](#désinstallation-automatique---windows)
       - [Désinstallation manuelle - Windows](#désinstallation-manuelle---windows)
-    - [Linux](#linux)
-      - [Installation automatique - Linux](#installation-automatique---linux)
-      - [Installation manuelle - Linux](#installation-manuelle---linux)
-      - [Désinstallation automatique - Linux](#désinstallation-automatique---linux)
-      - [Désinstallation manuelle - Linux](#désinstallation-manuelle---linux)
     - [MacOs](#macos)
       - [Installation automatique - MacOs](#installation-automatique---macos)
       - [Installation manuelle - MacOs](#installation-manuelle---macos)
@@ -29,17 +34,17 @@
     - [Exemple, fonctionnaliés et limites](#exemple-fonctionnaliés-et-limites)
   - [Installation automatique](#installation-automatique)
     - [Windows](#windows-1)
-    - [Linux](#linux-1)
+    - [Linux](#linux)
   - [Installation manuelle](#installation-manuelle)
     - [Windows](#windows-2)
     - [Linux Avec les droits administrateurs](#linux-avec-les-droits-administrateurs)
     - [Linux Sans les droits administrateurs](#linux-sans-les-droits-administrateurs)
   - [Désinstallation automatique](#désinstallation-automatique)
     - [Windows](#windows-3)
-    - [Linux](#linux-2)
+    - [Linux](#linux-1)
   - [Désinstallation manuelle](#désinstallation-manuelle)
     - [Windows](#windows-4)
-    - [Linux](#linux-3)
+    - [Linux](#linux-2)
 
 ## Compatibilité
 
@@ -71,6 +76,152 @@ Si vous ne disposez pas des droits administrateurs, vous pouvez installer maven 
 
 ## Installation et désinstallation
 
+### Debian et dérivés
+
+#### Installation automatique - Debian
+
+- Téléchargez le [fichier debian](https://github.com/FloRobart/mavenlite.github.io/releases) dans la langue de votre choix dans la section 'Releases' du dépôt Github
+  - [Téléchargez le fichier de la version française.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_french_2.0-1_all.deb)
+  - [Téléchargez le fichier de la version anglaise.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_english_2.0-1_all.deb)
+- Éxécutez le fichier debian
+
+  ```sh
+  sudo dpkg -i maven-lite_<langue>_2.0-1_all.deb
+  ```
+
+- Une fois l'installation terminée, vous pouvez supprimer le fichier `maven-lite_<langue>_2.0-1_all.deb` si vous le souhaitez.
+
+#### Installation manuelle - Debian
+
+- Téléchargez le [Fichier compressé](https://github.com/FloRobart/mavenlite.github.io/releases) contenant les fichiers de l'applications dans la langue de votre choix dans la section 'Releases' du dépôt Github
+  - [Téléchargez le fichier de la version française.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_french_2.0-1_all.zip)
+  - [Téléchargez le fichier de la version anglaise.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_english_2.0-1_all.zip)
+- Décompressez le fichier compressé
+- Déplacez le dossier `maven-lite` dans le dossier `/etc`
+
+  ```sh
+  sudo mv maven-lite /etc/
+  ```
+
+- Déplacez les fichiers shell dans le dossier `/usr/local/bin`
+
+  ```sh
+  sudo mv mvnl /usr/local/bin/
+  sudo mv mvnl-uninstall /usr/local/bin/
+  ```
+
+- Ajoutez les droits d'exécution au fichier `mvnl` et `mvnl-uninstall`
+
+  ```sh
+  sudo chmod +x /usr/local/bin/mvnl*
+  ```
+
+- Déplacez le dossier `man` dans le dossier `/usr/local/share` pour avoir les pages de manuel
+
+  ```sh
+  sudo mv man /usr/local/share/
+  ```
+
+- Vous pouvez supprimez le reste des fichiers inutilisés.
+
+#### Désinstallation automatique - Debian
+
+- Éxécutez la commande suivante
+
+  ```sh
+  mvnl-uninstall
+  ```
+
+#### Désinstallation manuelle - Debian
+
+- Supprimez le dossier `/etc/maven-lite`
+
+  ```sh
+  sudo rm -r /etc/maven-lite
+  ```
+
+- Supprimez les fichiers shell
+
+  ```sh
+  sudo rm /usr/local/bin/mvnl /usr/local/bin/mvnl-uninstall
+  ```
+
+- Supprimez les pages de manuel
+
+  ```sh
+  sudo rm /usr/local/share/man/fr/man1/mvnl.1.gz /usr/local/share/man/en/man1/mvnl.1.gz
+  ```
+
+### Autres distributions Linux
+
+#### Installation automatique - Linux
+
+- Téléchargez le [Fichier compressé](https://github.com/FloRobart/mavenlite.github.io/releases) contenant les fichiers de l'applications dans la langue de votre choix dans la section 'Releases' du dépôt Github
+  - [Téléchargez le fichier de la version française.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_french_2.0-1_all.zip)
+  - [Téléchargez le fichier de la version anglaise.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_english_2.0-1_all.zip)
+- Décompressez le fichier compressé
+- Éxecuter le script d'installation
+
+  ```sh
+  sudo ./installer.sh
+  ```
+
+- Vous pouvez supprimez le reste des fichiers inutilisés.
+
+#### Installation manuelle - Linux
+
+- Téléchargez le [Fichier compressé](https://github.com/FloRobart/mavenlite.github.io/releases) contenant les fichiers de l'applications dans la langue de votre choix dans la section 'Releases' du dépôt Github
+  - [Téléchargez le fichier de la version française.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_french_2.0-1_all.zip)
+  - [Téléchargez le fichier de la version anglaise.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_english_2.0-1_all.zip)
+- Décompressez le fichier compressé
+- Déplacez le dossier `maven-lite` dans le dossier `/etc`
+
+  ```sh
+  sudo mv maven-lite /etc/
+  ```
+
+- Ajoutez les droits d'exécution au fichier `mvnl` et `mvnl-uninstall`
+
+  ```sh
+  sudo chmod +x /usr/local/bin/mvnl*
+  ```
+
+- Déplacez le dossier `man` dans le dossier `/usr/local/share` pour avoir les pages de manuel
+
+  ```sh
+  sudo mv man /usr/local/share/
+  ```
+
+- Vous pouvez supprimez le reste des fichiers inutilisés.
+
+#### Désinstallation automatique - Linux
+
+- Éxécutez la commande suivante
+
+  ```sh
+  mvnl-uninstall
+  ```
+
+#### Désinstallation manuelle - Linux
+
+- Supprimez le dossier `/etc/maven-lite`
+
+  ```sh
+  sudo rm -r /etc/maven-lite
+  ```
+
+- Supprimez les fichiers shell
+
+  ```sh
+  sudo rm /usr/local/bin/mvnl /usr/local/bin/mvnl-uninstall
+  ```
+
+- Supprimez les pages de manuel
+
+  ```sh
+  sudo rm /usr/local/share/man/fr/man1/mvnl.1.gz /usr/local/share/man/en/man1/mvnl.1.gz
+  ```
+
 ### Windows
 
 #### Installation automatique - Windows
@@ -81,25 +232,75 @@ Si vous ne disposez pas des droits administrateurs, vous pouvez installer maven 
 
 #### Désinstallation manuelle - Windows
 
-### Linux
-
-#### Installation automatique - Linux
-
-#### Installation manuelle - Linux
-
-#### Désinstallation automatique - Linux
-
-#### Désinstallation manuelle - Linux
-
 ### MacOs
 
 #### Installation automatique - MacOs
 
+- Téléchargez le [Fichier compressé](https://github.com/FloRobart/mavenlite.github.io/releases) contenant les fichiers de l'applications dans la langue de votre choix dans la section 'Releases' du dépôt Github
+  - [Téléchargez le fichier de la version française.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_french_2.0-1_all.zip)
+  - [Téléchargez le fichier de la version anglaise.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_english_2.0-1_all.zip)
+- Décompressez le fichier compressé
+- Éxecuter le script d'installation
+
+  ```sh
+  sudo ./installer.sh
+  ```
+
+- Vous pouvez supprimez le reste des fichiers inutilisés.
+
 #### Installation manuelle - MacOs
+
+- Téléchargez le [Fichier compressé](https://github.com/FloRobart/mavenlite.github.io/releases) contenant les fichiers de l'applications dans la langue de votre choix dans la section 'Releases' du dépôt Github
+  - [Téléchargez le fichier de la version française.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_french_2.0-1_all.zip)
+  - [Téléchargez le fichier de la version anglaise.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_english_2.0-1_all.zip)
+- Décompressez le fichier compressé
+- Déplacez le dossier `maven-lite` dans le dossier `/etc`
+
+  ```sh
+  sudo mv maven-lite /etc/
+  ```
+
+- Ajoutez les droits d'exécution au fichier `mvnl` et `mvnl-uninstall`
+
+  ```sh
+  sudo chmod +x /usr/local/bin/mvnl*
+  ```
+
+- Déplacez le dossier `man` dans le dossier `/usr/local/share` pour avoir les pages de manuel
+
+  ```sh
+  sudo mv man /usr/local/share/
+  ```
+
+- Vous pouvez supprimez le reste des fichiers inutilisés.
 
 #### Désinstallation automatique - MacOs
 
+- Éxécutez la commande suivante
+
+  ```sh
+  mvnl-uninstall
+  ```
+
 #### Désinstallation manuelle - MacOs
+
+- Supprimez le dossier `/etc/maven-lite`
+
+  ```sh
+  sudo rm -r /etc/maven-lite
+  ```
+
+- Supprimez les fichiers shell
+
+  ```sh
+  sudo rm /usr/local/bin/mvnl /usr/local/bin/mvnl-uninstall
+  ```
+
+- Supprimez les pages de manuel
+
+  ```sh
+  sudo rm /usr/local/share/man/fr/man1/mvnl.1.gz /usr/local/share/man/en/man1/mvnl.1.gz
+  ```
 
 ## Utilisation
 
