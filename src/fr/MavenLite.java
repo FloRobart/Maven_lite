@@ -134,15 +134,14 @@ public class MavenLite
         /* 11 */ lst.add(new String[] {"target"           , "-t"   , "--target"               , "1"        , "1"        , MavenLite.TARGET      , "1", "Dossier de sortie des fichiers compilés. Ce dossier sera créer si il n'existe pas et sera automatiquement ajouter au classpath lors de la compilation et du lancement."});
         /* 12 */ lst.add(new String[] {"classpath"        , "-cp"  , "--classpath"            , "1"        , "1"        , null                  , "0", "Permet de spécifier le classpath à utiliser lors de la compilation et du lancement. Si vous voulez ajouter plusieurs éléments au classpath, il faut les séparer par des ':'."});
         /* 13 */ lst.add(new String[] {"libraries"        , "-lib" , "--libraries"            , "0"        , "1"        , MavenLite.LIBRARIES   , "0", "Dossier contenant les fichiers jar utiliser par le programme. Tout les fichiers jar seront ajoutés au classpath lors de la compilation et du lancement."});
-        /* 14 */ lst.add(new String[] {"argument"         , "-arg" , "--argument"             , "1"        , "1"        , null                  , "0", "Argument unique à passer à la classe principale. Si vous voulez passé un argument qui commencer par '-' échapper le caractère '-' avec deux '\\' comme ceci : '-arg \\\\-argument_pour_le_main'."});
-        /* 15 */ lst.add(new String[] {"arguments"        , "-args", "--arguments"            , "unlimited", "unlimited", null                  , "0", "Tous les arguments à passer à la classe principale. Si vous voulez passé un argument qui commencer par '-' échapper le caractère '-' avec deux '\\' comme ceci : '-args \\\\-argument_pour_le_main'."});
-        /* 16 */ lst.add(new String[] {"main"             , "-m"   , "--main"                 , "1"        , "1"        , null                  , "0", "Classe principale à lancer. Si vous voulez lancer une classe qui se trouve dans un package, il faut spécifier le package avec le nom de la classe comme ceci : 'package.nom.MainClass'"});
-        /* 17 */ lst.add(new String[] {"encoding"         , "-e"   , "--encoding"             , "1"        , "1"        , MavenLite.ENCODING    , "1", "Permet de changer l'encodage des fichiers java à compiler."});
-        /* 18 */ lst.add(new String[] {"export"           , "-exp" , "--export"               , "0"        , "1"        , MavenLite.EXPORT      , "0", "Permet de créer un fichier jar exécutable permettant de lancer le projet sans avoir installer MavenLite."});
-        /* 19 */ lst.add(new String[] {"maven"            , "-mvn" , "--maven"                , "0"        , "0"        , null                  , "0", "Convertie le projet en projet maven en créant un fichier pom.xml et en déplaçant les fichiers si nécessaire."});
-        /* 20 */ lst.add(new String[] {"version"          , "-V"   , "--version"              , "0"        , "0"        , MavenLite.VERSION     , "0", "Affiche la version."});
-        /* 21 */ lst.add(new String[] {"help"             , "-h"   , "--help"                 , "0"        , "0"        , null                  , "0", "Affiche l'aide et quitte."});
-        /* 22 */ lst.add(new String[] {"clear"            , "-cle" , "--clear"                , "0"        , "0"        , null                  , "0", "Permet de supprimer les fichiers dans le dossier de sortie des fichiers compilés."});
+        /* 14 */ lst.add(new String[] {"arguments"        , "-args", "--arguments"            , "unlimited", "unlimited", null                  , "0", "Tous les arguments à passer à la classe principale. Si vous voulez passé un argument qui commencer par '-' échapper le caractère '-' avec deux '\\' comme ceci : '-args \\\\-argument_pour_le_main'."});
+        /* 15 */ lst.add(new String[] {"main"             , "-m"   , "--main"                 , "1"        , "1"        , null                  , "0", "Classe principale à lancer. Si vous voulez lancer une classe qui se trouve dans un package, il faut spécifier le package avec le nom de la classe comme ceci : 'package.nom.MainClass'"});
+        /* 16 */ lst.add(new String[] {"encoding"         , "-e"   , "--encoding"             , "1"        , "1"        , MavenLite.ENCODING    , "1", "Permet de changer l'encodage des fichiers java à compiler."});
+        /* 17 */ lst.add(new String[] {"export"           , "-exp" , "--export"               , "0"        , "1"        , MavenLite.EXPORT      , "0", "Permet de créer un fichier jar exécutable permettant de lancer le projet sans avoir installer MavenLite."});
+        /* 18 */ lst.add(new String[] {"maven"            , "-mvn" , "--maven"                , "0"        , "0"        , null                  , "0", "Convertie le projet en projet maven en créant un fichier pom.xml et en déplaçant les fichiers si nécessaire."});
+        /* 19 */ lst.add(new String[] {"version"          , "-V"   , "--version"              , "0"        , "0"        , MavenLite.VERSION     , "0", "Affiche la version."});
+        /* 20 */ lst.add(new String[] {"help"             , "-h"   , "--help"                 , "0"        , "0"        , null                  , "0", "Affiche l'aide et quitte."});
+        /* 21 */ lst.add(new String[] {"clear"            , "-cle" , "--clear"                , "0"        , "0"        , null                  , "0", "Permet de supprimer les fichiers dans le dossier de sortie des fichiers compilés."});
         /* Pour ajouter une option, il faut ajouter un tableau de String dans la liste ci-dessus. Si l'option doit executé du code ajouter la au switch dans la méthode executeOption() et créer une méthode pour l'exécution de l'option. */
 
         return lst;
@@ -217,9 +216,9 @@ public class MavenLite
                         sArgs.append(this.hmArgs.get(opt[0]) == null ? "" : this.hmArgs.get(opt[0]));
 
                         while (i + 1 < args.length && !args[i + 1].startsWith("-"))
-                            sArgs.append("\"").append(args[++i].replace("\\", "")).append("\";");
+                            sArgs.append(args[++i]).append("\";\"");
 
-                        this.hmArgs.put(opt[0], sArgs.toString().substring(1, sArgs.toString().length()-2));
+                        this.hmArgs.put(opt[0], sArgs.toString());
                     }
                     /* Parse les options qui ont un nombre d'argument défini autre que 0 et 1 */
                     /* Pour l'instant ce code n'est pas utilisé */
@@ -229,13 +228,9 @@ public class MavenLite
                         sArgs.append(this.hmArgs.get(opt[0]) == null ? "" : this.hmArgs.get(opt[0]));
 
                         for (int j = 0; j < Integer.parseInt(opt[3]) && i+1 < args.length && !args[i + 1].startsWith("-"); j++)
-                            sArgs.append("\"").append(args[++i].replace("\\", "")).append("\";");
+                            sArgs.append(args[++i]).append("\";\"");
 
                         this.hmArgs.put(opt[0], sArgs.toString());
-
-                        // Je ne sais pas pourquoi j'ai fait ça
-                        // for (int j = i-Integer.parseInt(opt[3]); j < i+Integer.parseInt(opt[3]) && i+1 < args.length; j++)
-                        //     args = this.removeTabElement(args, i);
                     }
 
                     opt[6] = String.valueOf(this.countArgs);
@@ -414,7 +409,7 @@ public class MavenLite
 
         String exclude = this.hmArgs.get(this.lstOptions.get(9)[0]);
         if (exclude != null)
-            for (String ex : exclude.split("\";\""))
+            for (String ex : exclude.replace("\\", "").split("\";\""))
                 for (String line : sCompileList.toString().split("\n"))
                     if (line.contains(ex))
                         sCompileList = new StringBuilder(sCompileList.toString().replace(line + "\n", ""));
@@ -513,7 +508,8 @@ public class MavenLite
                     this.export();
                     break;
                 case "maven":
-                    System.exit(this.maven());
+                    // System.exit(this.maven());
+                    this.maven();
                     break;
                 case "clear":
                     this.clear(new File(this.hmArgs.get("target")));
@@ -646,7 +642,7 @@ public class MavenLite
             System.exit(1);
         }
 
-        return libraries.toString() == "" ? null : libraries.toString().substring(0, libraries.toString().length()-1);
+        return libraries.toString() == "" ? null : libraries.toString().substring(0, libraries.length()-1);
     }
 
     /**
@@ -833,8 +829,7 @@ public class MavenLite
             System.exit(1);
         }
 
-        this.executCommande("cd ./" + projectName);
-        System.out.println("\n" + MavenLite.SUCCESS + "Le projet '" + projectName + "' a été créé avec succès.\n");
+        System.out.println("\n" + MavenLite.SUCCESS + "Le projet '" + MavenLite.GREEN_BOLD + projectName + MavenLite.DEFAULT + "' a été créé avec succès.\n");
         System.out.println(MavenLite.INFO    + "Pour " + MavenLite.BLUE_BOLD + "compiler" + MavenLite.DEFAULT + " le projet, exécuter la commande : '" + MavenLite.BLUE_BOLD + "mvnl -c" + MavenLite.DEFAULT + "'.");
         System.out.println(MavenLite.INFO    + "Pour " + MavenLite.BLUE_BOLD + "lancer  " + MavenLite.DEFAULT + " le projet, exécuter la commande : '" + MavenLite.BLUE_BOLD + "mvnl -l" + MavenLite.DEFAULT + "'.");
         System.out.println(MavenLite.INFO    + "Pour " + MavenLite.BLUE_BOLD + "compiler et lancer" + MavenLite.DEFAULT + " le projet à partir des données du fichier de configuration, exécuter la commande : '" + MavenLite.BLUE_BOLD + "mvnl -f -cl" + MavenLite.DEFAULT + "'.\n");
@@ -911,10 +906,9 @@ public class MavenLite
 
         command.append(" ").append(this.hmArgs.get("main"));
 
-        if (this.hmArgs.get("argument") != null)
-            command.append(" ").append(this.hmArgs.get("argument"));
         if (this.hmArgs.get("arguments") != null)
-            command.append(" ").append(this.hmArgs.get("arguments"));
+            for (String s : this.hmArgs.get("arguments").split("\";\""))
+                command.append(" \"").append(s).append("\"");
 
         if (this.hmArgs.get(this.lstOptions.get(8)[0]) != null)
             System.out.println(MavenLite.INFO + MavenLite.BLUE_BOLD + command.toString() + MavenLite.DEFAULT);
@@ -936,7 +930,7 @@ public class MavenLite
      */
     private void export()
     {
-        System.out.println("Exportation du projet");
+        System.out.println("Export arrive bientôt...");
         // TODO : Exporter le projet dans un fichier .class
     }
 
@@ -946,7 +940,7 @@ public class MavenLite
      */
     private int maven()
     {
-        System.out.println("Conversion du projet en projet maven");
+        System.out.println("Maven arrive bientôt...");
         // TODO : Convertir le projet en projet maven
 
         return 0;
