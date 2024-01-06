@@ -1,8 +1,9 @@
 # Maven Lite
 
-Version anglaise
+Voir la [documentation en français](./README.md)
 
 - Version : 2.0.0
+- Auteur : Floris Robart
 
 ## Table des matières
 
@@ -33,6 +34,31 @@ Version anglaise
       - [Désinstallation automatique - MacOs](#désinstallation-automatique---macos)
       - [Désinstallation manuelle - MacOs](#désinstallation-manuelle---macos)
   - [Utilisation](#utilisation)
+    - [Description et utilisation des options](#description-et-utilisation-des-options)
+      - [Fichier de configuration](#fichier-de-configuration)
+        - [Possibilités du fichier de configuration](#possibilités-du-fichier-de-configuration)
+      - [create](#create)
+      - [mvc](#mvc)
+      - [compilation](#compilation)
+      - [launch](#launch)
+      - [compile-launch](#compile-launch)
+      - [launch-compile](#launch-compile)
+      - [quiet](#quiet)
+      - [verbose](#verbose)
+      - [exclude](#exclude)
+      - [jar](#jar)
+      - [source](#source)
+      - [target](#target)
+      - [classpath](#classpath)
+      - [libraries](#libraries)
+      - [arguments](#arguments)
+      - [main](#main)
+      - [encoding](#encoding)
+      - [export](#export)
+      - [maven](#maven)
+      - [version](#version)
+      - [help](#help)
+      - [clear](#clear)
     - [Exemple, fonctionnaliés et limites](#exemple-fonctionnaliés-et-limites)
 
 ## Compatibilité
@@ -105,10 +131,10 @@ Si vous ne disposez pas des droits administrateurs, vous pouvez installer maven 
   sudo chmod +x /usr/local/bin/mvnl*
   ```
 
-- Déplacez le dossier `man` dans le dossier `/usr/local/share` pour avoir les pages de manuel
+- Déplacez le dossier `man` dans le dossier `/usr/local/` pour avoir les pages de manuel
 
   ```sh
-  sudo mv man /usr/local/share/
+  sudo mv man /usr/local/
   ```
 
 - Vous pouvez supprimez le reste des fichiers inutilisés.
@@ -138,7 +164,7 @@ Si vous ne disposez pas des droits administrateurs, vous pouvez installer maven 
 - Supprimez les pages de manuel
 
   ```sh
-  sudo rm /usr/local/share/man/fr/man1/mvnl.1.gz /usr/local/share/man/en/man1/mvnl.1.gz
+  sudo rm /usr/local/man/fr/man1/mvnl.1.gz /usr/local/man/en/man1/mvnl.1.gz
   ```
 
 ### Autres distributions Linux
@@ -215,7 +241,17 @@ Si vous ne disposez pas des droits administrateurs, vous pouvez installer maven 
 
 #### Installation automatique - Windows
 
+- Téléchargez le [Fichier compressé](https://github.com/FloRobart/mavenlite.github.io/releases) contenant les fichiers de l'applications dans la langue de votre choix dans la section 'Releases' du dépôt Github
+  - [Téléchargez le fichier de la version française.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_french_2.0-1_win.zip)
+  - [Téléchargez le fichier de la version anglaise.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_english_2.0-1_win.zip)
+- Décompressez le fichier compressé
+
 #### Installation manuelle - Windows
+
+- Téléchargez le [Fichier compressé](https://github.com/FloRobart/mavenlite.github.io/releases) contenant les fichiers de l'applications dans la langue de votre choix dans la section 'Releases' du dépôt Github
+  - [Téléchargez le fichier de la version française.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_french_2.0-1_win.zip)
+  - [Téléchargez le fichier de la version anglaise.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_english_2.0-1_win.zip)
+- Décompressez le fichier compressé
 
 #### Désinstallation automatique - Windows
 
@@ -299,62 +335,96 @@ Si vous ne disposez pas des droits administrateurs, vous pouvez installer maven 
   mvnl [options] [arguments]
   ```
 
+### Description et utilisation des options
+
+#### Fichier de configuration
+
+L'utilisation d'un fichier de configuration se fait avec l'option `--file` ou `-f`.
+
+Le fichier de configuration est un fichier unique à chaque projet qui permet de configurer les options que Maven Lite devra utiliser.
+
+Le nom par défaut du fichier de configuration est `LPOM.conf` et doit être à la racine du projet. Il est possible de le renommer mais dans ce cas il faudra préciser son nom l'ors de l'utilisation de l'option, par exemple `mvnl -f monFichier`.
+
+##### Possibilités du fichier de configuration
+
+- Il est possible de mettre des commentaires dans le fichier de configuration en utilisant le caractère `#` au début de la ligne.
+- Il est possible de mettre des options dans le fichier de configuration en utilisant le même format que dans la ligne de commande, par exemple `--quiet` ou `-q`.
+- Il est possible de passé des arguments avec des espaces en utilisant des guillemets, par exemple `"mon argument"`.
+- Il est possible de mettre plusieurs options sur la même ligne en les séparant par un espace, par exemple `--quiet --verbose` ou `-q -v`.
+- Il est possible d'échapper les caractères spéciaux avec un antislash `\`, par exemple `--args exemp\"le`.
+  - Les caractères spéciaux dans le fichier de configuration sont : `\`, `"` et `-` uniquement s'il sont au début de l'argument. Par exemple :
+    - `--args exemp\"le` devient `exemp"le`
+    - `--args \-exemple` devient `-exemple`
+    - `--args \--exemple` devient `--exemple`
+    - `--args exemp\\le` devient `exemp\le`
+    - `--args exemp\\\"le` devient `exemp\"le`.
+- Une option et ses arguments peuvent être sur plusieurs lignes, par exemple
+
+  ```conf
+  --argslibraries src/main/resources/lib
+  "mon argument
+
+      sur plusieurs lignes"
+  ```
+
+- Un exemple type de fichier de configuration est le suivant :
+
+  ```conf
+  # Source du projet
+  --source src/main/java
+
+  # Dossier de sortie des fichiers compilés
+  --target target
+
+  # Liste des libraries à ajouter au classpath
+  --libraries src/main/resources/lib
+
+  # Affiche les commandes éxécutées
+  --verbose
+  ```
+
+#### create
+
+#### mvc
+
+#### compilation
+
+#### launch
+
+#### compile-launch
+
+#### launch-compile
+
+#### quiet
+
+#### verbose
+
+#### exclude
+
+#### jar
+
+#### source
+
+#### target
+
+#### classpath
+
+#### libraries
+
+#### arguments
+
+#### main
+
+#### encoding
+
+#### export
+
+#### maven
+
+#### version
+
+#### help
+
+#### clear
+
 ### Exemple, fonctionnaliés et limites
-
-Vous avez un projet java dans le dossier 'C:\Users\user\Documents\MonProjetJava'
-Tout le code source se trouve dans le dossier 'src' et les fichiers .class doivent être compilés dans le dossier 'bin'. Votre projet contient des dépendances sous forme de fichier jar qui se trouve dans le dossier 'lib'.
-
-Pour compiler le projet, vous devez ouvrir un terminal, vous placer dans le dossier 'C:\Users\user\Documents\MonProjetJava' puis exécuter la commande suivante :
-
-```sh
-mvnl -s src -o bin -d lib -c
-```
-
-Maintenant que votre projet est compilé, vous voulez lancer la classe principal 'Main.java' dans le package 'com.exemple'. Pour cela, vous devez exécuter la commande suivante :
-
-```sh
-mvnl -cp bin -d lib -m com.exemple.Main -l
-```
-
-Il est possible de combiner les deux commandes en une seule :
-
-```sh
-mvnl -s src -o bin -d lib -cp bin -m com.exemple.Main -cl
-```
-
-Comme vous pouvez le voir, ça fait une commande assez longue à taper. C'est pour cela que vous pouvez créer un fichier de configuration, par exemple 'config.txt' puis mettre les arguments dedans.
-
-Le fichier de configuration doit contenir les options et argument de la commande. Soit une option avec son argument par ligne, soit plusieurs options et arguments sur la même ligne séparé par un espace.
-
-Les options du fichier de configuration prévalent sur les options de la ligne de commande, il n'est donc pas possible de modifier une option dans la ligne de commande si elle est déjà présente dans le fichier de configuration. Cependant, il est possible de mettre un partie des options dans le fichier de configuration et le reste dans la ligne de commande.
-
-Exemple de fichier de configuration :
-
-```txt
--s src -o bin
--d lib -cp bin -m com.exemple.Main
-```
-
-- Une fois que vous avez créé le fichier de configuration, vous pouvez exécuter la commande suivante pour compiler et lancez le projet :
-
-  ```sh
-  mvnl -f config.txt -cl
-  ```
-
-Je vous recommande de ne pas mettre les options '-c' et '-l' dans le fichier de configuration car vous n'avez pas besoin de compiler et lancer le projet à chaque fois. Cela vous permettra de les mettres dans la commande quand vous en aurez besoin. Malgré tout, vous pouvez les mettre dans le fichier de configuration si vous le souhaitez.
-
-- Pour compiler le projet, vous pouvez exécuter la commande suivante :
-
-  ```sh
-  mvnl -f config.txt -c
-  ```
-
-- Pour lancer le projet, vous pouvez exécuter la commande suivante :
-
-  ```sh
-  mvnl -f config.txt -l
-  ```
-
-Les options inutiles comme l'option -s pour lancer le projet seront ignorées, donc pas de problème si vous les laissez dans le fichier de configuration.
-
-L'ordre des options n'a pas d'importance sauf les options -f, -h et -v qui doivent être la première option si elles sont utilisées.
