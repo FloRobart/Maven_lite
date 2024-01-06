@@ -33,33 +33,33 @@ See the [english documentation](./README.en.md)
       - [Installation manuelle - MacOs](#installation-manuelle---macos)
       - [Désinstallation automatique - MacOs](#désinstallation-automatique---macos)
       - [Désinstallation manuelle - MacOs](#désinstallation-manuelle---macos)
-  - [Utilisation](#utilisation)
-    - [Description et utilisation des options](#description-et-utilisation-des-options)
-      - [Fichier de configuration](#fichier-de-configuration)
-        - [Possibilités du fichier de configuration](#possibilités-du-fichier-de-configuration)
-      - [create](#create)
-      - [mvc](#mvc)
-      - [compilation](#compilation)
-      - [launch](#launch)
-      - [compile-launch](#compile-launch)
-      - [launch-compile](#launch-compile)
-      - [quiet](#quiet)
-      - [verbose](#verbose)
-      - [exclude](#exclude)
-      - [jar](#jar)
-      - [source](#source)
-      - [target](#target)
-      - [classpath](#classpath)
-      - [libraries](#libraries)
-      - [arguments](#arguments)
-      - [main](#main)
-      - [encoding](#encoding)
-      - [export](#export)
-      - [maven](#maven)
-      - [version](#version)
-      - [help](#help)
-      - [clear](#clear)
-    - [Exemple, fonctionnaliés et limites](#exemple-fonctionnaliés-et-limites)
+  - [Utilisation de Maven Lite](#utilisation-de-maven-lite)
+    - [Ligne de commande](#ligne-de-commande)
+    - [Fichier de configuration](#fichier-de-configuration)
+      - [Possibilités du fichier de configuration](#possibilités-du-fichier-de-configuration)
+    - [create](#create)
+    - [mvc](#mvc)
+    - [compilation](#compilation)
+    - [launch](#launch)
+    - [compile-launch](#compile-launch)
+    - [launch-compile](#launch-compile)
+    - [quiet](#quiet)
+    - [verbose](#verbose)
+    - [exclude](#exclude)
+    - [jar](#jar)
+    - [source](#source)
+    - [target](#target)
+    - [classpath](#classpath)
+    - [libraries](#libraries)
+    - [arguments](#arguments)
+    - [main](#main)
+    - [encoding](#encoding)
+    - [export](#export)
+    - [maven](#maven)
+    - [version](#version)
+    - [help](#help)
+    - [clear](#clear)
+  - [Exemple, fonctionnaliés et limites](#exemple-fonctionnaliés-et-limites)
 
 ## Compatibilité
 
@@ -327,7 +327,7 @@ Si vous ne disposez pas des droits administrateurs, vous pouvez installer maven 
   sudo rm /usr/local/share/man/fr/man1/mvnl.1.gz /usr/local/share/man/en/man1/mvnl.1.gz
   ```
 
-## Utilisation
+## Utilisation de Maven Lite
 
 - placer vous dans le dossier de votre projet java et exécuter la commande suivante :
 
@@ -335,9 +335,9 @@ Si vous ne disposez pas des droits administrateurs, vous pouvez installer maven 
   mvnl [options] [arguments]
   ```
 
-### Description et utilisation des options
+### Ligne de commande
 
-#### Fichier de configuration
+### Fichier de configuration
 
 L'utilisation d'un fichier de configuration se fait avec l'option `--file` ou `-f`.
 
@@ -345,7 +345,7 @@ Le fichier de configuration est un fichier unique à chaque projet qui permet de
 
 Le nom par défaut du fichier de configuration est `LPOM.conf` et doit être à la racine du projet. Il est possible de le renommer mais dans ce cas il faudra préciser son nom l'ors de l'utilisation de l'option, par exemple `mvnl -f monFichier`.
 
-##### Possibilités du fichier de configuration
+#### Possibilités du fichier de configuration
 
 - Il est possible de mettre des commentaires dans le fichier de configuration en utilisant le caractère `#` au début de la ligne.
 - Il est possible de mettre des options dans le fichier de configuration en utilisant le même format que dans la ligne de commande, par exemple `--quiet` ou `-q`.
@@ -383,48 +383,48 @@ Le nom par défaut du fichier de configuration est `LPOM.conf` et doit être à 
   --verbose
   ```
 
-#### create
+### create
 
-#### mvc
+### mvc
 
-#### compilation
+### compilation
 
-#### launch
+### launch
 
-#### compile-launch
+### compile-launch
 
-#### launch-compile
+### launch-compile
 
-#### quiet
+### quiet
 
-#### verbose
+### verbose
 
-#### exclude
+### exclude
 
-#### jar
+### jar
 
-#### source
+### source
 
-#### target
+### target
 
-#### classpath
+### classpath
 
-#### libraries
+### libraries
 
-#### arguments
+### arguments
 
-#### main
+### main
 
-#### encoding
+### encoding
 
-#### export
+### export
 
-#### maven
+### maven
 
-#### version
+### version
 
-#### help
+### help
 
-#### clear
+### clear
 
-### Exemple, fonctionnaliés et limites
+## Exemple, fonctionnaliés et limites
