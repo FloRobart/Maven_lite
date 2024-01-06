@@ -361,7 +361,7 @@ Le nom par défaut du fichier de configuration est `LPOM.conf` et doit être à 
 - Une option et ses arguments peuvent être sur plusieurs lignes, par exemple
 
   ```conf
-  --argslibraries src/main/resources/lib
+  --args
   "mon argument
 
       sur plusieurs lignes"
