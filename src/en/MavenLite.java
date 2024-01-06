@@ -513,7 +513,8 @@ public class MavenLite
                     this.export();
                     break;
                 case "maven":
-                    System.exit(this.maven());
+                    //System.exit(this.maven());
+                    this.maven();
                     break;
                 case "clear":
                     this.clear(new File(this.hmArgs.get("target")));
@@ -833,8 +834,7 @@ public class MavenLite
             System.exit(1);
         }
 
-        this.executCommande("cd ./" + projectName);
-        System.out.println("\n" + MavenLite.SUCCESS + "The project '" + projectName + "' was created successfully.\n");
+        System.out.println("\n" + MavenLite.SUCCESS + "The project '" + MavenLite.GREEN_BOLD + projectName + MavenLite.DEFAULT + "' was created successfully.\n");
         System.out.println(MavenLite.INFO    + "To " + MavenLite.BLUE_BOLD + "compile " + MavenLite.DEFAULT + " the project, execute the command : '" + MavenLite.BLUE_BOLD + "mvnl -c" + MavenLite.DEFAULT + "'.");
         System.out.println(MavenLite.INFO    + "To " + MavenLite.BLUE_BOLD + "launch  " + MavenLite.DEFAULT + " the project, execute the command : '" + MavenLite.BLUE_BOLD + "mvnl -l" + MavenLite.DEFAULT + "'.");
         System.out.println(MavenLite.INFO    + "To " + MavenLite.BLUE_BOLD + "compile et launch" + MavenLite.DEFAULT + " the project using the configuration file data, execute the command : '" + MavenLite.BLUE_BOLD + "mvnl -f -cl" + MavenLite.DEFAULT + "'.\n");
@@ -936,7 +936,7 @@ public class MavenLite
      */
     private void export()
     {
-        System.out.println("Exportation du projet");
+        System.out.println("Export comming soon...");
         // TODO : Exporter le projet dans un fichier .class
     }
 
@@ -946,7 +946,7 @@ public class MavenLite
      */
     private int maven()
     {
-        System.out.println("Conversion du projet en projet maven");
+        System.out.println("Maven comming soon...");
         // TODO : Convertir le projet en projet maven
 
         return 0;
