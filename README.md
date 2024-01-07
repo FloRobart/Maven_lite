@@ -470,12 +470,12 @@ Le nom par défaut du fichier de configuration est `LPOM.conf` et doit être à 
 #### Possibilités du fichier de configuration
 
 - Il est possible de mettre des commentaires en utilisant le caractère `#` au début de la ligne.
-- Il est possible de mettre des options en utilisant le même format que dans la ligne de commande, par exemple `--option` ou `-o`.
+- Il est possible de mettre des options en utilisant le même format que dans la ligne de commande, par exemple `--option` ou `-o`. Vous pouvez mettre n'inporte quel option cité dans [la liste des options](#liste-des-options).
 - Il est possible de passé des arguments avec des espaces en utilisant des guillemets, par exemple `mvnl -args "mon argument"`.
 - Il est possible de mettre plusieurs options sur la même ligne en les séparant par un espace, par exemple `mvnl --quiet --verbose` ou `mvnl -q -v`.
 - Il est possible d'échapper les caractères spéciaux avec un antislash `\`, par exemple `--args exemp\"le`.
   - Les caractères spéciaux dans le fichier de configuration sont : `\`, `"` et `-` uniquement s'il sont au début de l'argumentet que ce dernier n'a pas de guillement. Par exemple :
-    - `--args exemp\"le` devient `exemp"le`
+    - `--args exemp\"le` devient **`exemp"le`**
     - `--args \-exemple` devient `-exemple`
     - `--args "--exemple"` devient `--exemple`
     - `--args \--exemple` devient `--exemple`
