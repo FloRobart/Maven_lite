@@ -517,6 +517,12 @@ L'utilisation d'un fichier de configuration se fait avec l'option `--create` ou 
 Il est impossible de créer un projet avec un espace dans le nom.
 Il est impossible de créer un projet avec un nom qui est déjà utilisé par un fichier ou un dossier.
 
+Vous pouvez créer un projet dans le dossier courant grâce à la commande suivante :
+
+```sh
+mvnl --create ./
+```
+
 ### mvc
 
 L'utilisation de cette option se fait avec l'option `--model-view-controller` ou `-mvc`.
