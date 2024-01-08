@@ -162,6 +162,13 @@
   - [Téléchargez le fichier de la version française.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_french_2.0-1_win.zip)
   - [Téléchargez le fichier de la version anglaise.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_english_2.0-1_win.zip)
 - Décompressez le fichier compressé
+- Éxecuter le script d'installation
+
+  ```bat
+  ./installer.bat
+  ```
+
+- Vous pouvez supprimez le reste des fichiers inutilisés.
 
 #### Installation manuelle - Windows
 
@@ -324,4 +331,3 @@
 - -cle , --clear
   - Permet de supprimer les fichiers dans le dossier de sortie des fichiers compilés.
   - Nombre de d'argument  : `0`.
-
