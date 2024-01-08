@@ -129,7 +129,7 @@ public class MavenLite
         /* 7  */ lst.add(new String[] {"quiet"            , "-q"   , "--quiet"                , "0"        , "0"        , null                  , "0", "Permet de supprimer l'affichage de java dans le terminal lors de l'exécution du projet."});
         /* 8  */ lst.add(new String[] {"verbose"          , "-v"   , "--verbose"              , "0"        , "0"        , null                  , "0", "Permet d'afficher les commandes exécutées."});
         /* 9  */ lst.add(new String[] {"exclude"          , "-ex"  , "--exclude"              , "unlimited", "unlimited", null                  , "0", "Permet d'exclure des fichiers java et des dossiers de la compilation. Si vous voulez passé un argument qui commencer par '-' échapper le caractère '-' avec deux '\\' comme ceci : '-ex \\\\-fichier'."});
-        /* 10 */ lst.add(new String[] {"compile-jar"      , "-cj"  , "--compile-jar"          , "0"        , "0"        , null                  , "0", "Permet de créer un fichier jar exécutable permettant de lancer le projet sans avoir installer MavenLite."});
+        /* 10 */ lst.add(new String[] {"compile-jar"      , "-cj"  , "--compile-jar"          , "0"        , "0"        , null                  , "0", "Permet de créer un fichier jar de votre projet."});
         /* 11 */ lst.add(new String[] {"launch-jar"       , "-lj"  , "--launch-jar"           , "0"        , "1"        , null                  , "0", "Permet de lancer un fichier jar exécutable."});
         /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
         /* Tous se qui est au dessus de cette ligne ne doit pas être déplacer, leur ordre est important */
@@ -146,6 +146,8 @@ public class MavenLite
         /* 21 */ lst.add(new String[] {"version"          , "-V"   , "--version"              , "0"        , "0"        , MavenLite.VERSION     , "0", "Affiche la version."});
         /* 22 */ lst.add(new String[] {"help"             , "-h"   , "--help"                 , "0"        , "0"        , null                  , "0", "Affiche l'aide et quitte."});
         /* 23 */ lst.add(new String[] {"clear"            , "-cle" , "--clear"                , "0"        , "0"        , null                  , "0", "Permet de supprimer les fichiers dans le dossier de sortie des fichiers compilés."});
+        /* 24 */ lst.add(new String[] {"add-comile-option", "-aco" , "--add-compile-option"   , "unlimited", "unlimited", null                  , "0", "Permet d'ajouter une option à java lors de la compilation. Attention, Aucune vérification n'est faite sur l'option, il faut donc faire attention à ce que vous ajoutez."});
+        /* 25 */ lst.add(new String[] {"add-launch-option", "-alo" , "--add-launch-option"    , "unlimited", "unlimited", null                  , "0", "Permet d'ajouter une option à java lors du lancement. Attention, Aucune vérification n'est faite sur l'option, il faut donc faire attention à ce que vous ajoutez."});
         /* Pour ajouter une option, il faut ajouter un tableau de String dans la liste ci-dessus. Si l'option doit executé du code ajouter la au switch dans la méthode executeOption() et créer une méthode pour l'exécution de l'option. */
 
         return lst;
@@ -892,18 +894,18 @@ public class MavenLite
         }
 
         /* Compilation */
-        command.append("javac");
-        command.append(" -d ").append(this.hmArgs.get("target"));
+        command.append("javac -d ").append(this.hmArgs.get("target"));
 
         if (this.hmArgs.get("libraries") != null)
             command.append(" -cp ").append(this.hmArgs.get("libraries"));
         if (this.hmArgs.get("classpath") != null)
             command.append(":").append(this.hmArgs.get("classpath"));
 
-        command.append(" -encoding ");
-        command.append(this.hmArgs.get("encoding"));
-        command.append(" @");
-        command.append(MavenLite.COMPILE_LIST_NAME);
+        if (this.hmArgs.get("add-comile-option") != null)
+            command.append(" ").append(this.hmArgs.get("add-comile-option"));
+
+        command.append(" -encoding ").append(this.hmArgs.get("encoding"));
+        command.append(" @").append(MavenLite.COMPILE_LIST_NAME);
 
         if (this.hmArgs.get(this.lstOptions.get(8)[0]) != null)
             System.out.println(MavenLite.INFO + MavenLite.BLUE_BOLD + command.toString() + MavenLite.DEFAULT);
@@ -936,6 +938,9 @@ public class MavenLite
             command.append(":").append(this.hmArgs.get("libraries"));
         if (this.hmArgs.get("classpath") != null)
             command.append(":").append(this.hmArgs.get("classpath"));
+
+        if (this.hmArgs.get("add-launch-option") != null)
+            command.append(" ").append(this.hmArgs.get("add-launch-option"));
 
         if (this.hmArgs.get("main") == null)
             this.hmArgs.put("main", this.getMainClassName(new File(this.hmArgs.get("source"))));
