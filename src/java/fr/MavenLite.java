@@ -29,7 +29,7 @@ public class MavenLite
     private static final String EXPORT          = "run.java";
     private static final String TARGET          = "target";
     private static final String CREATE          = "NewProject";
-    private static final String FILE            = "LPOM";
+    private static final String FILE            = "LPOM.conf";
     private static final String SOURCE          = "src" + File.separator + "main" + File.separator + "java";
     private static final String LIBRARIES       = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "lib";
 
