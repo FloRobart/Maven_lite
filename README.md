@@ -563,7 +563,12 @@ Cette option permet d'exclure des fichiers java et des dossiers de la [compilati
 
 L'utilisation de cette option se fait avec l'option `--compile-jar` ou `-cj`.
 
-Cette option permet de créer un fichier jar exécutable de votre projet.
+Cette option permet de créer un fichier jar exécutable de votre projet. Le convention de nommage du fichier jar est la suivante : `<nom>-<M>.<m>.<b>.jar`.
+
+- `<nom>` : Nom du projet.
+- `<M>` : Numéro de la version majeur. Il commence à 1 et est incrémenté à chaque nouvelle version non compatible avec la précédente et avec de grosses modifications.
+- `<m>` : Numéro de la version mineur. Il commence à 0 et est incrémenté à chaque nouvelle version compatible avec la précédente et avec de petites modifications et retourne à 0 à chaque changement de version majeur.
+- `<b>` : Numéro de la version de build. Il commence à 0 et est incrémenté à chaque correction de bug et retourne à 0 à chaque changement de version mineur ou majeur.
 
 ### launch jar
 
