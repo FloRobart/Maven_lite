@@ -472,9 +472,10 @@ public class MavenLite
     }
 
     /**
-     * Permet de supprimer le fichier contenant la liste des fichiers à compiler
+     * Permet de supprimer un fichier ou un dossier en toute sécurité.
+     * @param f le fichier ou le dossier à supprimer
      */
-    private void removeCompilList()
+    private void removeFile(String name)
     {
         File f = new File(MavenLite.COMPILE_LIST_NAME);
         if (f.exists())
@@ -890,10 +891,11 @@ public class MavenLite
         catch (Exception e)
         {
             System.out.println(MavenLite.ERROR + "L'écriture dans le fichier '" + MavenLite.RED_BOLD + MavenLite.COMPILE_LIST_NAME + MavenLite.DEFAULT + "' à échoué.");
+            this.removeFile(MavenLite.COMPILE_LIST_NAME);
             System.exit(1);
         }
 
-        /* Compilation */
+        /* Compilation */this.removeFile(MavenLite.COMPILE_LIST_NAME);
         command.append("javac -d ").append(this.hmArgs.get("target"));
 
         if (this.hmArgs.get("libraries") != null)
@@ -914,12 +916,12 @@ public class MavenLite
         if (this.executCommande(command.toString()) != 0)
         {
             System.out.println(MavenLite.ERROR + "La compilation du projet '" + MavenLite.RED_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "' à échoué.");
-            this.removeCompilList();
+            this.removeFile(MavenLite.COMPILE_LIST_NAME);
             System.exit(1);
         }
         
         System.out.println(MavenLite.SUCCESS + "Compilation du projet '" + MavenLite.GREEN_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "' terminé avec succès.");
-        this.removeCompilList();
+        this.removeFile(MavenLite.COMPILE_LIST_NAME);
     }
 
     /**
@@ -958,7 +960,6 @@ public class MavenLite
         if (this.executCommande(command.toString()) != 0)
         {
             System.out.println(MavenLite.ERROR + "Le lancement du projet '" + MavenLite.RED_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "' à échoué.");
-            this.removeCompilList();
             System.exit(1);
         }
         
@@ -1005,7 +1006,6 @@ public class MavenLite
         if (this.executCommande(command.toString()) != 0)
         {
             System.out.println(MavenLite.ERROR + "La création du fichier jar '" + MavenLite.RED_BOLD + MavenLite.PROJECT_NAME + ".jar" + MavenLite.DEFAULT + "' à échoué.");
-            this.removeCompilList();
             System.exit(1);
         }
         
@@ -1036,7 +1036,6 @@ public class MavenLite
         if (this.executCommande(command.toString()) != 0)
         {
             System.out.println(MavenLite.ERROR + "Le lancement du fichier jar '" + MavenLite.RED_BOLD + MavenLite.PROJECT_NAME + ".jar" + MavenLite.DEFAULT + "' à échoué.");
-            this.removeCompilList();
             System.exit(1);
         }
         
