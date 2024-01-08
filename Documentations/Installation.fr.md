@@ -1,93 +1,10 @@
-# Maven Lite
+# Installation de Maven Lite
 
-Voir la [documentation en français](./README.md)
+## Installation des prérequis
 
-- Version : 2.0.0
-- Auteur : Floris Robart
+### Installation de bash
 
-## Table des matières
-
-- [Maven Lite](#maven-lite)
-  - [Table des matières](#table-des-matières)
-  - [Compatibilité](#compatibilité)
-  - [Description](#description)
-  - [Prérequis](#prérequis)
-  - [Installation et désinstallation](#installation-et-désinstallation)
-    - [Debian et dérivés](#debian-et-dérivés)
-      - [Installation automatique - Debian](#installation-automatique---debian)
-      - [Installation manuelle - Debian](#installation-manuelle---debian)
-      - [Désinstallation automatique - Debian](#désinstallation-automatique---debian)
-      - [Désinstallation manuelle - Debian](#désinstallation-manuelle---debian)
-    - [Autres distributions Linux](#autres-distributions-linux)
-      - [Installation automatique - Linux](#installation-automatique---linux)
-      - [Installation manuelle - Linux](#installation-manuelle---linux)
-      - [Désinstallation automatique - Linux](#désinstallation-automatique---linux)
-      - [Désinstallation manuelle - Linux](#désinstallation-manuelle---linux)
-    - [Windows](#windows)
-      - [Installation automatique - Windows](#installation-automatique---windows)
-      - [Installation manuelle - Windows](#installation-manuelle---windows)
-      - [Désinstallation automatique - Windows](#désinstallation-automatique---windows)
-      - [Désinstallation manuelle - Windows](#désinstallation-manuelle---windows)
-    - [MacOs](#macos)
-      - [Installation automatique - MacOs](#installation-automatique---macos)
-      - [Installation manuelle - MacOs](#installation-manuelle---macos)
-      - [Désinstallation automatique - MacOs](#désinstallation-automatique---macos)
-      - [Désinstallation manuelle - MacOs](#désinstallation-manuelle---macos)
-  - [Utilisation de Maven Lite](#utilisation-de-maven-lite)
-    - [Ligne de commande](#ligne-de-commande)
-    - [Fichier de configuration](#fichier-de-configuration)
-      - [Possibilités du fichier de configuration](#possibilités-du-fichier-de-configuration)
-    - [create](#create)
-    - [mvc](#mvc)
-    - [compilation](#compilation)
-    - [launch](#launch)
-    - [compile-launch](#compile-launch)
-    - [launch-compile](#launch-compile)
-    - [quiet](#quiet)
-    - [verbose](#verbose)
-    - [exclude](#exclude)
-    - [jar](#jar)
-    - [source](#source)
-    - [target](#target)
-    - [classpath](#classpath)
-    - [libraries](#libraries)
-    - [arguments](#arguments)
-    - [main](#main)
-    - [encoding](#encoding)
-    - [export](#export)
-    - [maven](#maven)
-    - [version](#version)
-    - [help](#help)
-    - [clear](#clear)
-  - [Exemple, fonctionnaliés et limites](#exemple-fonctionnaliés-et-limites)
-
-## Compatibilité
-
-- Windows 10 (Non testé)
-- Windows 11 (Non testé)
-- Linux possèdant `bash` (Testé sur Ubuntu 23.10 Mantic Minotaur)
-- MacOS Mojave 10.14.6 et inférieur (Non testé)
-- MacOS Catalina 10.15 et supérieur à condition d'avoir installé `bash` (Non testé)
-
-## Description
-
-Maven Lite est un système de gestion de projet java qui permet de compiler et lancer des projets java très simplement et rapidement.
-
-Le but est de pouvoir compiler et/ou lancer un projet java en une seule courte commande, comme maven mais en plus simple.
-
-Maven Lite est plus simple que Maven car il ne gère pas les dépendances hors local, les plugins, les phases de build, les déployements automatique, etc. Il est donc adapté pour les projets simples qui ne nécessitent pas de gérer des dépendances externes, cependant Maven Lite gère les dépendance local sous forme de fichier jar. Pour des projets plus complexes, il est conseillé d'utiliser Maven.
-
-Maven lite permet de compiler le projet dans un dossier target, gèrer les dépendances locales (fichier jar) et éxecuter le projet.
-
-L'intéret principale de maven lite dans la gestion des dépendances est de fournir un dossier qui contient toutes les dépendances, le script ajoutera automatiquement toutes les dépendances dans le classpath.
-
-Il est possible que cette deuxième version de Maven Lite contienne des bugs. Si vous en trouvez, n'hésitez pas à les signaler.
-
-## Prérequis
-
-- Disposer des droits administrateurs si vous voulez utiliser les installations automatiques.
-
-Si vous ne disposez pas des droits administrateurs, vous pouvez installer maven lite manuellement en suivant les instructions de la partie 'Installation manuelle'.
+### Installation de java
 
 ## Installation et désinstallation
 
@@ -327,104 +244,84 @@ Si vous ne disposez pas des droits administrateurs, vous pouvez installer maven 
   sudo rm /usr/local/share/man/fr/man1/mvnl.1.gz /usr/local/share/man/en/man1/mvnl.1.gz
   ```
 
-## Utilisation de Maven Lite
+## Liste des options
 
-- placer vous dans le dossier de votre projet java et exécuter la commande suivante :
+- Courte, Longue
+  - Description
+  - Nombre d'arguments
+  - Valeur par défaut
+- -f   , --file
+  - Permet de charger les options à partir d'un fichier de configuration. En savoir plus :
+  - Nombre de d'arguments : de `0` à `1`.
+  - Valeur par défaut     : `LPOM.conf`.
+- -cr  , --create
+  - Créer l'arborescence du projet ainsi qu'un fichier de config par défaut.
+  - Nombre de d'arguments : de `0` à `1`.
+  - Valeur par défaut     : `NewProject`.
+- -mvc , --model-view-controller
+  - Permet de spécifier à l'option '--create' de créer l'arborescence d'un projet MVC.
+  - Nombre de d'argument  : `0`.
+- -c   , --compilation
+  - Compile le projet.
+  - Nombre de d'argument  : `0`.
+- -l   , --launch
+  - Lance le projet.
+  - Nombre de d'argument  : `0`.
+- -cl  , --compile-launch
+  - Compile et lance le projet. (équivalent à -c -l)
+  - Nombre de d'argument  : `0`.
+- -lc  , --launch-compile
+  - Compile et lance le projet. (équivalent à -c -l)
+  - Nombre de d'argument  : `0`.
+- -q   , --quiet
+  - Permet de supprimer l'affichage de java dans le terminal lors de l'exécution du projet.
+  - Nombre de d'argument  : `0`.
+- -v   , --verbose
+  - Permet d'afficher les commandes exécutées.
+  - Nombre de d'argument  : `0`.
+- -ex  , --exclude
+  - Permet d'exclure des fichiers java et des dossiers de la compilation. Si vous voulez passé un argument qui commencer par '-' échapper le caractère '-' avec deux '\' comme ceci : '-ex  \\-fichier'.
+  - Nombre de d'argument  : `unlimited`.
+- -s   , --source
+  - Dossier contenant les fichiers java à compiler.
+  - Nombre de d'argument  : `1`.
+  - Valeur par défaut     : `src/main/java`.
+- -t   , --target
+  - Dossier de sortie des fichiers compilés. Ce dossier sera créer si il n'existe pas et sera automatiquement ajouter au classpath lors de la compilation et du lancement.
+  - Nombre de d'argument  : `1`.
+  - Valeur par défaut     : `target`.
+- -cp  , --classpath
+  - Permet de spécifier le classpath à utiliser lors de la compilation et du lancement. Si vous voulez ajouter plusieurs éléments au classpath, il faut les séparer par des ':'.
+  - Nombre de d'argument  : `1`.
+- -lib , --libraries
+  - Dossier contenant les fichiers jar utiliser par le programme. Tout les fichiers jar seront ajoutés au classpath lors de la compilation et du lancement.
+  - Nombre de d'arguments : de `0` à `1`.
+  - Valeur par défaut     : `src/main/resources/lib`.
+- -args, --arguments
+  - Tous les arguments à passer à la classe principale. Si vous voulez passé un argument qui commencer par '-' échapper le caractère '-' avec deux '\' comme ceci : '-args  \\-argument_pour_le_main'.
+  - Nombre de d'argument  : `unlimited`.
+- -m   , --main
+  - Classe principale à lancer. Si vous voulez lancer une classe qui se trouve dans un package, il faut spécifier le package avec le nom de la classe comme ceci : 'package.nom.MainClass'
+  - Nombre de d'argument  : `1`.
+- -e   , --encoding
+  - Permet de changer l'encodage des fichiers java à compiler.
+  - Nombre de d'argument  : `1`.
+  - Valeur par défaut     : `UTF-8`.
+- -exp , --export
+  - Permet de créer un fichier jar exécutable permettant de lancer le projet sans avoir installer MavenLite.
+  - Nombre de d'arguments : de `0` à `1`.
+  - Valeur par défaut     : `run.java`.
+- -mvn , --maven
+  - Convertie le projet en projet maven en créant un fichier pom.xml et en déplaçant les fichiers si nécessaire.
+  - Nombre de d'argument  : `0`.
+- -V   , --version
+  - Affiche la version.
+  - Nombre de d'argument  : `0`.
+  - Valeur par défaut     : `2.0.0`.
+- -h   , --help
+  - Affiche l'aide et quitte.
+  - Nombre de d'argument  : `0`.
+- -cle , --clear
+  - Permet de supprimer les fichiers dans le dossier de sortie des fichiers compilés.
+  - Nombre de d'argument  : `0`.
 
-  ```sh
-  mvnl [options] [arguments]
-  ```
-
-### Ligne de commande
-
-### Fichier de configuration
-
-L'utilisation d'un fichier de configuration se fait avec l'option `--file` ou `-f`.
-
-Le fichier de configuration est un fichier unique à chaque projet qui permet de configurer les options que Maven Lite devra utiliser.
-
-Le nom par défaut du fichier de configuration est `LPOM.conf` et doit être à la racine du projet. Il est possible de le renommer mais dans ce cas il faudra préciser son nom l'ors de l'utilisation de l'option, par exemple `mvnl -f monFichier`.
-
-#### Possibilités du fichier de configuration
-
-- Il est possible de mettre des commentaires dans le fichier de configuration en utilisant le caractère `#` au début de la ligne.
-- Il est possible de mettre des options dans le fichier de configuration en utilisant le même format que dans la ligne de commande, par exemple `--quiet` ou `-q`.
-- Il est possible de passé des arguments avec des espaces en utilisant des guillemets, par exemple `"mon argument"`.
-- Il est possible de mettre plusieurs options sur la même ligne en les séparant par un espace, par exemple `--quiet --verbose` ou `-q -v`.
-- Il est possible d'échapper les caractères spéciaux avec un antislash `\`, par exemple `--args exemp\"le`.
-  - Les caractères spéciaux dans le fichier de configuration sont : `\`, `"` et `-` uniquement s'il sont au début de l'argument. Par exemple :
-    - `--args exemp\"le` devient `exemp"le`
-    - `--args \-exemple` devient `-exemple`
-    - `--args \--exemple` devient `--exemple`
-    - `--args exemp\\le` devient `exemp\le`
-    - `--args exemp\\\"le` devient `exemp\"le`.
-- Une option et ses arguments peuvent être sur plusieurs lignes, par exemple
-
-  ```conf
-  --args
-  "mon argument
-
-      sur plusieurs lignes"
-  ```
-
-- Un exemple type de fichier de configuration est le suivant :
-
-  ```conf
-  # Source du projet
-  --source src/main/java
-
-  # Dossier de sortie des fichiers compilés
-  --target target
-
-  # Liste des libraries à ajouter au classpath
-  --libraries src/main/resources/lib
-
-  # Affiche les commandes éxécutées
-  --verbose
-  ```
-
-### create
-
-### mvc
-
-### compilation
-
-### launch
-
-### compile-launch
-
-### launch-compile
-
-### quiet
-
-### verbose
-
-### exclude
-
-### jar
-
-### source
-
-### target
-
-### classpath
-
-### libraries
-
-### arguments
-
-### main
-
-### encoding
-
-### export
-
-### maven
-
-### version
-
-### help
-
-### clear
-
-## Exemple, fonctionnaliés et limites
