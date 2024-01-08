@@ -30,8 +30,9 @@ public class MavenLite
     private static final String TARGET          = "target";
     private static final String CREATE          = "NewProject";
     private static final String FILE            = "LPOM.conf";
-    private static final String SOURCE          = "src" + File.separator + "main" + File.separator + "java";
-    private static final String LIBRARIES       = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "lib";
+    private static final String SOURCE          = "src" + File.separator + "main"      + File.separator + "java";
+    private static final String LIBRARIES       = "src" + File.separator + "resources" + File.separator + "lib";
+    private static final String TEST_UNITAIRE   = "src" + File.separator + "test"      + File.separator + "java";
 
     private static final String COMPILE_LIST_NAME = "compile.list";
 
@@ -745,8 +746,11 @@ public class MavenLite
             ├── main
             │   └── java
             │       └── App.java
-            └── resources
-                └── lib
+            ├── resources
+            │   └── lib
+            └── test
+                └── java
+                    └── AppTest.java
         */
 
         if (new File(projectName).exists() && !projectName.equals("./"))
@@ -760,26 +764,34 @@ public class MavenLite
         String main = "HelloWorld";
 
         /* Création de la liste des dossiers du projet */
-        lstFoldersProject.add(projectName);
-        lstFoldersProject.add(projectName + File.separator + MavenLite.SOURCE);
-        lstFoldersProject.add(projectName + File.separator + MavenLite.TARGET);
-        lstFoldersProject.add(projectName + File.separator + MavenLite.LIBRARIES);
+        /* 0 */ lstFoldersProject.add(projectName);
+        /* 1 */ lstFoldersProject.add(projectName + File.separator + MavenLite.SOURCE);
+        /* 2 */ lstFoldersProject.add(projectName + File.separator + MavenLite.TARGET);
+        /* 3 */ lstFoldersProject.add(projectName + File.separator + MavenLite.LIBRARIES);
+        /* 4 */ lstFoldersProject.add(projectName + File.separator + MavenLite.TEST_UNITAIRE);
 
         if (this.hmArgs.get(this.lstOptions.get(2)[0]) == null)
         {
             /* Création de la liste des fichiers du projet */
-            lstFilesProject.add(projectName + File.separator + MavenLite.SOURCE + File.separator + main + ".java");
+            lstFilesProject.add(lstFoldersProject.get(1) + File.separator + main + ".java");
+            lstFilesProject.add(lstFoldersProject.get(4) + File.separator + main + "Test.java");
         }
         else
         {
             /* Création de la liste des dossiers du projet */
-            lstFoldersProject.add(projectName + File.separator + "controller");
-            lstFoldersProject.add(projectName + File.separator + "model");
-            lstFoldersProject.add(projectName + File.separator + "view");
+            /* 5 */ lstFoldersProject.add(lstFoldersProject.get(1) + File.separator + "controller");
+            /* 6 */ lstFoldersProject.add(lstFoldersProject.get(1) + File.separator + "model");
+            /* 7 */ lstFoldersProject.add(lstFoldersProject.get(1) + File.separator + "view");
+
+            /* Création de la liste des dossier de test du projet */
+            /* 8  */ lstFoldersProject.add(lstFoldersProject.get(4) + File.separator + "controller");
+            /* 9  */ lstFoldersProject.add(lstFoldersProject.get(4) + File.separator + "model");
+            /* 10 */ lstFoldersProject.add(lstFoldersProject.get(4) + File.separator + "view");
 
             /* Création de la liste des fichiers du projet */
             main = "Controller";
-            lstFilesProject.add(projectName + File.separator + MavenLite.SOURCE + File.separator + "controller" + File.separator + main + ".java");
+            lstFilesProject.add(lstFoldersProject.get(5) + File.separator + main + ".java");
+            lstFilesProject.add(lstFoldersProject.get(8) + File.separator + main + "Test.java");
         }
 
         /* Création de la liste des fichiers du projet */
@@ -858,7 +870,7 @@ public class MavenLite
             sConfig += "\n";
             sConfig += "# Compiler et lancer le projet grâce à la commande 'mvnl -cl'\n";
 
-            FileWriter fw = new FileWriter(new File(lstFilesProject.get(1)));
+            FileWriter fw = new FileWriter(new File(lstFilesProject.get(2)));
             fw.write(sConfig);
             fw.close();
         }
@@ -867,6 +879,9 @@ public class MavenLite
             System.out.println(MavenLite.ERROR + "L'écriture dans le fichier '" + MavenLite.RED_BOLD + lstFilesProject.get(1) + MavenLite.DEFAULT + "' à échoué.");
             System.exit(1);
         }
+
+        /* Écriture dans le fichier de test */
+        // TODO : Écrire dans le fichier de test
 
         System.out.println("\n" + MavenLite.SUCCESS + "Le projet '" + MavenLite.GREEN_BOLD + projectName + MavenLite.DEFAULT + "' a été créé avec succès.\n");
         System.out.println(MavenLite.INFO    + "Pour " + MavenLite.BLUE_BOLD + "compiler" + MavenLite.DEFAULT + " le projet, exécuter la commande : '" + MavenLite.BLUE_BOLD + "mvnl -c" + MavenLite.DEFAULT + "'.");
