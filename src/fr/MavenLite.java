@@ -184,6 +184,7 @@ public class MavenLite
                 bFound = true;
             }
 
+            /* Toute les autres options */
             for (String[] opt : this.lstOptions)
             {
                 if (bFound) break;
@@ -1013,10 +1014,11 @@ public class MavenLite
     {
         /* Variables */
         StringBuilder command = new StringBuilder();
+        String jarName = this.hmArgs.get(this.lstOptions.get(11)[0]).equals("true") ? MavenLite.PROJECT_NAME : this.lstOptions.get(11)[0];
 
         /* Lancement */
         command.append("java -jar ");
-        command.append(this.hmArgs.get("target")).append(File.separator).append(MavenLite.PROJECT_NAME).append(".jar");
+        command.append(this.hmArgs.get("target")).append(File.separator).append(jarName).append(".jar");
 
         if (this.hmArgs.get("arguments") != null)
             for (String s : this.hmArgs.get("arguments").split(MavenLite.ARG_SEPARATOR))
