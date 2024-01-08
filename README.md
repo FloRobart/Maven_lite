@@ -659,13 +659,13 @@ Cette option permet de convertir le projet en projet maven en créant un fichier
 
 L'utilisation de cette option se fait avec l'option `--version` ou `-V`.
 
-Cette option permet d'afficher la version de Maven Lite ainsi que la localisation d'où est lancé la commande, la version de java, le type de build, le runtime java utilisé, la langue utilisée par le système, la plateforme d'encodage utilisée par Maven Lite, le nom du système d'exploitation, la version du noyaux du système d'exploitation et l'architecture du système.
+Cette option permet d'afficher la version de Maven Lite ainsi que la localisation du fichier principale de Maven Lite, la version de java, le type de build, le runtime java utilisé, la langue utilisée par le système, la plateforme d'encodage utilisée par Maven Lite, le nom du système d'exploitation, la version du noyaux du système d'exploitation et l'architecture du système.
 
 - Exemple
 
   ```sh
   Maven Lite 2.0.0 
-  Maven Lite home : /home/floris/Documents/Projet_perso/Maven_lite
+  Maven Lite home : /etc/maven-lite/
   Java version : 17.0.9, vendor : Private Build, runtime : OpenJDK Runtime Environment
   Default locale : fr_FR, platform encoding : UTF-8
   OS name : "Linux", version : "6.5.0-14-generic", architecture : "amd64"
