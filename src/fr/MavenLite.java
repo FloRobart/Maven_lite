@@ -50,6 +50,8 @@ public class MavenLite
     private static final String WARNING         = "[" + MavenLite.YELLOW_BOLD + "AVERTISSEMENT" + MavenLite.DEFAULT + "] ";
     private static final String ERROR           = "[" + MavenLite.RED_BOLD + "ERREUR" + MavenLite.DEFAULT + "] ";
 
+    /* Séparation des arguments */
+    private static final String ARG_SEPARATOR   = "/;#;/";
 
     /*===========*/
     /* Variables */
@@ -218,11 +220,11 @@ public class MavenLite
                         sArgs.append(this.hmArgs.get(opt[0]) == null ? "" : this.hmArgs.get(opt[0]));
 
                         while (i + 1 < args.length && !args[i + 1].startsWith("-"))
-                            sArgs.append(args[++i]).append("\";\"");
+                            sArgs.append(args[++i]).append(MavenLite.ARG_SEPARATOR);
 
-                        this.hmArgs.put(opt[0], sArgs.toString());
+                        this.hmArgs.put(opt[0], sArgs.toString().substring(0, sArgs.length()-MavenLite.ARG_SEPARATOR.length()));
                     }
-                    /* Parse les options qui ont un nombre d'argument défini autre que 0 et 1 */
+                    /* Parse les options qui ont un nombre d'argument défini autre que 0, 1 et unlimited */
                     /* Pour l'instant ce code n'est pas utilisé */
                     else
                     {
@@ -230,9 +232,9 @@ public class MavenLite
                         sArgs.append(this.hmArgs.get(opt[0]) == null ? "" : this.hmArgs.get(opt[0]));
 
                         for (int j = 0; j < Integer.parseInt(opt[3]) && i+1 < args.length && !args[i + 1].startsWith("-"); j++)
-                            sArgs.append(args[++i]).append("\";\"");
+                            sArgs.append(args[++i]).append(MavenLite.ARG_SEPARATOR);
 
-                        this.hmArgs.put(opt[0], sArgs.toString());
+                        this.hmArgs.put(opt[0], sArgs.toString().substring(0, sArgs.length()-MavenLite.ARG_SEPARATOR.length()));
                     }
 
                     opt[6] = String.valueOf(this.countArgs);
@@ -411,7 +413,7 @@ public class MavenLite
 
         String exclude = this.hmArgs.get(this.lstOptions.get(9)[0]);
         if (exclude != null)
-            for (String ex : exclude.replace("\\", "").split("\";\""))
+            for (String ex : exclude.replace("\\", "").split(MavenLite.ARG_SEPARATOR))
                 for (String line : sCompileList.toString().split("\n"))
                     if (line.contains(ex))
                         sCompileList = new StringBuilder(sCompileList.toString().replace(line + "\n", ""));
@@ -500,7 +502,11 @@ public class MavenLite
                     this.version("");
                     break;
                 case "libraries":
-                    this.hmArgs.put(opt[0], this.libraries(opt[5]));
+                    this.hmArgs.put(opt[0], this.libraries(this.hmArgs.get(opt[0])));
+                    break;
+                case "classpath":
+                    this.hmArgs.put(opt[0], this.classpath(this.hmArgs.get(opt[0])));
+                    System.out.println("classpath : '" + this.hmArgs.get(opt[0]) + "'");
                     break;
                 case "help":
                     System.out.println(this.help(this.lstOptions));
@@ -562,7 +568,7 @@ public class MavenLite
         String version = "";
 
         version += MavenLite.BOLD + "Maven Lite " + MavenLite.VERSION + MavenLite.DEFAULT + " " + MavenLite.GREEN_BOLD + phraseAuteur + MavenLite.DEFAULT + "\n";
-        version += "Maven Lite home : " + new File(".").getAbsolutePath().substring(0, new File(".").getAbsolutePath().length()-2) + "\n";
+        version += "Maven Lite home : " + MavenLite.class.getClassLoader().getResource("MavenLite.class") + "\n";
         version += "Java version : " + System.getProperty("java.version") + ", vendor : " + System.getProperty("java.vendor") + ", runtime : " + System.getProperty("java.runtime.name") + "\n";
         version += "Default locale : " + System.getProperty("user.language") + "_" + System.getProperty("user.country") + ", platform encoding : " + System.getProperty("file.encoding") + "\n";
         version += "OS name : \"" + System.getProperty("os.name") + "\", version : \"" + System.getProperty("os.version") + "\", architecture : \"" + System.getProperty("os.arch") + "\"";
@@ -614,6 +620,19 @@ public class MavenLite
 
         return help;
     }    
+
+    /**
+     * Permet de formatter la chaine de caractère passée en paramètre dans la forme du classpath java correspondant à l'OS.
+     * @param classpath la chaine de caractère à formatter
+     * @return la chaine de caractère formaté. Si la chaine de caractère est null, null est retourné.
+     */
+    private String classpath(String classpath)
+    {
+        if (classpath == null)
+            return null;
+
+        return System.getProperty("os.name").toLowerCase().startsWith("windows") ? classpath.replace(MavenLite.ARG_SEPARATOR, ";").replace("CLASSPATH", System.getProperty("java.class.path")) : classpath.replace(MavenLite.ARG_SEPARATOR, ":").replace("CLASSPATH", System.getProperty("java.class.path"));
+    }
 
     /**
      * Permet de spécifier le dossier contenant les fichiers jar utiliser par le programme.
@@ -923,7 +942,7 @@ public class MavenLite
         command.append(" ").append(this.hmArgs.get("main"));
 
         if (this.hmArgs.get("arguments") != null)
-            for (String s : this.hmArgs.get("arguments").split("\";\""))
+            for (String s : this.hmArgs.get("arguments").split(MavenLite.ARG_SEPARATOR))
                 command.append(" \"").append(s).append("\"");
 
         if (this.hmArgs.get(this.lstOptions.get(8)[0]) != null)
@@ -948,20 +967,24 @@ public class MavenLite
         /* Variables */
         StringBuilder command = new StringBuilder();
         String main = this.hmArgs.get("main") == null ? this.getMainClassName(new File(this.hmArgs.get("source"))) : this.hmArgs.get("main");
+        File manifest = new File(this.hmArgs.get("target") + File.separator + "manifest.txt");
 
         /* Création du manifest */
-        try
+        if (!manifest.exists())
         {
-            FileWriter fw = new FileWriter(new File(this.hmArgs.get("target") + File.separator + "manifest.txt"));
-            fw.write("Manifest-Version: 1.0\n");
-            fw.write("Author: " + System.getProperty("user.name") + "\n");
-            fw.write("Main-Class: " + main + "\n");
-            fw.close();
-        }
-        catch (Exception e)
-        {
-            System.out.println(MavenLite.ERROR + "L'écriture dans le fichier '" + MavenLite.RED_BOLD + this.hmArgs.get("target") + File.separator + "manifest.txt" + MavenLite.DEFAULT + "' à échoué.");
-            System.exit(1);
+            try
+            {
+                FileWriter fw = new FileWriter(manifest);
+                fw.write("Manifest-Version: 1.0\n");
+                fw.write("Author: " + System.getProperty("user.name") + "\n");
+                fw.write("Main-Class: " + main + "\n");
+                fw.close();
+            }
+            catch (Exception e)
+            {
+                System.out.println(MavenLite.ERROR + "L'écriture dans le fichier '" + MavenLite.RED_BOLD + this.hmArgs.get("target") + File.separator + "manifest.txt" + MavenLite.DEFAULT + "' à échoué.");
+                System.exit(1);
+            }
         }
 
         /* Création du fichier jar */
@@ -996,7 +1019,7 @@ public class MavenLite
         command.append(this.hmArgs.get("target")).append(File.separator).append(MavenLite.PROJECT_NAME).append(".jar");
 
         if (this.hmArgs.get("arguments") != null)
-            for (String s : this.hmArgs.get("arguments").split("\";\""))
+            for (String s : this.hmArgs.get("arguments").split(MavenLite.ARG_SEPARATOR))
                 command.append(" \"").append(s).append("\"");
 
         if (this.hmArgs.get(this.lstOptions.get(8)[0]) != null)
