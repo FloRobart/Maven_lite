@@ -927,15 +927,15 @@ public class MavenLite
         if (this.hmArgs.get(this.lstOptions.get(8)[0]) != null)
             System.out.println(MavenLite.INFO + MavenLite.BLUE_BOLD + command.toString() + MavenLite.DEFAULT);
 
-        System.out.println(MavenLite.INFO + "Compilation du projet '" + MavenLite.BLUE_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "'...\n");
+        System.out.println(MavenLite.INFO + "Compilation du projet '" + MavenLite.BLUE_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "'...");
         if (this.executCommande(command.toString()) != 0)
         {
-            System.out.println("\n" + MavenLite.ERROR + "La compilation du projet '" + MavenLite.RED_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "' à échoué.");
+            System.out.println(MavenLite.ERROR + "La compilation du projet '" + MavenLite.RED_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "' à échoué.");
             this.removeFile(MavenLite.COMPILE_LIST_NAME);
             System.exit(1);
         }
         
-        System.out.println("\n" + MavenLite.SUCCESS + "Compilation du projet '" + MavenLite.GREEN_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "' terminé avec succès.");
+        System.out.println(MavenLite.SUCCESS + "Compilation du projet '" + MavenLite.GREEN_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "' terminé avec succès.");
         this.removeFile(MavenLite.COMPILE_LIST_NAME);
     }
 
@@ -971,14 +971,14 @@ public class MavenLite
         if (this.hmArgs.get(this.lstOptions.get(8)[0]) != null)
             System.out.println(MavenLite.INFO + MavenLite.BLUE_BOLD + command.toString() + MavenLite.DEFAULT);
 
-        System.out.println(MavenLite.INFO + "Lancement du projet '" + MavenLite.BLUE_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "'...");
+        System.out.println(MavenLite.INFO + "Lancement du projet '" + MavenLite.BLUE_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "'...\n");
         if (this.executCommande(command.toString()) != 0)
         {
-            System.out.println(MavenLite.ERROR + "Le lancement du projet '" + MavenLite.RED_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "' à échoué.");
+            System.out.println("\n" + MavenLite.ERROR + "Le lancement du projet '" + MavenLite.RED_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "' à échoué.");
             System.exit(1);
         }
         
-        System.out.println(MavenLite.SUCCESS + "Lancement du projet '" + MavenLite.GREEN_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "' terminé avec succès.");
+        System.out.println("\n" + MavenLite.SUCCESS + "Lancement du projet '" + MavenLite.GREEN_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "' terminé avec succès.");
     }
 
     /**
