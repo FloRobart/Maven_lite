@@ -962,7 +962,7 @@ public class MavenLite
         if (this.hmArgs.get("main") == null)
             this.hmArgs.put("main", this.getMainClassName(new File(this.hmArgs.get("source"))));
 
-        if (this.hmArgs.get("main") == null)
+        if (this.hmArgs.get("main").isBlank())
         {
             System.out.println(MavenLite.ERROR + "Impossible de trouver la classe principale du projet. Vous pouvez spécifier la classe principale avec l'option '" + MavenLite.RED_BOLD + "--main <nomClass>" + MavenLite.DEFAULT + "'.");
             System.exit(1);
