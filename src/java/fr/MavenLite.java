@@ -133,8 +133,8 @@ public class MavenLite
         /* 7  */ lst.add(new String[] {"quiet"            , "-q"   , "--quiet"                , "0"        , "0"        , null                  , "0", "Permet de supprimer l'affichage de java dans le terminal lors de l'exécution du projet."});
         /* 8  */ lst.add(new String[] {"verbose"          , "-v"   , "--verbose"              , "0"        , "0"        , null                  , "0", "Permet d'afficher les commandes exécutées."});
         /* 9  */ lst.add(new String[] {"exclude"          , "-ex"  , "--exclude"              , "unlimited", "unlimited", null                  , "0", "Permet d'exclure des fichiers java et des dossiers de la compilation. Si vous voulez passé un argument qui commencer par '-' échapper le caractère '-' avec deux '\\' comme ceci : '-ex \\\\-fichier'."});
-        /* 10 */ lst.add(new String[] {"compile-jar"      , "-cj"  , "--compile-jar"          , "0"        , "0"        , null                  , "0", "Permet de créer un fichier jar de votre projet."});
-        /* 11 */ lst.add(new String[] {"launch-jar"       , "-lj"  , "--launch-jar"           , "0"        , "1"        , null                  , "0", "Permet de lancer un fichier jar exécutable."});
+        /* 10 */ lst.add(new String[] {"compile-jar"      , "-cj"  , "--compile-jar"          , "0"        , "1"        , null                  , "0", "Permet de créer un fichier jar de votre projet. Vous pouvez spécifier le nom du fichier jar à créer. Si vous ne spécifiez pas de nom, le nom du fichier jar sera le nom du projet."});
+        /* 11 */ lst.add(new String[] {"launch-jar"       , "-lj"  , "--launch-jar"           , "0"        , "1"        , null                  , "0", "Permet de lancer un fichier jar exécutable. Vous pouvez spécifier le nom du fichier jar à lancer. Si vous ne spécifiez pas de nom, le nom du fichier jar sera le nom du projet."});
         /* 12 */ lst.add(new String[] {"integrate-test"   , "-it"  , "--integrate-test"       , "0"        , "0"        , null                  , "0", "Permet d'intégrer les tests unitaires au projet."});
         /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
         /* Tous se qui est au dessus de cette ligne ne doit pas être déplacer, leur ordre est important */
@@ -482,7 +482,7 @@ public class MavenLite
      */
     private void removeFile(String name)
     {
-        File f = new File(MavenLite.COMPILE_LIST_NAME);
+        File f = new File(name);
         if (f.exists())
             f.delete();
     }
@@ -737,6 +737,14 @@ public class MavenLite
             System.out.println(MavenLite.ERROR + "La lecture du fichier '" + MavenLite.RED_BOLD + fileName + MavenLite.DEFAULT + "' a échoué.");
             System.exit(1);
         }
+    }
+
+    /**
+     * Permet de créer toute l'arborscence, y compris les fichiers pour réaliser les tests unitaires.
+     */
+    private void integrateTest()
+    {
+        // TODO : Créer l'arborescence pour les tests unitaires
     }
 
     /**
@@ -1047,6 +1055,7 @@ public class MavenLite
             catch (Exception e)
             {
                 System.out.println(MavenLite.ERROR + "L'écriture dans le fichier '" + MavenLite.RED_BOLD + this.hmArgs.get("target") + File.separator + "manifest.txt" + MavenLite.DEFAULT + "' à échoué.");
+                this.removeFile(manifest.getPath());
                 System.exit(1);
             }
         }
@@ -1063,10 +1072,12 @@ public class MavenLite
         if (this.executCommande(command.toString()) != 0)
         {
             System.out.println(MavenLite.ERROR + "La création du fichier jar '" + MavenLite.RED_BOLD + MavenLite.PROJECT_NAME + ".jar" + MavenLite.DEFAULT + "' à échoué.");
+            this.removeFile(manifest.getPath());
             System.exit(1);
         }
         
         System.out.println(MavenLite.SUCCESS + "Création du fichier jar '" + MavenLite.GREEN_BOLD + MavenLite.PROJECT_NAME + ".jar" + MavenLite.DEFAULT + "' terminé avec succès.");
+        this.removeFile(manifest.getPath());
     }
 
     /**
@@ -1076,11 +1087,14 @@ public class MavenLite
     {
         /* Variables */
         StringBuilder command = new StringBuilder();
-        String jarName = this.hmArgs.get(this.lstOptions.get(11)[0]).equals("true") ? MavenLite.PROJECT_NAME : this.lstOptions.get(11)[0];
+        String jarName = this.hmArgs.get(this.lstOptions.get(11)[0]) == null ? this.hmArgs.get("target") + File.separator + MavenLite.PROJECT_NAME : this.hmArgs.get(this.lstOptions.get(11)[0]);
 
         /* Lancement */
         command.append("java -jar ");
-        command.append(this.hmArgs.get("target")).append(File.separator).append(jarName).append(".jar");
+        command.append(jarName);
+
+        if (!command.toString().endsWith(".jar"))
+            command.append(".jar");
 
         if (this.hmArgs.get("arguments") != null)
             for (String s : this.hmArgs.get("arguments").split(MavenLite.ARG_SEPARATOR))
@@ -1095,7 +1109,7 @@ public class MavenLite
             System.out.println(MavenLite.ERROR + "Le lancement du fichier jar '" + MavenLite.RED_BOLD + MavenLite.PROJECT_NAME + ".jar" + MavenLite.DEFAULT + "' à échoué.");
             System.exit(1);
         }
-        
+
         System.out.println(MavenLite.SUCCESS + "Lancement du fichier jar '" + MavenLite.GREEN_BOLD + MavenLite.PROJECT_NAME + ".jar" + MavenLite.DEFAULT + "' terminé avec succès.");
     }
 
