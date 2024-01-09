@@ -596,12 +596,12 @@ public class MavenLite
     {
         int optLength = 30;
         int descLength = 50;
-        String help = "\nUsage : mvnl [options] [argument]\n\n";
-        help += "Options :\n";
+        StringBuilder help = new StringBuilder();
+        help.append("\nUsage : mvnl [options] [argument]\n\nOptions :\n");
 
         for (String[] s : lst)
         {
-            help += String.format("  %-" + (optLength-2) + "s", (String.format("%-5s, ", s[1]) + s[2]));
+            help.append(String.format("  %-" + (optLength-2) + "s", (String.format("%-5s, ", s[1]) + s[2])));
 
             /* Écriture de la description */
             String sDesc = s[7];
@@ -610,26 +610,28 @@ public class MavenLite
             {
                 if ((currentLineLength + word.length()) > descLength)
                 {
-                    help += "\n" + String.format("%-" + optLength + "s", "");
+                    help.append("\n" + String.format("%-" + optLength + "s", ""));
                     currentLineLength = 0;
                 }
 
-                help += word + " ";
+                help.append(word + " ");
                 currentLineLength = currentLineLength + word.length();
             }
 
             if (s[3].equals(s[4]))
-                help += String.format("\n%-" + optLength + "s", "") + "Nombre de d'argument  : " + MavenLite.BOLD + s[3] + MavenLite.DEFAULT + ".";
+                help.append(String.format("\n%-" + optLength + "s", "") + "Nombre de d'argument  : " + MavenLite.BOLD + s[3] + MavenLite.DEFAULT + ".");
             else
-                help += String.format("\n%-" + optLength + "s", "") + "Nombre de d'arguments : de " + MavenLite.BOLD + s[3] + MavenLite.DEFAULT + " à " + MavenLite.BOLD + s[4] + MavenLite.DEFAULT + ".";
+                help.append(String.format("\n%-" + optLength + "s", "") + "Nombre de d'arguments : de " + MavenLite.BOLD + s[3] + MavenLite.DEFAULT + " à " + MavenLite.BOLD + s[4] + MavenLite.DEFAULT + ".");
             
             if (s[5] != null)
-                help += String.format("\n%-" + optLength + "s", "") + "Valeur par défaut     : " + MavenLite.BOLD + s[5] + MavenLite.DEFAULT + ".";
+                help.append(String.format("\n%-" + optLength + "s", "") + "Valeur par défaut     : " + MavenLite.BOLD + s[5] + MavenLite.DEFAULT + ".");
 
-            help += "\n\n";
+            help.append("\n\n");
         }
 
-        return help;
+        help.append(MavenLite.BLUE_BOLD + "Documentation complète : <https://florobart.github.io/mavenlite.github.io>\n" + MavenLite.DEFAULT);
+
+        return help.toString();
     }    
 
     /**
