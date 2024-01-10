@@ -701,17 +701,13 @@ public class MavenLite
                 for (File file : lstFiles)
                 {
                     if (file.isFile())
-                    {
                         file.delete();
-                    }
                     else if (file.isDirectory())
-                    {
                         if (!this.deleteDirectory(file))
                         {
                             System.out.println(MavenLite.ERROR + "La suppression du dossier '" + MavenLite.RED_BOLD + file.getName() + MavenLite.DEFAULT + "' a échoué.");
                             System.exit(1);
                         }
-                    }
                 }
             }
 
@@ -731,7 +727,7 @@ public class MavenLite
     }
 
     /**
-     * 
+     * Permet de supprimer tout les dossier et fichiers d'un répertoire.
      * @param directory le dossier à supprimer
      * @return true si le dossier a été supprimé, false sinon
      */
