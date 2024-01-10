@@ -474,7 +474,7 @@ public class MavenLite
             if (rCode != 0)
             {
                 while ((line = readerError.readLine()) != null)
-                    System.out.println(line);
+                    System.out.println(MavenLite.ERROR + line);
             }
 
             return rCode;
@@ -1147,14 +1147,14 @@ public class MavenLite
         if (this.hmArgs.get(this.lstOptions.get(8)[0]) != null)
             System.out.println(MavenLite.INFO + MavenLite.BLUE_BOLD + command.toString() + MavenLite.DEFAULT);
 
-        System.out.println(MavenLite.INFO + "Lancement du projet '" + MavenLite.BLUE_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "'...\n");
+        System.out.println(MavenLite.INFO + "Lancement du projet '" + MavenLite.BLUE_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "'...");
         if (this.executCommande(command.toString()) != 0)
         {
-            System.out.println("\n" + MavenLite.ERROR + "Le lancement du projet '" + MavenLite.RED_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "' à échoué.");
+            System.out.println(MavenLite.ERROR + "Le lancement du projet '" + MavenLite.RED_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "' à échoué.");
             System.exit(1);
         }
         
-        System.out.println("\n" + MavenLite.SUCCESS + "Lancement du projet '" + MavenLite.GREEN_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "' terminé avec succès.");
+        System.out.println(MavenLite.SUCCESS + "Lancement du projet '" + MavenLite.GREEN_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "' terminé avec succès.");
     }
 
     /**
@@ -1278,7 +1278,7 @@ public class MavenLite
     {
         /* Variables */
         StringBuilder command = new StringBuilder();
-        String jarName = this.hmArgs.get(this.lstOptions.get(11)[0]) == null ? this.hmArgs.get("target") + File.separator + MavenLite.PROJECT_NAME : this.hmArgs.get(this.lstOptions.get(11)[0]);
+        String jarName = this.hmArgs.get(this.lstOptions.get(11)[0]) == null ? MavenLite.PROJECT_NAME + File.separator + this.hmArgs.get("target") : this.hmArgs.get(this.lstOptions.get(11)[0]);
 
         /* Lancement */
         command.append("java -jar ");
