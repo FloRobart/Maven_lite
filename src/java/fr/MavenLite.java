@@ -461,13 +461,23 @@ public class MavenLite
             /* Exécution de la commande */
             Process        process = processBuilder.start();
             BufferedReader reader  = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            BufferedReader readerError  = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 
             String line;
             while ((line = reader.readLine()) != null)
                 if (this.hmArgs.get(this.lstOptions.get(7)[0]) == null)
                     System.out.println(line);
+            
+                    
 
-            return process.waitFor();
+            int rCode = process.waitFor();
+            if (rCode != 0)
+            {
+                while ((line = readerError.readLine()) != null)
+                    System.out.println(line);
+            }
+
+            return rCode;
         }
         catch (Exception e)
         {
@@ -856,6 +866,8 @@ public class MavenLite
     private void integrateTest()
     {
         // TODO : Créer l'arborescence pour les tests unitaires
+
+
     }
 
     /**
