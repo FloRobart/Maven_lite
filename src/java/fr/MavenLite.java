@@ -696,8 +696,27 @@ public class MavenLite
         if (f.exists() && f.isDirectory())
         {
             File[] lstFiles = f.listFiles();
-            for (File file : lstFiles)
-                file.delete();
+            if (lstFiles != null)
+            {
+                for (File file : lstFiles)
+                {
+                    if (file.isFile())
+                    {
+                        file.delete();
+                    }
+                    else if (file.isDirectory())
+                    {
+                        if (!this.deleteDirectory(file))
+                        {
+                            System.out.println(MavenLite.ERROR + "La suppression du dossier '" + MavenLite.RED_BOLD + file.getName() + MavenLite.DEFAULT + "' a échoué.");
+                            System.exit(1);
+                        }
+                    }
+                }
+            }
+
+            System.out.println(MavenLite.SUCCESS + "Le dossier '" + MavenLite.GREEN_BOLD + f.getName() + MavenLite.DEFAULT + "' a été vidé.");
+
         }
         else
         {
@@ -707,6 +726,39 @@ public class MavenLite
                 System.out.println(MavenLite.ERROR + "Le dossier '" + MavenLite.RED_BOLD + f.getName() + MavenLite.DEFAULT + "' n'existe pas.");
 
             System.exit(1);
+        }
+
+    }
+
+    /**
+     * 
+     * @param directory le dossier à supprimer
+     * @return true si le dossier a été supprimé, false sinon
+     */
+    private boolean deleteDirectory(File directory)
+    {
+        if (directory.exists() && directory.isDirectory())
+        {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isFile())
+                        file.delete();
+                    else if (file.isDirectory())
+                        this.deleteDirectory(file);
+                }
+            }
+
+            return directory.delete();
+        }
+        else
+        {
+            if (directory.exists())
+                System.out.println(MavenLite.ERROR + "Le fichier '" + MavenLite.RED_BOLD + directory.getName() + MavenLite.DEFAULT + "' n'est pas un dossier.");
+            else
+                System.out.println(MavenLite.ERROR + "Le dossier '" + MavenLite.RED_BOLD + directory.getName() + MavenLite.DEFAULT + "' n'existe pas.");
+
+            return false;
         }
     }
 
@@ -952,7 +1004,8 @@ public class MavenLite
         catch (Exception e)
         {
             System.out.println(MavenLite.ERROR + "L'écriture dans le fichier '" + MavenLite.RED_BOLD + MavenLite.COMPILE_LIST_NAME + MavenLite.DEFAULT + "' à échoué.");
-            this.removeFile(MavenLite.COMPILE_LIST_NAME);
+            if (this.hmArgs.get(this.lstOptions.get(8)[0]) == null)
+                this.removeFile(MavenLite.COMPILE_LIST_NAME);
             System.exit(1);
         }
 
@@ -977,12 +1030,14 @@ public class MavenLite
         if (this.executCommande(command.toString()) != 0)
         {
             System.out.println(MavenLite.ERROR + "La compilation du projet '" + MavenLite.RED_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "' à échoué.");
-            this.removeFile(MavenLite.COMPILE_LIST_NAME);
+            if (this.hmArgs.get(this.lstOptions.get(8)[0]) == null)
+                this.removeFile(MavenLite.COMPILE_LIST_NAME);
             System.exit(1);
         }
         
         System.out.println(MavenLite.SUCCESS + "Compilation du projet '" + MavenLite.GREEN_BOLD + MavenLite.PROJECT_NAME + MavenLite.DEFAULT + "' terminé avec succès.");
-        this.removeFile(MavenLite.COMPILE_LIST_NAME);
+        if (this.hmArgs.get(this.lstOptions.get(8)[0]) == null)
+            this.removeFile(MavenLite.COMPILE_LIST_NAME);
     }
 
     /**
@@ -1040,6 +1095,7 @@ public class MavenLite
     {
         /* Variables */
         StringBuilder command = new StringBuilder();
+        System.out.println("main" + this.hmArgs.get("main"));
         String main = this.hmArgs.get("main") == null ? this.getMainClassName(new File(this.hmArgs.get("source"))) : this.hmArgs.get("main");
         File manifest = new File(this.hmArgs.get("target") + File.separator + "manifest.txt");
 
@@ -1057,7 +1113,8 @@ public class MavenLite
             catch (Exception e)
             {
                 System.out.println(MavenLite.ERROR + "L'écriture dans le fichier '" + MavenLite.RED_BOLD + this.hmArgs.get("target") + File.separator + "manifest.txt" + MavenLite.DEFAULT + "' à échoué.");
-                this.removeFile(manifest.getPath());
+                if (this.hmArgs.get(this.lstOptions.get(8)[0]) == null)
+                    this.removeFile(manifest.getPath());
                 System.exit(1);
             }
         }
@@ -1074,12 +1131,14 @@ public class MavenLite
         if (this.executCommande(command.toString()) != 0)
         {
             System.out.println(MavenLite.ERROR + "La création du fichier jar '" + MavenLite.RED_BOLD + MavenLite.PROJECT_NAME + ".jar" + MavenLite.DEFAULT + "' à échoué.");
-            this.removeFile(manifest.getPath());
+            if (this.hmArgs.get(this.lstOptions.get(8)[0]) == null)
+                this.removeFile(manifest.getPath());
             System.exit(1);
         }
         
         System.out.println(MavenLite.SUCCESS + "Création du fichier jar '" + MavenLite.GREEN_BOLD + MavenLite.PROJECT_NAME + ".jar" + MavenLite.DEFAULT + "' terminé avec succès.");
-        this.removeFile(manifest.getPath());
+        if (this.hmArgs.get(this.lstOptions.get(8)[0]) == null)
+            this.removeFile(manifest.getPath());
     }
 
     /**
