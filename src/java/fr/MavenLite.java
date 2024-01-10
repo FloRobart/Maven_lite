@@ -33,11 +33,9 @@ public class MavenLite
     private static final String CREATE          = "NewProject";
     private static final String FILE            = "LPOM.conf";
     private static final String SOURCE          = "src" + File.separator + "main"      + File.separator + "java";
-    private static final String LIBRARIES       = "src" + File.separator + "resources" + File.separator + "lib";
+    private static final String RESOURCES       = "src" + File.separator + "resources";
+    private static final String LIBRARIES       = MavenLite.RESOURCES + File.separator + "lib";
     private static final String TEST_UNITAIRE   = "src" + File.separator + "test"      + File.separator + "java";
-
-    private static final String COMPILE_LIST_NAME = "compile.list";
-    private static final String[] JUNIT_FILES     = new String[]{"junit-4.13.2.jar", "hamcrest-core-1.3.jar"};
 
     /* Couleurs et style */
     private static final String DEFAULT         = "\u001B[0m";
@@ -55,7 +53,10 @@ public class MavenLite
     private static final String ERROR           = "[" + MavenLite.RED_BOLD + "ERREUR" + MavenLite.DEFAULT + "] ";
 
     /* Séparation des arguments */
-    private static final String ARG_SEPARATOR   = "/;#;/";
+    private static final String ARG_SEPARATOR     = "/;#;/";
+    private static final String CP_SEPARATOR      = System.getProperty("os.name").toLowerCase().startsWith("windows") ? ";" : ":";
+    private static final String COMPILE_LIST_NAME = "compile.list";
+    private static final String[] JUNIT_FILES     = new String[]{"junit-4.13.2.jar", "hamcrest-core-1.3.jar"};
 
     /*===========*/
     /* Variables */
@@ -141,6 +142,7 @@ public class MavenLite
 
         /* 13 */ lst.add(new String[] {"source"           , "-s"   , "--source"               , "1"        , "1"        , MavenLite.SOURCE      , "1", "Dossier contenant les fichiers java à compiler."});
         /* 14 */ lst.add(new String[] {"target"           , "-t"   , "--target"               , "1"        , "1"        , MavenLite.TARGET      , "1", "Dossier de sortie des fichiers compilés. Ce dossier sera créer si il n'existe pas et sera automatiquement ajouter au classpath lors de la compilation et du lancement."});
+        /* 15 */ lst.add(new String[] {"resources"        , "-r"   , "--resources"            , "1"        , "1"        , MavenLite.RESOURCES   , "1", "Dossier contenant les fichiers ressources à copier dans le dossier de sortie des fichiers compilés dans le cas de la création d'un fichier jar."});
         /* 15 */ lst.add(new String[] {"classpath"        , "-cp"  , "--classpath"            , "unlimited", "unlimited", null                  , "0", "Permet de spécifier le classpath à utiliser lors de la compilation et du lancement. Si vous voulez ajouter plusieurs éléments au classpath, il faut les séparer par des ':'."});
         /* 16 */ lst.add(new String[] {"libraries"        , "-lib" , "--libraries"            , "0"        , "1"        , MavenLite.LIBRARIES   , "0", "Dossier contenant les fichiers jar utiliser par le programme. Tout les fichiers jar seront ajoutés au classpath lors de la compilation et du lancement."});
         /* 17 */ lst.add(new String[] {"arguments"        , "-args", "--arguments"            , "unlimited", "unlimited", null                  , "0", "Tous les arguments à passer à la classe principale. Si vous voulez passé un argument qui commencer par '-' échapper le caractère '-' avec deux '\\' comme ceci : '-args \\\\-argument_pour_le_main'."});
@@ -487,6 +489,65 @@ public class MavenLite
             f.delete();
     }
 
+    /**
+     * Permet de copier une arborescence de fichier.
+     * @param source le dossier à copier
+     * @param target le dossier de destination
+     */
+    private boolean copyArborescence(File source, File target)
+    {
+        if (source.exists() && source.isDirectory())
+        {
+            /* Création du dossier de destination */
+            if (!new File(target.getPath() + source.getName()).exists())
+                target.mkdirs();
+
+            /* Création de tout les dossier de l'arborscence */
+            File[] lstFiles = source.listFiles();
+            if (lstFiles != null)
+            {
+                for (File file : lstFiles)
+                    if (file.isDirectory())
+                        new File(target.getPath() + File.separator + source.getName() + File.separator + file.getName()).mkdirs();
+            }
+
+
+            /* Copie des fichiers */
+            if (lstFiles != null)
+            {
+                for (File file : lstFiles)
+                {
+                    if (file.isFile())
+                    {
+                        try
+                        {
+                            Files.copy(file.toPath(), new File(target.getPath() + File.separator + source.getName() + File.separator + file.getName()).toPath(), StandardCopyOption.REPLACE_EXISTING);
+                        }
+                        catch (IOException e)
+                        {
+                            System.out.println(MavenLite.ERROR + "La copie du fichier '" + MavenLite.RED_BOLD + file.getName() + MavenLite.DEFAULT + "' a échoué.");
+                            return false;
+                        }
+                    }
+                    else if (file.isDirectory())
+                    {
+                        this.copyArborescence(file, new File(target.getPath() + File.separator + source.getName() + File.separator));
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (source.exists())
+                System.out.println(MavenLite.ERROR + "Le fichier '" + MavenLite.RED_BOLD + source + MavenLite.DEFAULT + "' n'est pas un dossier.");
+            else
+                System.out.println(MavenLite.ERROR + "Le dossier '" + MavenLite.RED_BOLD + source + MavenLite.DEFAULT + "' n'existe pas.");
+
+            return false;
+        }
+
+        return true;
+    }
 
 
     /*=======================================*/
@@ -644,7 +705,7 @@ public class MavenLite
         if (classpath == null)
             return null;
 
-        return System.getProperty("os.name").toLowerCase().startsWith("windows") ? classpath.replace(MavenLite.ARG_SEPARATOR, ";").replace("CLASSPATH", System.getProperty("java.class.path")) : classpath.replace(MavenLite.ARG_SEPARATOR, ":").replace("CLASSPATH", System.getProperty("java.class.path"));
+        return classpath.replace(MavenLite.ARG_SEPARATOR, MavenLite.CP_SEPARATOR).replace("CLASSPATH", System.getProperty("java.class.path"));
     }
 
     /**
@@ -666,7 +727,7 @@ public class MavenLite
                 if (file.isFile())
                 {
                     if (file.getName().endsWith(".jar"))
-                        libraries.append(file.getPath()).append(":");
+                        libraries.append(file.getPath()).append(MavenLite.CP_SEPARATOR);
                 }
                 else if (file.isDirectory())
                 {
@@ -1011,7 +1072,7 @@ public class MavenLite
         if (this.hmArgs.get("libraries") != null)
             command.append(" -cp ").append(this.hmArgs.get("libraries"));
         if (this.hmArgs.get("classpath") != null)
-            command.append(":").append(this.hmArgs.get("classpath"));
+            command.append(MavenLite.CP_SEPARATOR).append(this.hmArgs.get("classpath"));
 
         if (this.hmArgs.get("add-comile-option") != null)
             command.append(" ").append(this.hmArgs.get("add-comile-option"));
@@ -1049,9 +1110,9 @@ public class MavenLite
         command.append(this.hmArgs.get("target"));
 
         if (this.hmArgs.get("libraries") != null)
-            command.append(":").append(this.hmArgs.get("libraries"));
+            command.append(MavenLite.CP_SEPARATOR).append(this.hmArgs.get("libraries"));
         if (this.hmArgs.get("classpath") != null)
-            command.append(":").append(this.hmArgs.get("classpath"));
+            command.append(MavenLite.CP_SEPARATOR).append(this.hmArgs.get("classpath"));
 
         if (this.hmArgs.get("add-launch-option") != null)
             command.append(" ").append(this.hmArgs.get("add-launch-option"));
@@ -1091,9 +1152,69 @@ public class MavenLite
     {
         /* Variables */
         StringBuilder command = new StringBuilder();
-        System.out.println("main" + this.hmArgs.get("main"));
         String main = this.hmArgs.get("main") == null ? this.getMainClassName(new File(this.hmArgs.get("source"))) : this.hmArgs.get("main");
         File manifest = new File(this.hmArgs.get("target") + File.separator + "manifest.txt");
+
+        /* Copie des fichiers de données */
+        if (this.hmArgs.get("resources") != null)
+        {
+            if (this.copyArborescence(new File(this.hmArgs.get("resources")), new File(this.hmArgs.get("target"))))
+            {
+                System.out.println(MavenLite.SUCCESS + "Copie du dossier '" + MavenLite.GREEN_BOLD + this.hmArgs.get("resources") + MavenLite.DEFAULT + "' dans le dossier '" + MavenLite.GREEN_BOLD + this.hmArgs.get("target") + MavenLite.DEFAULT + "' terminé avec succès.");
+            }
+            else
+            {
+                System.out.println(MavenLite.ERROR + "La copie du dossier '" + MavenLite.RED_BOLD + this.hmArgs.get("resources") + MavenLite.DEFAULT + "' dans le dossier '" + MavenLite.RED_BOLD + this.hmArgs.get("target") + MavenLite.DEFAULT + "' à échoué.");
+                System.exit(1);
+            }
+        }
+
+        /* Décompression des fichiers jar */
+        // Fait par copilot
+        if (this.hmArgs.get("libraries") != null)
+        {
+            String[] lstLibraries = this.hmArgs.get("libraries").split(MavenLite.CP_SEPARATOR);
+            System.out.println("Libraries : " + this.hmArgs.get("libraries"));
+            for (String s : lstLibraries)
+            {
+                if (s.endsWith(".jar"))
+                {
+                    File source = new File(s);
+                    File dest = new File(this.hmArgs.get("target") + File.separator + source.getName());
+
+                    System.out.println("source : " + source.getPath()); // debug
+                    System.out.println("dest   : " + dest.getPath()); // debug
+
+                    try
+                    {
+                        System.out.println(MavenLite.INFO + "Copie du fichier '" + MavenLite.BLUE_BOLD + s + MavenLite.DEFAULT + "' dans le dossier '" + MavenLite.BLUE_BOLD + dest.getPath() + MavenLite.DEFAULT + "'..."); // debug
+                        Files.copy(source.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    }
+                    catch (IOException e)
+                    {
+                        System.out.println(MavenLite.ERROR + "La copie du fichier '" + MavenLite.RED_BOLD + s + MavenLite.DEFAULT + "' à échoué.");
+                        System.exit(1);
+                    }
+
+                    command = new StringBuilder();
+                    command.append("jar xvf ").append(dest.getPath()).append(" -C ").append(this.hmArgs.get("target")).append(File.separator).append(MavenLite.LIBRARIES).append(" .");
+                    if (this.hmArgs.get(this.lstOptions.get(8)[0]) != null)
+                        System.out.println(MavenLite.INFO + MavenLite.BLUE_BOLD + command.toString() + MavenLite.DEFAULT);
+
+                    System.out.println(MavenLite.INFO + "Décompression du fichier '" + MavenLite.BLUE_BOLD + dest.getName() + MavenLite.DEFAULT + "'...");
+                    if (this.executCommande(command.toString()) != 0)
+                    {
+                        System.out.println(MavenLite.ERROR + "La décompression du fichier '" + MavenLite.RED_BOLD + dest.getName() + MavenLite.DEFAULT + "' à échoué.");
+                        System.exit(1);
+                    }
+                    
+                    System.out.println(MavenLite.SUCCESS + "Décompression du fichier '" + MavenLite.GREEN_BOLD + dest.getName() + MavenLite.DEFAULT + "' terminé avec succès.");
+                    //this.removeFile(dest.getPath());
+                }
+            }
+        }
+
+        System.exit(0);
 
         /* Création du manifest */
         if (!manifest.exists())
@@ -1116,6 +1237,7 @@ public class MavenLite
         }
 
         /* Création du fichier jar */
+        command = new StringBuilder();
         command.append("jar cvfe ");
         command.append(this.hmArgs.get("target")).append(File.separator).append(MavenLite.PROJECT_NAME).append(".jar ");
         command.append(main).append(" -C ").append(this.hmArgs.get("target")).append(" .");
