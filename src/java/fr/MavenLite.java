@@ -444,7 +444,7 @@ public class MavenLite
 
         if (System.getProperty("os.name").toLowerCase().startsWith("windows"))
         {
-            shell = "cmd.exe";
+            shell = "powershell";
             shellOption = "/c";
         }
         else
@@ -601,9 +601,6 @@ public class MavenLite
                     break;
                 case "clear":
                     this.clear(new File(this.hmArgs.get("target")));
-                    break;
-                case "uninstall":
-                    this.uninstall();
                     break;
             }
 
@@ -1330,7 +1327,7 @@ public class MavenLite
      * Permet de désinstaller les pages de manuel de Maven Lite.
      * @return 0 si la désinstallation à réussi, 1 si une erreur est survenue, 2 si l'utilisateur à annulé la désinstallation
      */
-    private int uninstall()
+    private int uninstallManPage()
     {
         // Variables
         String[] manPageLangages = {"fr", "en"};
@@ -1412,7 +1409,7 @@ public class MavenLite
         }
         else if (args.length == 1 && args[0].equals("uninstall_from_mvnl-uninstall"))
         {
-            System.exit(new MavenLite().uninstall());
+            System.exit(new MavenLite().uninstallManPage());
         }
 
         new MavenLite(args);
