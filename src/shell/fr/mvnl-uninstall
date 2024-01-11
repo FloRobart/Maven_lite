@@ -9,11 +9,11 @@ ERROR="[ERREUR]"
 
 
 # Variables
+mavenLiteFolder="/etc/maven-lite"
 shellFile="/usr/local/bin/mvnl"
-classFile="/etc/maven-lite/MavenLite.class"
 uninstaller="/usr/local/bin/mvnl-uninstall"
 
-# Suppression des pages de manuel
+# Demande de confirmation et suppression des pages de manuel
 mvnl uninstall_from_mvnl-uninstall
 
 exitCode=$?
@@ -22,22 +22,28 @@ if [ $exitCode -gt 0 ]; then
 fi
 
 # Suppression du fichier shell
-sudo rm -f ${shellFile} && echo "${SUCCES} Le fichier '${shellFile}' a été supprimé avec succès." || {
-    echo "${ERROR} Erreur lors de la suppression du fichier '${shellFile}'."
-    exit 1
-}
+if [ -f ${shellFile} ]; then
+    sudo rm -f ${shellFile} || {
+        echo "${ERROR} Erreur lors de la suppression du fichier '${shellFile}'."
+        exit 1
+    }
+fi
 
-# Suppression du fichier class
-sudo rm -f ${classFile} && echo "${SUCCES} Le fichier '${classFile}' a été supprimé avec succès." || {
-    echo "${ERROR} Erreur lors de la suppression du fichier '${classFile}'."
-    exit 1
-}
+# Suppression du dossier maven-lite
+if [ -d ${mavenLiteFolder} ]; then
+    sudo rm -rf ${mavenLiteFolder} || {
+        echo "${ERROR} Erreur lors de la suppression du dossier '${mavenLiteFolder}'."
+        exit 1
+    }
+fi
 
 # Suppression du fichier uninstaller
-sudo rm -f ${uninstaller} && echo "${SUCCES} Le fichier '${uninstaller}' a été supprimé avec succès." || {
-    echo "${ERROR} Erreur lors de la suppression du fichier '${uninstaller}'."
-    exit 1
-}
+if [ -f ${uninstaller} ]; then
+    sudo rm -f ${uninstaller} || {
+        echo "${ERROR} Erreur lors de la suppression du fichier '${uninstaller}'."
+        exit 1
+    }
+fi
 
 echo -e "\n${SUCCES} Désinstallation de Maven Lite terminée avec succès."
 exit 0

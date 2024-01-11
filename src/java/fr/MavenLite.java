@@ -1330,18 +1330,11 @@ public class MavenLite
     private int uninstallManPage()
     {
         // Variables
+        int exitCode = this.confirmeUninstall();
+        if (exitCode != 0)
+            return exitCode;
+
         String[] manPageLangages = {"fr", "en"};
-
-        System.out.print(MavenLite.WARNING + MavenLite.RED_BOLD + "ATTENTION" + MavenLite.DEFAULT + ", vous êtes sur le point de désinstaller Maven Lite. Êtes-vous sûr de vouloir continuer ? (y/n) : ");
-        Scanner sc = new Scanner(System.in);
-        String reponse = sc.nextLine().toLowerCase();
-        sc.close();
-
-        if (!reponse.matches("^[yY]([eE][sS])?$"))
-        {
-            System.out.println(MavenLite.INFO + "Désinstallation annulée.");
-            return 2;
-        }
 
         System.out.println(MavenLite.INFO + "Désinstallation de Maven Lite...");
 
@@ -1359,6 +1352,26 @@ public class MavenLite
                 System.out.println(MavenLite.INFO + "Le fichier '" + MavenLite.BLUE_BOLD + manPageFile + MavenLite.DEFAULT + "'' a été supprimé avec succès.");
         }
         System.out.println(MavenLite.SUCCESS + "Pages de manuel supprimées avec succès.");
+
+        return 0;
+    }
+
+    /**
+     * Permet de demander à l'utilisateur si il est sûr de vouloir désinstaller Maven Lite.
+     * @return 0 si l'utilisateur confirme la désinstallation, 1 s'il y a une erreur, 2 si il annule la désinstallation
+     */
+    private int confirmeUninstall()
+    {
+        System.out.print(MavenLite.WARNING + MavenLite.RED_BOLD + "ATTENTION" + MavenLite.DEFAULT + ", vous êtes sur le point de désinstaller Maven Lite. Êtes-vous sûr de vouloir continuer ? (y/n) : ");
+        Scanner sc = new Scanner(System.in);
+        String reponse = sc.nextLine().toLowerCase();
+        sc.close();
+
+        if (!reponse.matches("^[yY]([eE][sS])?$"))
+        {
+            System.out.println(MavenLite.INFO + "Désinstallation annulée.");
+            return 2;
+        }
 
         return 0;
     }
@@ -1409,7 +1422,10 @@ public class MavenLite
         }
         else if (args.length == 1 && args[0].equals("uninstall_from_mvnl-uninstall"))
         {
-            System.exit(new MavenLite().uninstallManPage());
+            if (System.getProperty("os.name").toLowerCase().contains("windows"))
+                System.exit(new MavenLite().confirmeUninstall());
+            else
+                System.exit(new MavenLite().uninstallManPage());
         }
 
         new MavenLite(args);
