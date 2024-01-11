@@ -283,9 +283,67 @@ public class MavenLite
 
 
 
-    /*===================*/
-    /* Méthodes générale */
-    /*===================*/
+    /*===================================================================*/
+    /* Méthodes générale utilisée par les options ou les autres méthodes */
+    /*===================================================================*/
+    /**
+     * Permet d'éxecuter une commande dans le terminal (bash / cmd)
+     * @param commande la commande à exécuter
+     * @return le code de retour de la commande. 0 si la commande s'est bien exécutée, 1 sinon.
+     */
+    private int executCommande(String commande)
+    {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        String shell;
+        String shellOption;
+
+        if (System.getProperty("os.name").toLowerCase().startsWith("windows"))
+        {
+            shell = "powershell";
+            shellOption = "/c";
+        }
+        else
+        {
+            shell = "bash";
+            shellOption = "-c";
+        }
+
+        /* Préparation de la commande */
+        processBuilder.command(shell, shellOption, commande);
+
+        try
+        {
+            /* Exécution de la commande */
+            Process        process = processBuilder.start();
+            BufferedReader reader  = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            BufferedReader readerError  = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+
+            String line;
+            while ((line = reader.readLine()) != null)
+                if (this.hmArgs.get(this.lstOptions.get(7)[0]) == null)
+                    System.out.println(line);
+            
+                    
+
+            int rCode = process.waitFor();
+            if (rCode != 0)
+            {
+                while ((line = readerError.readLine()) != null)
+                    System.out.println(MavenLite.ERROR + line);
+            }
+
+            return rCode;
+        }
+        catch (Exception e)
+        {
+            System.out.println(MavenLite.ERROR + "L'exécution de la commande '" + MavenLite.RED_BOLD + shell + " " + shellOption + " " + commande + MavenLite.DEFAULT + "' a échoué.");
+            System.exit(1);
+        }
+
+        return 1;
+    }
+
+    /* Main */
     /**
      * Permet de détecter automatiquement le Main à lancer
      * @param directory le dossier à parcourir (source du projet java)
@@ -384,6 +442,7 @@ public class MavenLite
         return packageName;
     }
 
+    /* Compilation et compilation en jar */
     /**
      * Génère la liste des fichiers à compiler
      * @param source le dossier à parcourir (source du projet java)
@@ -429,63 +488,6 @@ public class MavenLite
                         sCompileList = new StringBuilder(sCompileList.toString().replace(line + "\n", ""));
 
         return sCompileList.toString();
-    }
-
-    /**
-     * Permet d'éxecuter une commande dans le terminal (bash / cmd)
-     * @param commande la commande à exécuter
-     * @return le code de retour de la commande. 0 si la commande s'est bien exécutée, 1 sinon.
-     */
-    private int executCommande(String commande)
-    {
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        String shell;
-        String shellOption;
-
-        if (System.getProperty("os.name").toLowerCase().startsWith("windows"))
-        {
-            shell = "powershell";
-            shellOption = "/c";
-        }
-        else
-        {
-            shell = "bash";
-            shellOption = "-c";
-        }
-
-        /* Préparation de la commande */
-        processBuilder.command(shell, shellOption, commande);
-
-        try
-        {
-            /* Exécution de la commande */
-            Process        process = processBuilder.start();
-            BufferedReader reader  = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            BufferedReader readerError  = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-
-            String line;
-            while ((line = reader.readLine()) != null)
-                if (this.hmArgs.get(this.lstOptions.get(7)[0]) == null)
-                    System.out.println(line);
-            
-                    
-
-            int rCode = process.waitFor();
-            if (rCode != 0)
-            {
-                while ((line = readerError.readLine()) != null)
-                    System.out.println(MavenLite.ERROR + line);
-            }
-
-            return rCode;
-        }
-        catch (Exception e)
-        {
-            System.out.println(MavenLite.ERROR + "L'exécution de la commande '" + MavenLite.RED_BOLD + shell + " " + shellOption + " " + commande + MavenLite.DEFAULT + "' a échoué.");
-            System.exit(1);
-        }
-
-        return 1;
     }
 
     /**
@@ -559,6 +561,73 @@ public class MavenLite
         return true;
     }
 
+    /* Désinstallation */
+    /**
+     * Permet de demander à l'utilisateur si il est sûr de vouloir désinstaller Maven Lite.
+     * @return 0 si l'utilisateur confirme la désinstallation, 1 s'il y a une erreur, 2 si il annule la désinstallation
+     */
+    private int confirmeUninstall()
+    {
+        System.out.print(MavenLite.WARNING + MavenLite.RED_BOLD + "ATTENTION" + MavenLite.DEFAULT + ", vous êtes sur le point de désinstaller Maven Lite. Êtes-vous sûr de vouloir continuer ? (y/n) : ");
+        Scanner sc = new Scanner(System.in);
+        String reponse = sc.nextLine().toLowerCase();
+        sc.close();
+
+        if (!reponse.matches("^[yY]([eE][sS])?$"))
+        {
+            System.out.println(MavenLite.INFO + "Désinstallation annulée.");
+            return 2;
+        }
+
+        return 0;
+    }
+
+    /**
+     * Supprime un fichier
+     * @param filePath le chemin du fichier à supprimer
+     * @return true si le fichier a été supprimé, false sinon
+     */
+    private static boolean deleteFile(String filePath)
+    {
+        File file = new File(filePath);
+        return file.delete();
+    }
+
+    /* Clear */
+    /**
+     * Permet de supprimer tout les dossier et fichiers d'un répertoire.
+     * @param directory le dossier à supprimer
+     * @return true si le dossier a été supprimé, false sinon
+     */
+    private boolean deleteDirectory(File directory)
+    {
+        if (directory.exists() && directory.isDirectory())
+        {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isFile())
+                        file.delete();
+                    else if (file.isDirectory())
+                        this.deleteDirectory(file);
+                }
+            }
+
+            return directory.delete();
+        }
+        else
+        {
+            if (directory.exists())
+                System.out.println(MavenLite.ERROR + "Le fichier '" + MavenLite.RED_BOLD + directory.getName() + MavenLite.DEFAULT + "' n'est pas un dossier.");
+            else
+                System.out.println(MavenLite.ERROR + "Le dossier '" + MavenLite.RED_BOLD + directory.getName() + MavenLite.DEFAULT + "' n'existe pas.");
+
+            return false;
+        }
+    }
+
+    /* Autres */
+
 
     /*=======================================*/
     /* Méthodes pour l'exécution des options */
@@ -581,26 +650,29 @@ public class MavenLite
                 case "version":
                     this.version("");
                     break;
+                case "help":
+                    System.out.println(this.help(this.lstOptions));
+                    System.exit(0);
+                    break;
+                case "clear":
+                    this.clear(new File(this.hmArgs.get("target")));
+                    break;
+                case "maven":
+                    // System.exit(this.maven());
+                    this.maven();
+                    break;
+                case "integrate-test":
+                    this.integrateTest();
+                    break;
+                case "export":
+                    this.export();
+                    break;
                 case "libraries":
                     this.hmArgs.put(opt[0], this.libraries(this.hmArgs.get(opt[0])));
                     break;
                 case "classpath":
                     this.hmArgs.put(opt[0], this.classpath(this.hmArgs.get(opt[0])));
                     System.out.println("classpath : '" + this.hmArgs.get(opt[0]) + "'");
-                    break;
-                case "help":
-                    System.out.println(this.help(this.lstOptions));
-                    System.exit(0);
-                    break;
-                case "export":
-                    this.export();
-                    break;
-                case "maven":
-                    // System.exit(this.maven());
-                    this.maven();
-                    break;
-                case "clear":
-                    this.clear(new File(this.hmArgs.get("target")));
                     break;
             }
 
@@ -795,38 +867,6 @@ public class MavenLite
     }
 
     /**
-     * Permet de supprimer tout les dossier et fichiers d'un répertoire.
-     * @param directory le dossier à supprimer
-     * @return true si le dossier a été supprimé, false sinon
-     */
-    private boolean deleteDirectory(File directory)
-    {
-        if (directory.exists() && directory.isDirectory())
-        {
-            File[] files = directory.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    if (file.isFile())
-                        file.delete();
-                    else if (file.isDirectory())
-                        this.deleteDirectory(file);
-                }
-            }
-
-            return directory.delete();
-        }
-        else
-        {
-            if (directory.exists())
-                System.out.println(MavenLite.ERROR + "Le fichier '" + MavenLite.RED_BOLD + directory.getName() + MavenLite.DEFAULT + "' n'est pas un dossier.");
-            else
-                System.out.println(MavenLite.ERROR + "Le dossier '" + MavenLite.RED_BOLD + directory.getName() + MavenLite.DEFAULT + "' n'existe pas.");
-
-            return false;
-        }
-    }
-
-    /**
      * Permet de charger les options à partir d'un fichier de configuration.
      * Le séparateur sont l'espace et le retour à la ligne.
      * Les options de la ligne de commande prédomine sur les options sur celle du fichier de configuration.
@@ -862,9 +902,8 @@ public class MavenLite
      */
     private void integrateTest()
     {
+        System.out.println(MavenLite.INFO + "L'intégration des tests unitaires arrive bientôt...");
         // TODO : Créer l'arborescence pour les tests unitaires
-
-
     }
 
     /**
@@ -1159,6 +1198,9 @@ public class MavenLite
      */
     private void compileJar()
     {
+        System.out.println(MavenLite.INFO + "Compilation en jar arrivera dans la " + MavenLite.BLUE_BOLD + "version 2.1.0" + MavenLite.BLUE_BOLD + "...");
+        System.exit(0);
+
         /* Variables */
         StringBuilder command = new StringBuilder();
         String main = this.hmArgs.get("main") == null ? this.getMainClassName(new File(this.hmArgs.get("source"))) : this.hmArgs.get("main");
@@ -1307,7 +1349,7 @@ public class MavenLite
      */
     private void export()
     {
-        System.out.println("Export arrive bientôt...");
+        System.out.println(MavenLite.INFO + "Export arrive bientôt...");
         // TODO : Exporter le projet dans un fichier .class
     }
 
@@ -1317,7 +1359,7 @@ public class MavenLite
      */
     private int maven()
     {
-        System.out.println("Maven arrive bientôt...");
+        System.out.println(MavenLite.INFO + "Maven arrive bientôt...");
         // TODO : Convertir le projet en projet maven
 
         return 0;
@@ -1354,37 +1396,6 @@ public class MavenLite
         System.out.println(MavenLite.SUCCESS + "Pages de manuel supprimées avec succès.");
 
         return 0;
-    }
-
-    /**
-     * Permet de demander à l'utilisateur si il est sûr de vouloir désinstaller Maven Lite.
-     * @return 0 si l'utilisateur confirme la désinstallation, 1 s'il y a une erreur, 2 si il annule la désinstallation
-     */
-    private int confirmeUninstall()
-    {
-        System.out.print(MavenLite.WARNING + MavenLite.RED_BOLD + "ATTENTION" + MavenLite.DEFAULT + ", vous êtes sur le point de désinstaller Maven Lite. Êtes-vous sûr de vouloir continuer ? (y/n) : ");
-        Scanner sc = new Scanner(System.in);
-        String reponse = sc.nextLine().toLowerCase();
-        sc.close();
-
-        if (!reponse.matches("^[yY]([eE][sS])?$"))
-        {
-            System.out.println(MavenLite.INFO + "Désinstallation annulée.");
-            return 2;
-        }
-
-        return 0;
-    }
-
-    /**
-     * Supprime un fichier
-     * @param filePath le chemin du fichier à supprimer
-     * @return true si le fichier a été supprimé, false sinon
-     */
-    private static boolean deleteFile(String filePath)
-    {
-        File file = new File(filePath);
-        return file.delete();
     }
 
     /**
