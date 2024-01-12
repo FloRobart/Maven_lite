@@ -1,2 +1,2 @@
 #!/bin/bash
-java -cp /etc/maven-lite MavenLite $@
+java -cp /usr/local/etc/maven-lite MavenLite $@
