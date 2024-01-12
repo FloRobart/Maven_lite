@@ -9,7 +9,7 @@ ERROR="[ERREUR]"
 
 
 # Variables
-mavenLiteFolder="/etc/maven-lite"
+mavenLiteFolder="/usr/local/etc/maven-lite"
 shellFile="/usr/local/bin/mvnl"
 uninstaller="/usr/local/bin/mvnl-uninstall"
 
