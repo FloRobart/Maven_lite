@@ -1,0 +1,49 @@
+#!/bin/bash
+
+#======#
+# Main #
+#======#
+# Constantes
+SUCCES="[SUCCES]"
+ERROR="[ERREUR]"
+
+
+# Variables
+mavenLiteFolder="/etc/maven-lite"
+shellFile="/usr/local/bin/mvnl"
+uninstaller="/usr/local/bin/mvnl-uninstall"
+
+# Demande de confirmation et suppression des pages de manuel
+mvnl uninstall_from_mvnl-uninstall
+
+exitCode=$?
+if [ $exitCode -gt 0 ]; then
+    exit $exitCode
+fi
+
+# Suppression du fichier shell
+if [ -f ${shellFile} ]; then
+    sudo rm -f ${shellFile} || {
+        echo "${ERROR} Erreur lors de la suppression du fichier '${shellFile}'."
+        exit 1
+    }
+fi
+
+# Suppression du dossier maven-lite
+if [ -d ${mavenLiteFolder} ]; then
+    sudo rm -rf ${mavenLiteFolder} || {
+        echo "${ERROR} Erreur lors de la suppression du dossier '${mavenLiteFolder}'."
+        exit 1
+    }
+fi
+
+# Suppression du fichier uninstaller
+if [ -f ${uninstaller} ]; then
+    sudo rm -f ${uninstaller} || {
+        echo "${ERROR} Erreur lors de la suppression du fichier '${uninstaller}'."
+        exit 1
+    }
+fi
+
+echo -e "\n${SUCCES} Désinstallation de Maven Lite terminée avec succès."
+exit 0
