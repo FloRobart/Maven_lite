@@ -19,6 +19,7 @@ REM Suppression du dossier bin et de tout son contenu
 IF EXIST "%bin%" (
     RMDIR /S /Q "%bin%" || (
         echo %ERROR% Erreur lors de la suppression du dossier '%bin%'.
+        call :exitPerso
         exit /b 1
     )
 )
@@ -27,3 +28,11 @@ echo.
 echo %SUCCES% Désinstallation de Maven Lite terminée avec succès.
 pause
 exit /b 0
+
+REM Fait une pause et afficher un message d'aide
+:exitPerso
+    echo.
+    echo Essayer de relancer le programme en tant qu'administrateur.
+    echo.
+    pause
+goto :EOF

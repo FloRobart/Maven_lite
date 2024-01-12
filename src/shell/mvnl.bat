@@ -1,2 +1,2 @@
 @echo off
-start java -cp "C:\Program Files\%mavenLiteFolder%\etc" MavenLite %*
+call powershell java -cp "C:\Program Files\maven-lite\etc" MavenLite %*
