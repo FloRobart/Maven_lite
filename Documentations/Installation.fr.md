@@ -4,7 +4,39 @@
 
 ### Installation de bash
 
+#### Installer bash sur Debian et dérivés
+
+- Éxécutez la commande suivante
+
+  ```sh
+  sudo apt install bash
+  ```
+
+#### Installer Bash sur d'autre distributions Linux ou MacOs
+
+- Allez sur le [site de GNU](https://www.gnu.org/software/bash/)
+
 ### Installation de java
+
+#### Debian et dérivés
+
+- Éxécutez la commande suivante
+
+  ```sh
+  sudo apt install openjdk-17-jdk openjdk-17-jre
+  ```
+
+#### Autres distributions Linux
+
+- Allez sur le [site d'Oracle](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+- Téléchargez l'installeur de java 17 pour votre distribution Linux ou votre version de MacOs. Se guide d'installation ne traite pas l'installation avec un fichier compressé.
+- Une fois l'installeur téléchargé, éxécutez le.
+- Suivez les instructions de l'installeur.
+- Une fois l'installation terminée, vous pouvez supprimer l'installeur si vous le souhaitez.
+
+#### Windows
+
+
 
 ## Installation et désinstallation
 
@@ -18,7 +50,7 @@
 - Éxécutez le fichier debian
 
   ```sh
-  sudo dpkg -i maven-lite_<langue>_2.0-1_all.deb
+  sudo dpkg -i maven-lite_fr_2.0-1_all.deb
   ```
 
 - Une fois l'installation terminée, vous pouvez supprimer le fichier `maven-lite_<langue>_2.0-1_all.deb` si vous le souhaitez.

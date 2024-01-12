@@ -76,7 +76,7 @@ Chaque argument doit être précédé de son option, vous ne pouvez pas mettre d
 
 - Disposer des droits administrateurs si vous voulez utiliser les installations automatiques.
 - Avoir installé `bash`
-- Avoir installé `java`
+- Avoir installé `java` 17 ou supérieur
 
 Si vous ne disposez pas des droits administrateurs, vous pouvez installer maven lite manuellement en suivant les instructions de la partie 'Installation manuelle'.
 
