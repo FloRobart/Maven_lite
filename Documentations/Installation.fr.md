@@ -1,5 +1,41 @@
 # Installation et désinstallation de Maven Lite et de ses prérequis
 
+## Table des matières
+
+- [Installation et désinstallation de Maven Lite et de ses prérequis](#installation-et-désinstallation-de-maven-lite-et-de-ses-prérequis)
+  - [Table des matières](#table-des-matières)
+  - [Prérequis avant l'installation de Maven Lite](#prérequis-avant-linstallation-de-maven-lite)
+    - [Prérequis pour Toutes les distributions Linux et MacOs](#prérequis-pour-toutes-les-distributions-linux-et-macos)
+    - [Prérequis pour Windows](#prérequis-pour-windows)
+  - [Installation des prérequis](#installation-des-prérequis)
+    - [Installation de bash](#installation-de-bash)
+      - [Installer bash sur Debian et ses dérivés](#installer-bash-sur-debian-et-ses-dérivés)
+      - [Installer Bash sur d'autre distributions Linux ou sur MacOs](#installer-bash-sur-dautre-distributions-linux-ou-sur-macos)
+    - [Installation de java](#installation-de-java)
+      - [Installation de java sur Debian et ses dérivés](#installation-de-java-sur-debian-et-ses-dérivés)
+      - [Installation de java sur d'autre distributions Linux ou sur MacOs](#installation-de-java-sur-dautre-distributions-linux-ou-sur-macos)
+      - [Installation de java sur Windows](#installation-de-java-sur-windows)
+  - [Installation de Maven Lite](#installation-de-maven-lite)
+    - [Installation de Maven Lite sur Debian et ses dérivés](#installation-de-maven-lite-sur-debian-et-ses-dérivés)
+      - [Installation automatique de Maven Lite - Debian](#installation-automatique-de-maven-lite---debian)
+      - [Installation manuelle de Maven Lite - Debian](#installation-manuelle-de-maven-lite---debian)
+    - [Installation de Maven Lite sur d'autres distributions Linux ou sur MacOs](#installation-de-maven-lite-sur-dautres-distributions-linux-ou-sur-macos)
+      - [Installation automatique de Maven Lite - Linux \& MacOs](#installation-automatique-de-maven-lite---linux--macos)
+      - [Installation manuelle de Maven Lite - Linux \& MacOs](#installation-manuelle-de-maven-lite---linux--macos)
+    - [Installation de Maven Lite sur Windows](#installation-de-maven-lite-sur-windows)
+      - [Installation automatique de Maven Lite - Windows](#installation-automatique-de-maven-lite---windows)
+      - [Installation manuelle de Maven Lite - Windows](#installation-manuelle-de-maven-lite---windows)
+  - [Désinstallation de Maven Lite](#désinstallation-de-maven-lite)
+    - [Désinstallation de Maven Lite sur Debian et ses dérivés](#désinstallation-de-maven-lite-sur-debian-et-ses-dérivés)
+      - [Désinstallation automatique de Maven Lite - Debian](#désinstallation-automatique-de-maven-lite---debian)
+      - [Désinstallation manuelle de Maven Lite - Debian](#désinstallation-manuelle-de-maven-lite---debian)
+    - [Désinstallation de Maven Lite sur d'autres distributions Linux ou sur MacOs](#désinstallation-de-maven-lite-sur-dautres-distributions-linux-ou-sur-macos)
+      - [Désinstallation automatique de Maven Lite - Linux \& MacOs](#désinstallation-automatique-de-maven-lite---linux--macos)
+      - [Désinstallation manuelle de Maven Lite - Linux \& MacOs](#désinstallation-manuelle-de-maven-lite---linux--macos)
+    - [Désinstallation de Maven Lite sur Windows](#désinstallation-de-maven-lite-sur-windows)
+      - [Désinstallation automatique de Maven Lite - Windows](#désinstallation-automatique-de-maven-lite---windows)
+      - [Désinstallation manuelle de Maven Lite - Windows](#désinstallation-manuelle-de-maven-lite---windows)
+
 **Si vous voulez désinstaller Maven Lite, vous pouvez [passer directement à la désinstallation de Maven Lite](#désinstallation-de-maven-lite).**
 
 ## Prérequis avant l'installation de Maven Lite
@@ -185,7 +221,7 @@
 
 - Vous pouvez supprimez le reste des fichiers inutilisés.
 
-### Windows
+### Installation de Maven Lite sur Windows
 
 #### Installation automatique de Maven Lite - Windows
 
@@ -336,6 +372,8 @@
   ```sh
   sudo rm /usr/local/share/man/fr/man1/mvnl.1.gz /usr/local/share/man/en/man1/mvnl.1.gz
   ```
+
+### Désinstallation de Maven Lite sur Windows
 
 #### Désinstallation automatique de Maven Lite - Windows
 

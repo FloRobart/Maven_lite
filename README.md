@@ -11,7 +11,7 @@ See the [english documentation](./README.en.md)
   - [Table des matières](#table-des-matières)
   - [Compatibilité](#compatibilité)
   - [Description](#description)
-  - [Prérequis](#prérequis)
+  - [Installation de Maven Lite et ses dépendances](#installation-de-maven-lite-et-ses-dépendances)
   - [Utilisation de Maven Lite](#utilisation-de-maven-lite)
     - [Ligne de commande](#ligne-de-commande)
       - [Possibilités de la ligne de commande](#possibilités-de-la-ligne-de-commande)
@@ -72,13 +72,9 @@ Chaque argument doit être précédé de son option, vous ne pouvez pas mettre d
 
 **Il est recommandé de laisser les options par défaut parce que Maven Lite est basé sur les conventions simplifier de Maven qui sont des conventions de nommage et d'arborescence connues de beaucoup de développeurs java.**
 
-## Prérequis
+## Installation de Maven Lite et ses dépendances
 
-- Disposer des droits administrateurs si vous voulez utiliser les installations automatiques.
-- Avoir installé `bash`
-- Avoir installé `java` 17 ou supérieur
-
-Si vous ne disposez pas des droits administrateurs, vous pouvez installer maven lite manuellement en suivant les instructions de la partie 'Installation manuelle'.
+[Voir la documentation sur l'installation de Maven Lite](./Documentations/Installation.fr.md)
 
 ## Utilisation de Maven Lite
 
