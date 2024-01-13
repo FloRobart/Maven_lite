@@ -1,8 +1,8 @@
-# Installation et désinstallation de Maven Lite et de ses prérequis
+# Installation et désinstallation de Maven Lite et de ses dépendances
 
 ## Table des matières
 
-- [Installation et désinstallation de Maven Lite et de ses prérequis](#installation-et-désinstallation-de-maven-lite-et-de-ses-prérequis)
+- [Installation et désinstallation de Maven Lite et de ses dépendances](#installation-et-désinstallation-de-maven-lite-et-de-ses-dépendances)
   - [Table des matières](#table-des-matières)
   - [Prérequis avant l'installation de Maven Lite](#prérequis-avant-linstallation-de-maven-lite)
     - [Prérequis pour Toutes les distributions Linux et MacOs](#prérequis-pour-toutes-les-distributions-linux-et-macos)
