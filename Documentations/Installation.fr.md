@@ -101,20 +101,26 @@
 
 #### Installation de java sur d'autre distributions Linux ou sur MacOs
 
-- Allez sur le [site d'Oracle](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
-- Téléchargez l'installeur de java 17 pour votre distribution Linux ou votre version de MacOs. Se guide d'installation ne traite pas l'installation avec un fichier compressé.
-- Une fois l'installeur téléchargé, éxécutez le.
-- Suivez les instructions de l'installeur.
-- Une fois l'installation terminée, vous pouvez supprimer l'installeur si vous le souhaitez.
+- Allez sur le [site officiel d'Oracle](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+- Téléchargez l'installateur de java 17 pour votre distribution Linux ou votre version de MacOs. Se petit guide d'installation de java ne traite pas de l'installation avec un fichier compressé.
+- Une fois l'installateur téléchargé, éxécutez le.
+- Suivez les instructions de l'installateur.
+- Une fois l'installation terminée, vous pouvez supprimer l'installateur si vous le souhaitez.
 
 #### Installation de java sur Windows
 
-- Téléchargez le fichier d'installation de java 17 pour Windows en cliquant [ici](https://download.oracle.com/java/17/archive/jdk-17.0.9_windows-x64_bin.exe).
-- Une fois l'installeur '`jdk-17.0.9_windows-x64_bin.exe`' téléchargé, éxécutez le en double cliquant dessus.
-- Suivez les instructions de l'installeur.
-- Une fois l'installation terminée, vous pouvez supprimer l'installeur si vous le souhaitez.
+- Téléchargez le fichier d'installation de java 17 pour Windows sur le site officiel d'Oracle en cliquant [ici](https://download.oracle.com/java/17/archive/jdk-17.0.9_windows-x64_bin.exe).
+- Une fois l'installateur '`jdk-17.0.9_windows-x64_bin.exe`' téléchargé, éxécutez le en double cliquant dessus.
+- Suivez les instructions de l'installateur.
+- Une fois l'installation terminée, vous pouvez supprimer l'installateur si vous le souhaitez.
 
 ## Installation de Maven Lite
+
+**Suivez les instructions correspondant à votre système d'exploitation.**
+
+- [Debian et ses dérivés](#installation-de-maven-lite-sur-debian-et-ses-dérivés)
+- [Linux et MacOs](#installation-de-maven-lite-sur-dautres-distributions-linux-ou-sur-macos)
+- [Windows](#installation-de-maven-lite-sur-windows)
 
 ### Installation de Maven Lite sur Debian et ses dérivés
 
@@ -304,6 +310,12 @@
   ```
 
 ## Désinstallation de Maven Lite
+
+**Suivez les instructions correspondant à votre système d'exploitation.**
+
+- [Debian et ses dérivés](#désinstallation-de-maven-lite-sur-debian-et-ses-dérivés)
+- [Linux et MacOs](#désinstallation-de-maven-lite-sur-dautres-distributions-linux-ou-sur-macos)
+- [Windows](#désinstallation-de-maven-lite-sur-windows)
 
 ### Désinstallation de Maven Lite sur Debian et ses dérivés
 
