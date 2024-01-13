@@ -1175,10 +1175,11 @@ public class MavenLite
         }
 
         command.append(" ").append(this.hmArgs.get("main"));
-
+            
         if (this.hmArgs.get("arguments") != null)
             for (String s : this.hmArgs.get("arguments").split(MavenLite.ARG_SEPARATOR))
-                command.append(" \"").append(s).append("\"");
+                if (System.getProperty("os.name").toLowerCase().contains("windows"))
+                    command.append(" \"").append(s).append("\"");
 
         if (this.hmArgs.get(this.lstOptions.get(8)[0]) != null)
             System.out.println(MavenLite.INFO + MavenLite.BLUE_BOLD + command.toString() + MavenLite.DEFAULT);
