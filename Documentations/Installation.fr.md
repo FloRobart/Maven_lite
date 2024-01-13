@@ -1,10 +1,25 @@
-# Installation de Maven Lite
+# Installation et désinstallation de Maven Lite et de ses prérequis
+
+**Si vous voulez désinstaller Maven Lite, vous pouvez [passer directement à la désinstallation de Maven Lite](#désinstallation-de-maven-lite).**
+
+## Prérequis avant l'installation de Maven Lite
+
+### Prérequis pour Toutes les distributions Linux et MacOs
+
+- [Bash](#installation-de-bash)
+- [Java 17 ou supérieur](#installation-de-java)
+
+### Prérequis pour Windows
+
+- [Java 17 ou supérieur](#installation-de-java-sur-windows)
 
 ## Installation des prérequis
 
+**Si vous avez déjà installé les prérequis, vous pouvez [passer directement à l'installation de Maven Lite](#installation-de-maven-lite).**
+
 ### Installation de bash
 
-#### Installer bash sur Debian et dérivés
+#### Installer bash sur Debian et ses dérivés
 
 - Éxécutez la commande suivante
 
@@ -12,13 +27,35 @@
   sudo apt install bash
   ```
 
-#### Installer Bash sur d'autre distributions Linux ou MacOs
+#### Installer Bash sur d'autre distributions Linux ou sur MacOs
 
-- Allez sur le [site de GNU](https://www.gnu.org/software/bash/)
+- Téléchargez le fichier d'installation de bash en éxécutant la commande suivante
+
+  ```sh
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  ```
+
+- Éxécutez la commande suivante pour ajouter le dossier d'installation de bash au zprofile
+
+  ```sh
+  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+  ```
+
+- Éxécutez la commande suivante pour installer bash
+
+  ```sh
+  brew install bash
+  ```
+
+- Vérifiez que bash est bien installé en éxécutant la commande suivante
+
+  ```sh
+  bash --version
+  ```
 
 ### Installation de java
 
-#### Debian et dérivés
+#### Installation de java sur Debian et ses dérivés
 
 - Éxécutez la commande suivante
 
@@ -26,7 +63,7 @@
   sudo apt install openjdk-17-jdk openjdk-17-jre
   ```
 
-#### Autres distributions Linux
+#### Installation de java sur d'autre distributions Linux ou sur MacOs
 
 - Allez sur le [site d'Oracle](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 - Téléchargez l'installeur de java 17 pour votre distribution Linux ou votre version de MacOs. Se guide d'installation ne traite pas l'installation avec un fichier compressé.
@@ -34,19 +71,20 @@
 - Suivez les instructions de l'installeur.
 - Une fois l'installation terminée, vous pouvez supprimer l'installeur si vous le souhaitez.
 
-#### Windows
+#### Installation de java sur Windows
 
+- Téléchargez le fichier d'installation de java 17 pour Windows en cliquant [ici](https://download.oracle.com/java/17/archive/jdk-17.0.9_windows-x64_bin.exe).
+- Une fois l'installeur '`jdk-17.0.9_windows-x64_bin.exe`' téléchargé, éxécutez le en double cliquant dessus.
+- Suivez les instructions de l'installeur.
+- Une fois l'installation terminée, vous pouvez supprimer l'installeur si vous le souhaitez.
 
+## Installation de Maven Lite
 
-## Installation et désinstallation
+### Installation de Maven Lite sur Debian et ses dérivés
 
-### Debian et dérivés
+#### Installation automatique de Maven Lite - Debian
 
-#### Installation automatique - Debian
-
-- Téléchargez le [fichier debian](https://github.com/FloRobart/mavenlite.github.io/releases) dans la langue de votre choix dans la section 'Releases' du dépôt Github
-  - [Téléchargez le fichier de la version française.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_french_2.0-1_all.deb)
-  - [Téléchargez le fichier de la version anglaise.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_english_2.0-1_all.deb)
+- Téléchargez le [fichier debian de la version française](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_all.deb)
 - Éxécutez le fichier debian
 
   ```sh
@@ -55,16 +93,22 @@
 
 - Une fois l'installation terminée, vous pouvez supprimer le fichier `maven-lite_<langue>_2.0-1_all.deb` si vous le souhaitez.
 
-#### Installation manuelle - Debian
+#### Installation manuelle de Maven Lite - Debian
 
-- Téléchargez le [Fichier compressé](https://github.com/FloRobart/mavenlite.github.io/releases) contenant les fichiers de l'applications dans la langue de votre choix dans la section 'Releases' du dépôt Github
-  - [Téléchargez le fichier de la version française.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_french_2.0-1_all.zip)
-  - [Téléchargez le fichier de la version anglaise.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_english_2.0-1_all.zip)
+- Téléchargez le [Fichier compressé de la version française](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_all.zip) contenant les fichiers de l'applications.
 - Décompressez le fichier compressé
-- Déplacez le dossier `maven-lite` dans le dossier `/etc`
+- Créez le dossier `/usr/local/etc/maven-lite`
 
   ```sh
-  sudo mv maven-lite /etc/
+  sudo mkdir -p /usr/local/etc/maven-lite
+  ```
+
+- Déplacez les fichiers .class et .jar dans le dossier `/usr/local/etc/maven-lite`
+
+  ```sh
+  sudo mv hamcrest-core-1.3.jar /usr/local/etc/maven-lite/
+  sudo mv junit-4.13.2.jar /usr/local/etc/maven-lite/
+  sudo mv MavenLite.class /usr/local/etc/maven-lite/
   ```
 
 - Déplacez les fichiers shell dans le dossier `/usr/local/bin`
@@ -80,28 +124,175 @@
   sudo chmod +x /usr/local/bin/mvnl*
   ```
 
-- Déplacez le dossier `man` dans le dossier `/usr/local/` pour avoir les pages de manuel
+- Déplacez le fichier `mvnl.1.gz` dans le dossier `/usr/local/man/fr/man1` pour avoir les pages de manuel
 
   ```sh
-  sudo mv man /usr/local/
+  sudo mv mvnl.1.gz /usr/local/man/fr/man1/
   ```
 
 - Vous pouvez supprimez le reste des fichiers inutilisés.
 
-#### Désinstallation automatique - Debian
+### Installation de Maven Lite sur d'autres distributions Linux ou sur MacOs
 
-- Éxécutez la commande suivante
+#### Installation automatique de Maven Lite - Linux & MacOs
+
+- Téléchargez le [Fichier compressé de la version française](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_all.zip) contenant les fichiers de l'applications.
+- Décompressez le fichier compressé
+- Éxecuter le script d'installation en éxécutant la commande suivante dans un terminal
 
   ```sh
-  mvnl-uninstall
+  sudo ./installer.sh
   ```
 
-#### Désinstallation manuelle - Debian
+- Vous pouvez supprimez le reste des fichiers inutilisés.
 
-- Supprimez le dossier `/etc/maven-lite`
+#### Installation manuelle de Maven Lite - Linux & MacOs
+
+- Téléchargez le [Fichier compressé de la version française](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_all.zip) contenant les fichiers de l'applications.
+- Décompressez le fichier compressé
+- Créez le dossier `/usr/local/etc/maven-lite`
 
   ```sh
-  sudo rm -r /etc/maven-lite
+  sudo mkdir -p /usr/local/etc/maven-lite
+  ```
+
+- Déplacez les fichiers .class et .jar dans le dossier `/usr/local/etc/maven-lite`
+
+  ```sh
+  sudo mv hamcrest-core-1.3.jar /usr/local/etc/maven-lite/
+  sudo mv junit-4.13.2.jar /usr/local/etc/maven-lite/
+  sudo mv MavenLite.class /usr/local/etc/maven-lite/
+  ```
+
+- Déplacez les fichiers shell dans le dossier `/usr/local/bin`
+
+  ```sh
+  sudo mv mvnl /usr/local/bin/
+  sudo mv mvnl-uninstall /usr/local/bin/
+  ```
+
+- Ajoutez les droits d'exécution au fichier `mvnl` et `mvnl-uninstall`
+
+  ```sh
+  sudo chmod +x /usr/local/bin/mvnl*
+  ```
+
+- Déplacez le fichier `mvnl.1.gz` dans le dossier `/usr/local/man/fr/man1` pour avoir les pages de manuel
+
+  ```sh
+  sudo mv mvnl.1.gz /usr/local/man/fr/man1/
+  ```
+
+- Vous pouvez supprimez le reste des fichiers inutilisés.
+
+### Windows
+
+#### Installation automatique de Maven Lite - Windows
+
+- Téléchargez le [Fichier compressé de la version française](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_win.zip) contenant les fichiers de l'applications.
+- Décompressez le fichier compressé en faisant un clic droit sur le fichier et en cliquant sur `Extraire tout...`
+  ![Image décompression 1](./img/windows_unzip_1.png)
+- Validez la décompression dans le dossier de votre choix en cliquant sur `Extraire`
+  ![Image décompression 2](./img/windows_unzip_2.png)
+- Éxecuter le script d'installation `installer.bat` en faisant un clic droit dessus et en cliquant sur `Exécuter en tant qu'administrateur`
+  ![Image execution du script](./img/windows_execute_script.png)
+- Vous devriez voir une fenêtre de commande s'ouvrir et afficher un texte ressemblant à celui-ci
+  ![Image resultat execution du script](./img/windows_execution_result.png)
+- Appuyez sur n'importe quelle touche pour fermer la fenêtre de commande
+- Ajoutez le dossier `C:\Program Files\Maven Lite` à la variable d'environnement système `PATH`
+  - Si vous ne savez pas comment faire éxactué la commande qui se trouve ci-dessous ou suivez les étapes suivantes ou suivez [ce tutoriel](https://wiki.gamedevalliance.fr/contribuer/path/)
+    - Ouvrez le menu démarrer
+    - Tapez `variables d'environnement` et cliquez sur `Modifier les variables d'environnement système`
+    - Cliquez sur `Variables d'environnement...`
+    - Sélectionnez la variable système `Path` et cliquez sur `Modifier...`
+    - Cliquez sur `Nouveau`
+    - Tapez `C:\Program Files\Maven Lite` et cliquez sur `OK`
+    - Cliquez sur `OK`
+    - Cliquez sur `OK`
+  - Éxécutez la commande suivante dans un terminal powershell en tant qu'administrateur
+
+  ```powershell
+  SETX PATH "%PATH%;C:\Program Files\Maven Lite"
+  ```
+
+- Vous pouvez supprimez le reste des fichiers inutilisés ainsi que le fichier compressé.
+
+#### Installation manuelle de Maven Lite - Windows
+
+- Téléchargez le [Fichier compressé de la version française](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_win.zip) contenant les fichiers de l'applications.
+- Décompressez le fichier compressé en faisant un clic droit sur le fichier et en cliquant sur `Extraire tout...`
+  ![Image décompression 1](./img/windows_unzip_1.png)
+- Validez la décompression dans le dossier de votre choix en cliquant sur `Extraire`
+  ![Image décompression 2](./img/windows_unzip_2.png)
+- Créez le dossier `C:\Program Files\Maven Lite`
+
+  ```powershell
+  mkdir 'C:\Program Files\Maven Lite'
+  ```
+
+- Créez le dossier `C:\Program Files\Maven Lite\etc`
+
+  ```powershell
+  mkdir 'C:\Program Files\Maven Lite\etc'
+  ```
+
+- Déplacez les fichiers .class et .jar dans le dossier `C:\Program Files\Maven Lite\etc`
+
+  ```powershell
+  MOVE hamcrest-core-1.3.jar 'C:\Program Files\Maven Lite\etc'
+  MOVE junit-4.13.2.jar 'C:\Program Files\Maven Lite\etc'
+  MOVE MavenLite.class 'C:\Program Files\Maven Lite\etc'
+  ```
+
+- Déplacez les fichiers Batch dans le dossier `C:\Program Files\Maven Lite`
+
+  ```powershell
+  MOVE mvnl.bat 'C:\Program Files\Maven Lite'
+  MOVE mvnl-uninstall.bat 'C:\Program Files\Maven Lite'
+  ```
+
+- Ajoutez le dossier `C:\Program Files\Maven Lite` à la variable d'environnement système `PATH`
+  - Si vous ne savez pas comment faire éxactué la commande qui se trouve ci-dessous ou suivez les étapes suivantes ou suivez [ce tutoriel](https://wiki.gamedevalliance.fr/contribuer/path/)
+    - Ouvrez le menu démarrer
+    - Tapez `variables d'environnement` et cliquez sur `Modifier les variables d'environnement système`
+    - Cliquez sur `Variables d'environnement...`
+    - Sélectionnez la variable système `Path` et cliquez sur `Modifier...`
+    - Cliquez sur `Nouveau`
+    - Tapez `C:\Program Files\Maven Lite` et cliquez sur `OK`
+    - Cliquez sur `OK`
+    - Cliquez sur `OK`
+  - Éxécutez la commande suivante dans un terminal powershell en tant qu'administrateur
+
+  ```powershell
+  SETX PATH "%PATH%;C:\Program Files\Maven Lite"
+  ```
+
+## Désinstallation de Maven Lite
+
+### Désinstallation de Maven Lite sur Debian et ses dérivés
+
+#### Désinstallation automatique de Maven Lite - Debian
+
+- Première méthode
+  - Éxécutez la commande suivante
+
+    ```sh
+    mvnl-uninstall
+    ```
+
+- Deuxième méthode
+  - Éxécutez la commande suivante
+
+    ```sh
+    sudo dpkg -r mvnl
+    ```
+
+#### Désinstallation manuelle de Maven Lite - Debian
+
+- Supprimez le dossier `/usr/local/etc/maven-lite`
+
+  ```sh
+  sudo rm -r /usr/local/etc/maven-lite
   ```
 
 - Supprimez les fichiers shell
@@ -116,49 +307,9 @@
   sudo rm /usr/local/man/fr/man1/mvnl.1.gz /usr/local/man/en/man1/mvnl.1.gz
   ```
 
-### Autres distributions Linux
+### Désinstallation de Maven Lite sur d'autres distributions Linux ou sur MacOs
 
-#### Installation automatique - Linux
-
-- Téléchargez le [Fichier compressé](https://github.com/FloRobart/mavenlite.github.io/releases) contenant les fichiers de l'applications dans la langue de votre choix dans la section 'Releases' du dépôt Github
-  - [Téléchargez le fichier de la version française.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_french_2.0-1_all.zip)
-  - [Téléchargez le fichier de la version anglaise.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_english_2.0-1_all.zip)
-- Décompressez le fichier compressé
-- Éxecuter le script d'installation
-
-  ```sh
-  sudo ./installer.sh
-  ```
-
-- Vous pouvez supprimez le reste des fichiers inutilisés.
-
-#### Installation manuelle - Linux
-
-- Téléchargez le [Fichier compressé](https://github.com/FloRobart/mavenlite.github.io/releases) contenant les fichiers de l'applications dans la langue de votre choix dans la section 'Releases' du dépôt Github
-  - [Téléchargez le fichier de la version française.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_french_2.0-1_all.zip)
-  - [Téléchargez le fichier de la version anglaise.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_english_2.0-1_all.zip)
-- Décompressez le fichier compressé
-- Déplacez le dossier `maven-lite` dans le dossier `/etc`
-
-  ```sh
-  sudo mv maven-lite /etc/
-  ```
-
-- Ajoutez les droits d'exécution au fichier `mvnl` et `mvnl-uninstall`
-
-  ```sh
-  sudo chmod +x /usr/local/bin/mvnl*
-  ```
-
-- Déplacez le dossier `man` dans le dossier `/usr/local/share` pour avoir les pages de manuel
-
-  ```sh
-  sudo mv man /usr/local/share/
-  ```
-
-- Vous pouvez supprimez le reste des fichiers inutilisés.
-
-#### Désinstallation automatique - Linux
+#### Désinstallation automatique de Maven Lite - Linux & MacOs
 
 - Éxécutez la commande suivante
 
@@ -166,12 +317,12 @@
   mvnl-uninstall
   ```
 
-#### Désinstallation manuelle - Linux
+#### Désinstallation manuelle de Maven Lite - Linux & MacOs
 
-- Supprimez le dossier `/etc/maven-lite`
+- Supprimez le dossier `/usr/local/etc/maven-lite`
 
   ```sh
-  sudo rm -r /etc/maven-lite
+  sudo rm -r /usr/local/etc/maven-lite
   ```
 
 - Supprimez les fichiers shell
@@ -186,180 +337,30 @@
   sudo rm /usr/local/share/man/fr/man1/mvnl.1.gz /usr/local/share/man/en/man1/mvnl.1.gz
   ```
 
-### Windows
+#### Désinstallation automatique de Maven Lite - Windows
 
-#### Installation automatique - Windows
+- Éxécutez la commande suivante dans un terminal powershell en tant qu'administrateur
 
-- Téléchargez le [Fichier compressé](https://github.com/FloRobart/mavenlite.github.io/releases) contenant les fichiers de l'applications dans la langue de votre choix dans la section 'Releases' du dépôt Github
-  - [Téléchargez le fichier de la version française.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_french_2.0-1_win.zip)
-  - [Téléchargez le fichier de la version anglaise.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_english_2.0-1_win.zip)
-- Décompressez le fichier compressé
-- Éxecuter le script d'installation
-
-  ```bat
-  ./installer.bat
-  ```
-
-- Vous pouvez supprimez le reste des fichiers inutilisés.
-
-#### Installation manuelle - Windows
-
-- Téléchargez le [Fichier compressé](https://github.com/FloRobart/mavenlite.github.io/releases) contenant les fichiers de l'applications dans la langue de votre choix dans la section 'Releases' du dépôt Github
-  - [Téléchargez le fichier de la version française.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_french_2.0-1_win.zip)
-  - [Téléchargez le fichier de la version anglaise.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_english_2.0-1_win.zip)
-- Décompressez le fichier compressé
-
-#### Désinstallation automatique - Windows
-
-#### Désinstallation manuelle - Windows
-
-### MacOs
-
-#### Installation automatique - MacOs
-
-- Téléchargez le [Fichier compressé](https://github.com/FloRobart/mavenlite.github.io/releases) contenant les fichiers de l'applications dans la langue de votre choix dans la section 'Releases' du dépôt Github
-  - [Téléchargez le fichier de la version française.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_french_2.0-1_all.zip)
-  - [Téléchargez le fichier de la version anglaise.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_english_2.0-1_all.zip)
-- Décompressez le fichier compressé
-- Éxecuter le script d'installation
-
-  ```sh
-  sudo ./installer.sh
-  ```
-
-- Vous pouvez supprimez le reste des fichiers inutilisés.
-
-#### Installation manuelle - MacOs
-
-- Téléchargez le [Fichier compressé](https://github.com/FloRobart/mavenlite.github.io/releases) contenant les fichiers de l'applications dans la langue de votre choix dans la section 'Releases' du dépôt Github
-  - [Téléchargez le fichier de la version française.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_french_2.0-1_all.zip)
-  - [Téléchargez le fichier de la version anglaise.](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_english_2.0-1_all.zip)
-- Décompressez le fichier compressé
-- Déplacez le dossier `maven-lite` dans le dossier `/etc`
-
-  ```sh
-  sudo mv maven-lite /etc/
-  ```
-
-- Ajoutez les droits d'exécution au fichier `mvnl` et `mvnl-uninstall`
-
-  ```sh
-  sudo chmod +x /usr/local/bin/mvnl*
-  ```
-
-- Déplacez le dossier `man` dans le dossier `/usr/local/share` pour avoir les pages de manuel
-
-  ```sh
-  sudo mv man /usr/local/share/
-  ```
-
-- Vous pouvez supprimez le reste des fichiers inutilisés.
-
-#### Désinstallation automatique - MacOs
-
-- Éxécutez la commande suivante
-
-  ```sh
+  ```powershell
   mvnl-uninstall
   ```
 
-#### Désinstallation manuelle - MacOs
+#### Désinstallation manuelle de Maven Lite - Windows
 
-- Supprimez le dossier `/etc/maven-lite`
+- Supprimez le dossier `C:\Program Files\Maven Lite` en éxécutant la commande suivante dans un terminal powershell
 
-  ```sh
-  sudo rm -r /etc/maven-lite
+  ```powershell
+  rmdir 'C:\Program Files\Maven Lite'
   ```
 
-- Supprimez les fichiers shell
-
-  ```sh
-  sudo rm /usr/local/bin/mvnl /usr/local/bin/mvnl-uninstall
-  ```
-
-- Supprimez les pages de manuel
-
-  ```sh
-  sudo rm /usr/local/share/man/fr/man1/mvnl.1.gz /usr/local/share/man/en/man1/mvnl.1.gz
-  ```
-
-## Liste des options
-
-- Courte, Longue
-  - Description
-  - Nombre d'arguments
-  - Valeur par défaut
-- -f   , --file
-  - Permet de charger les options à partir d'un fichier de configuration. En savoir plus :
-  - Nombre de d'arguments : de `0` à `1`.
-  - Valeur par défaut     : `LPOM.conf`.
-- -cr  , --create
-  - Créer l'arborescence du projet ainsi qu'un fichier de config par défaut.
-  - Nombre de d'arguments : de `0` à `1`.
-  - Valeur par défaut     : `NewProject`.
-- -mvc , --model-view-controller
-  - Permet de spécifier à l'option '--create' de créer l'arborescence d'un projet MVC.
-  - Nombre de d'argument  : `0`.
-- -c   , --compilation
-  - Compile le projet.
-  - Nombre de d'argument  : `0`.
-- -l   , --launch
-  - Lance le projet.
-  - Nombre de d'argument  : `0`.
-- -cl  , --compile-launch
-  - Compile et lance le projet. (équivalent à -c -l)
-  - Nombre de d'argument  : `0`.
-- -lc  , --launch-compile
-  - Compile et lance le projet. (équivalent à -c -l)
-  - Nombre de d'argument  : `0`.
-- -q   , --quiet
-  - Permet de supprimer l'affichage de java dans le terminal lors de l'exécution du projet.
-  - Nombre de d'argument  : `0`.
-- -v   , --verbose
-  - Permet d'afficher les commandes exécutées.
-  - Nombre de d'argument  : `0`.
-- -ex  , --exclude
-  - Permet d'exclure des fichiers java et des dossiers de la compilation. Si vous voulez passé un argument qui commencer par '-' échapper le caractère '-' avec deux '\' comme ceci : '-ex  \\-fichier'.
-  - Nombre de d'argument  : `unlimited`.
-- -s   , --source
-  - Dossier contenant les fichiers java à compiler.
-  - Nombre de d'argument  : `1`.
-  - Valeur par défaut     : `src/main/java`.
-- -t   , --target
-  - Dossier de sortie des fichiers compilés. Ce dossier sera créer si il n'existe pas et sera automatiquement ajouter au classpath lors de la compilation et du lancement.
-  - Nombre de d'argument  : `1`.
-  - Valeur par défaut     : `target`.
-- -cp  , --classpath
-  - Permet de spécifier le classpath à utiliser lors de la compilation et du lancement. Si vous voulez ajouter plusieurs éléments au classpath, il faut les séparer par des ':'.
-  - Nombre de d'argument  : `1`.
-- -lib , --libraries
-  - Dossier contenant les fichiers jar utiliser par le programme. Tout les fichiers jar seront ajoutés au classpath lors de la compilation et du lancement.
-  - Nombre de d'arguments : de `0` à `1`.
-  - Valeur par défaut     : `src/main/resources/lib`.
-- -args, --arguments
-  - Tous les arguments à passer à la classe principale. Si vous voulez passé un argument qui commencer par '-' échapper le caractère '-' avec deux '\' comme ceci : '-args  \\-argument_pour_le_main'.
-  - Nombre de d'argument  : `unlimited`.
-- -m   , --main
-  - Classe principale à lancer. Si vous voulez lancer une classe qui se trouve dans un package, il faut spécifier le package avec le nom de la classe comme ceci : 'package.nom.MainClass'
-  - Nombre de d'argument  : `1`.
-- -e   , --encoding
-  - Permet de changer l'encodage des fichiers java à compiler.
-  - Nombre de d'argument  : `1`.
-  - Valeur par défaut     : `UTF-8`.
-- -exp , --export
-  - Permet de créer un fichier jar exécutable permettant de lancer le projet sans avoir installer MavenLite.
-  - Nombre de d'arguments : de `0` à `1`.
-  - Valeur par défaut     : `run.java`.
-- -mvn , --maven
-  - Convertie le projet en projet maven en créant un fichier pom.xml et en déplaçant les fichiers si nécessaire.
-  - Nombre de d'argument  : `0`.
-- -V   , --version
-  - Affiche la version.
-  - Nombre de d'argument  : `0`.
-  - Valeur par défaut     : `2.0.0`.
-- -h   , --help
-  - Affiche l'aide et quitte.
-  - Nombre de d'argument  : `0`.
-- -cle , --clear
-  - Permet de supprimer les fichiers dans le dossier de sortie des fichiers compilés.
-  - Nombre de d'argument  : `0`.
+- Confirmer la suppression en tapant `O`
+- Supprimez le dossier `C:\Program Files\Maven Lite\` de la variable d'environnement système `PATH`
+  - Si vous ne savez pas comment faire suivez les étapes suivantes ou suivez [ce tutoriel](https://wiki.gamedevalliance.fr/contribuer/path/)
+    - Ouvrez le menu démarrer
+    - Tapez `variables d'environnement` et cliquez sur `Modifier les variables d'environnement système`
+    - Cliquez sur `Variables d'environnement...`
+    - Sélectionnez la variable système `Path` et cliquez sur `Modifier...`
+    - Cliquez sur `C:\Program Files\Maven Lite` et cliquez sur `Supprimer`
+    - Cliquez sur `OK`
+    - Cliquez sur `OK`
+    - Cliquez sur `OK`
