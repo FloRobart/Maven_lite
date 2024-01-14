@@ -25,6 +25,7 @@ public class MavenLite
     /*============*/
     /* Constantes */
     /*============*/
+    private static final String OS = System.getProperty("os.name").toLowerCase();
     /* Valeurs par défauts */
     private static final String PROJECT_NAME    = System.getProperty("user.dir").substring(System.getProperty("user.dir").lastIndexOf("/")+1);
     private static final String AUTHOR          = "Floris Robart";
@@ -57,7 +58,7 @@ public class MavenLite
     /* Séparation des arguments */
     private static final String ARG_SEPARATOR     = "@;#ARGUMENT#;@";
     private static       String SPACE_REPLACEMENT;
-    private static final String CP_SEPARATOR      = System.getProperty("os.name").toLowerCase().startsWith("windows") ? ";" : ":";
+    private static final String CP_SEPARATOR      = MavenLite.OS.contains("windows") ? ";" : ":";
     private static final String COMPILE_LIST_NAME = "compile.list";
     private static final String[] JUNIT_FILES     = new String[]{"junit-4.13.2.jar", "hamcrest-core-1.3.jar"};
 
@@ -300,7 +301,7 @@ public class MavenLite
         String shell;
         String shellOption;
 
-        if (System.getProperty("os.name").toLowerCase().startsWith("windows"))
+        if (MavenLite.OS.contains("windows"))
         {
             shell = "powershell";
             shellOption = "/c";
@@ -883,7 +884,7 @@ public class MavenLite
 
             while (sc.hasNextLine())
             {
-                String line = sc.nextLine().replace("^[\\u0009\\u0020]*", ""); // Supprime les espaces et les tabulations au début de la ligne
+                String line = sc.nextLine().replace("^[\\u0009\\u0020]*", ""); /* Supprime les espaces et les tabulations au début de la ligne */
                 if (!line.startsWith("#") && !line.equals(""))
                 {
                     /* Suppression des espaces dans les chaines de caractères */
@@ -904,9 +905,6 @@ public class MavenLite
 
             sc.close();
 
-            for (String s : sFile.toString().split(" ")) {
-                System.out.println(s);//debug
-            }
             this.parseOptions(sFile.toString().split(" "));
         }
         catch (Exception e)
@@ -1198,8 +1196,11 @@ public class MavenLite
         if (this.hmArgs.get("arguments") != null)
         {
             this.hmArgs.put("arguments", this.hmArgs.get("arguments").substring(MavenLite.ARG_SEPARATOR.length()));
+            if (MavenLite.OS.contains("windows"))
+                this.hmArgs.put("arguments", this.hmArgs.get("arguments").replace("\\\"", "\\\"\\\""));
+
             for (String s : this.hmArgs.get("arguments").split(MavenLite.ARG_SEPARATOR))
-                if (System.getProperty("os.name").toLowerCase().contains("windows"))
+                if (MavenLite.OS.contains("windows"))
                     command.append(" \'").append(s).append("\'");
                 else
                     command.append(" \"").append(s).append("\"");
@@ -1461,7 +1462,7 @@ public class MavenLite
         }
         else if (args.length == 1 && args[0].equals("uninstall_from_mvnl-uninstall"))
         {
-            if (System.getProperty("os.name").toLowerCase().contains("windows"))
+            if (MavenLite.OS.contains("windows"))
                 System.exit(new MavenLite().confirmeUninstall());
             else
                 System.exit(new MavenLite().uninstallManPage());

@@ -1,5 +1,5 @@
 #!/bin/bash
-SPACE_REPLACEMENT="@;#SPACE#;@"
+SPACE_REPLACEMENT="#;#SPACE#;#"
 for arg in "$@"
 do
     args="$args $( echo "$arg" | sed -r "s/[ ]/$SPACE_REPLACEMENT/g" )"
