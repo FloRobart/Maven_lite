@@ -1,2 +1,8 @@
 #!/bin/bash
-java -cp /usr/local/etc/maven-lite MavenLite $@
+SPACE_REPLACEMENT="@;#SPACE#;@"
+for arg in "$@"
+do
+    args="$args $( echo "$arg" | sed -r "s/[ ]/$SPACE_REPLACEMENT/g" )"
+done
+
+java -cp /usr/local/etc/maven-lite MavenLite $SPACE_REPLACEMENT $args

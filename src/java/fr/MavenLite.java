@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * MavenLite est un programme qui permet de compiler et de lancer un projet java
@@ -53,7 +55,8 @@ public class MavenLite
     private static final String ERROR           = "[" + MavenLite.RED_BOLD + "ERREUR" + MavenLite.DEFAULT + "] ";
 
     /* Séparation des arguments */
-    private static final String ARG_SEPARATOR     = "/;#;/";
+    private static final String ARG_SEPARATOR     = "@;#ARGUMENT#;@";
+    private static       String SPACE_REPLACEMENT;
     private static final String CP_SEPARATOR      = System.getProperty("os.name").toLowerCase().startsWith("windows") ? ";" : ":";
     private static final String COMPILE_LIST_NAME = "compile.list";
     private static final String[] JUNIT_FILES     = new String[]{"junit-4.13.2.jar", "hamcrest-core-1.3.jar"};
@@ -230,9 +233,9 @@ public class MavenLite
                         sArgs.append(this.hmArgs.get(opt[0]) == null ? "" : this.hmArgs.get(opt[0]));
 
                         while (i + 1 < args.length && !args[i + 1].startsWith("-"))
-                            sArgs.append(args[++i]).append(MavenLite.ARG_SEPARATOR);
+                            sArgs.append(MavenLite.ARG_SEPARATOR).append(args[++i]);
 
-                        this.hmArgs.put(opt[0], sArgs.toString().substring(0, sArgs.length()-MavenLite.ARG_SEPARATOR.length()));
+                        this.hmArgs.put(opt[0], sArgs.toString().replace(MavenLite.SPACE_REPLACEMENT, " "));
                     }
                     /* Parse les options qui ont un nombre d'argument défini autre que 0, 1 et unlimited */
                     /* Pour l'instant ce code n'est pas utilisé */
@@ -366,7 +369,7 @@ public class MavenLite
                             while (scanner.hasNextLine())
                             {
                                 String line = scanner.nextLine();
-                                if (line.replaceAll(" ", "").contains("public static void main(String[]".replaceAll(" ", "")))
+                                if (line.replace(" ", "").contains("public static void main(String[]".replace(" ", "")))
                                 {
                                     /* Récupération du package */
                                     mainClass = this.getPackageName(file) + file.getName().replace(".java", "");
@@ -420,13 +423,13 @@ public class MavenLite
             Scanner scanner = new Scanner(javaFile);
             while (scanner.hasNextLine())
             {
-                String line = scanner.nextLine().replaceAll("^[\\u0009\\u0020]*", "");
+                String line = scanner.nextLine().replace("^[\\u0009\\u0020]*", "");
                 if (line.contains("package"))
                 {
                     packageName = line.split(" ")[1].replace(";", ".");
                     break;
                 }
-                else if (!line.replaceAll("^[\\u0009\\u0020]*", "").equals(""))
+                else if (!line.replace("^[\\u0009\\u0020]*", "").equals(""))
                 {
                     break;
                 }
@@ -671,8 +674,7 @@ public class MavenLite
                     this.hmArgs.put(opt[0], this.libraries(this.hmArgs.get(opt[0])));
                     break;
                 case "classpath":
-                    this.hmArgs.put(opt[0], this.classpath(this.hmArgs.get(opt[0])));
-                    System.out.println("classpath : '" + this.hmArgs.get(opt[0]) + "'");
+                    this.hmArgs.put(opt[0], this.classpath(this.hmArgs.get(opt[0]).substring(MavenLite.ARG_SEPARATOR.length())));
                     break;
             }
 
@@ -784,7 +786,7 @@ public class MavenLite
         if (classpath == null)
             return null;
 
-        return classpath.replace(MavenLite.ARG_SEPARATOR, MavenLite.CP_SEPARATOR).replace("CLASSPATH", System.getProperty("java.class.path"));
+        return classpath.replace(MavenLite.ARG_SEPARATOR, MavenLite.CP_SEPARATOR).replace("$CLASSPATH", System.getProperty("java.class.path"));
     }
 
     /**
@@ -881,13 +883,30 @@ public class MavenLite
 
             while (sc.hasNextLine())
             {
-                String line = sc.nextLine().replaceAll("^[\\u0009\\u0020]*", ""); // Supprime les espaces et les tabulations au début de la ligne
+                String line = sc.nextLine().replace("^[\\u0009\\u0020]*", ""); // Supprime les espaces et les tabulations au début de la ligne
                 if (!line.startsWith("#") && !line.equals(""))
+                {
+                    /* Suppression des espaces dans les chaines de caractères */
+                    Pattern p = Pattern.compile("\"(?:\\\\\"|[^\"])*\""); /* Matche tous les mots entre guillemets, en ignorant les guillemets précédés par le caractère "\" */
+                    Matcher m = p.matcher(line);
+                    while (m.find())
+                    {
+                        line = line.replace(m.group(0), m.group(0).replace(" ", MavenLite.SPACE_REPLACEMENT));
+                        
+                        /* Suppression des guillemets au début et à la fin */
+                        line = line.replaceFirst("\"", "");
+                        line = line.substring(0, line.length()-1);
+                    }
+
                     sFile.append(line).append(" ");
+                }
             }
 
             sc.close();
 
+            for (String s : sFile.toString().split(" ")) {
+                System.out.println(s);//debug
+            }
             this.parseOptions(sFile.toString().split(" "));
         }
         catch (Exception e)
@@ -1175,11 +1194,16 @@ public class MavenLite
         }
 
         command.append(" ").append(this.hmArgs.get("main"));
-            
+
         if (this.hmArgs.get("arguments") != null)
+        {
+            this.hmArgs.put("arguments", this.hmArgs.get("arguments").substring(MavenLite.ARG_SEPARATOR.length()));
             for (String s : this.hmArgs.get("arguments").split(MavenLite.ARG_SEPARATOR))
                 if (System.getProperty("os.name").toLowerCase().contains("windows"))
+                    command.append(" \'").append(s).append("\'");
+                else
                     command.append(" \"").append(s).append("\"");
+        }
 
         if (this.hmArgs.get(this.lstOptions.get(8)[0]) != null)
             System.out.println(MavenLite.INFO + MavenLite.BLUE_BOLD + command.toString() + MavenLite.DEFAULT);
@@ -1430,7 +1454,7 @@ public class MavenLite
     /*======*/
     public static void main(String[] args)
     {
-        if (args.length < 1)
+        if (args.length <= 1)
         {
             new MavenLite().defaultAffichage();
             System.exit(0);
@@ -1443,6 +1467,12 @@ public class MavenLite
                 System.exit(new MavenLite().uninstallManPage());
         }
 
-        new MavenLite(args);
+        String[] args2 = new String[args.length-1];
+        for (int i = 1; i < args.length; i++)
+            args2[i-1] = args[i];
+
+        MavenLite.SPACE_REPLACEMENT = args[0];
+
+        new MavenLite(args2);
     }
 }
