@@ -4,6 +4,7 @@ Voir la [documentation Française](../README.md)
 
 - Version: 2.0.0
 - Author: Floris Robart
+- Translated by: Chat GPT-3.5
 
 ## Table of Contents
 
