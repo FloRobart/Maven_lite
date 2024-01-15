@@ -645,3 +645,5 @@ L'utilisation de cette option se fait avec l'option `--clear` ou `-clr`.
 Cette option permet de supprimer tous les fichiers dans le dossier de sortie des fichiers compilés. Cette option permet de libérer de l'espace disque, ainsi que de faire un un fichier jar propre.
 
 ## Exemple, fonctionnaliés et limites
+
+<a href="https://florobart.github.io/mavenlite.github.io/"><button type="button">Retour</button></a>

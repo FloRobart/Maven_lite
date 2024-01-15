@@ -502,3 +502,5 @@ This option displays the list of options along with their description, the numbe
 This option is used with the `--clear` or `-clr` option.
 
 This option deletes all files in the output folder for compiled files. This option frees up disk space and provides a clean JAR file.
+
+<a href="https://florobart.github.io/mavenlite.github.io/Documentations/README.en.html"><button type="button">Retour</button></a>
