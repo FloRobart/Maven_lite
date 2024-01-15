@@ -1,6 +1,7 @@
 # Maven Lite
 
-Voir la [documentation Française](../README.md)
+- Voir la [documentation Française](../README.md)
+- See the [PDF documentation](./pdf/README.en.pdf)
 
 - Version: 2.0.0
 - Author: Floris Robart

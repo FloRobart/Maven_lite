@@ -1,5 +1,8 @@
 # Utilisation de Maven Lite et description de toutes les fonctionnalités
 
+- See the [English documentation](./Utilisation.en.md)
+- Voir la [documentation en PDF](./pdf/Utilisation.fr.pdf)
+
 ## Table des matières
 
 - [Utilisation de Maven Lite et description de toutes les fonctionnalités](#utilisation-de-maven-lite-et-description-de-toutes-les-fonctionnalités)
@@ -277,7 +280,6 @@ Si vous voulez exclure un dossier, il faut mettre le chemin relatif du dossier �
 Si vous excluez un dossier, tous les fichiers et dossiers qu'il contient seront aussi exclus.
 
 **Attention, si vous excluez le dossier `test`, tout les fichiers ou dossiers qui contiennent le mot `test` dans leur nom seront aussi exclus.**
-
 
 - Exemple d'utilisation de l'option Exclusion
   - Dans cette exemple, nous allons compiler et lancer un projet java avec l'exclusion du fichier `Main2.java` et de tout les fichiers et dossier que contient le dossier `tests` ainsi que le dossier source et le dossier de sortie des fichiers compilés par défaut.

@@ -1,5 +1,8 @@
 # Utilisation de Maven Lite et description de toutes les fonctionnalités
 
+- Voir la [documentation Française](./Utilisation.fr.md)
+- See the [PDF documentation](./pdf/Utilisation.en.pdf)
+
 ## Table des matières
 
 - [Utilisation de Maven Lite et description de toutes les fonctionnalités](#utilisation-de-maven-lite-et-description-de-toutes-les-fonctionnalités)
@@ -42,7 +45,7 @@
 
 - [`-f`](#configuration-file), [`--file`](#configuration-file): Load options from a configuration file.
 - [`-cr`](#project-creation), [`--create`](#project-creation): Create the project structure along with a default configuration file.
-- [`-mvc`](#model-view-controller), [`--model-view-controller`](#model-view-controller): Specify to the '[`--create`](#project-creation)' option to create the project structure in MVC style.
+- [`-mvc`](#project-creation), [`--model-view-controller`](#project-creation): Create the project structure along with a default configuration file and the Model-View-Controller (MVC) structure.
 - [`-c`](#project-compilation), [`--compilation`](#project-compilation): Compile the project.
 - [`-l`](#project-launch), [`--launch`](#project-launch): Launch the project.
 - [`-cl`](#project-compilation-launch), [`--compile-launch`](#project-compilation-launch): Compile and launch the project (equivalent to -c -l).

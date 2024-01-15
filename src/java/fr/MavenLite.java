@@ -128,41 +128,41 @@ public class MavenLite
 
         /*                             nom                  court    long                       nb argument  nb argument  valeur                  utilisé    description       */
         /*                             0                    1        2                          3            4            5                       6          7                 */
-        /* 0  */ lst.add(new String[] {"file"             , "-f"   , "--file"                 , "0"        , "1"        , MavenLite.FILE        , "0", "Permet de charger les options à partir d'un fichier de configuration. En savoir plus : "});
-        /* 1  */ lst.add(new String[] {"create"           , "-cr"  , "--create"               , "0"        , "1"        , MavenLite.CREATE      , "0", "Créer l'arborescence du projet ainsi qu'un fichier de config par défaut."});
-        /* 2  */ lst.add(new String[] {"mvc"              , "-mvc" , "--model-view-controller", "0"        , "0"        , null                  , "0", "Permet de spécifier à l'option '" + lst.get(1)[2] + "' de créer l'arborescence d'un projet MVC."});
-        /* 3  */ lst.add(new String[] {"compilation"      , "-c"   , "--compilation"          , "0"        , "0"        , null                  , "0", "Compile le projet."});
-        /* 4  */ lst.add(new String[] {"launch"           , "-l"   , "--launch"               , "0"        , "0"        , null                  , "0", "Lance le projet."});
-        /* 5  */ lst.add(new String[] {"compile-launch"   , "-cl"  , "--compile-launch"       , "0"        , "0"        , null                  , "0", "Compile et lance le projet. (équivalent à -c -l)"});
-        /* 6  */ lst.add(new String[] {"launch-compile"   , "-lc"  , "--launch-compile"       , "0"        , "0"        , null                  , "0", "Compile et lance le projet. (équivalent à -c -l)"});
-        /* 7  */ lst.add(new String[] {"quiet"            , "-q"   , "--quiet"                , "0"        , "0"        , null                  , "0", "Permet de supprimer l'affichage de java dans le terminal lors de l'exécution du projet."});
-        /* 8  */ lst.add(new String[] {"verbose"          , "-v"   , "--verbose"              , "0"        , "0"        , null                  , "0", "Permet d'afficher les commandes exécutées."});
-        /* 9  */ lst.add(new String[] {"exclude"          , "-ex"  , "--exclude"              , "unlimited", "unlimited", null                  , "0", "Permet d'exclure des fichiers java et des dossiers de la compilation. Si vous voulez passé un argument qui commencer par '-' échapper le caractère '-' avec deux '\\' comme ceci : '-ex \\\\-fichier'."});
-        /* 10 */ lst.add(new String[] {"compile-jar"      , "-cj"  , "--compile-jar"          , "0"        , "1"        , null                  , "0", "Permet de créer un fichier jar de votre projet. Vous pouvez spécifier le nom du fichier jar à créer. Si vous ne spécifiez pas de nom, le nom du fichier jar sera le nom du projet."});
-        /* 11 */ lst.add(new String[] {"launch-jar"       , "-lj"  , "--launch-jar"           , "0"        , "1"        , null                  , "0", "Permet de lancer un fichier jar exécutable. Vous pouvez spécifier le nom du fichier jar à lancer. Si vous ne spécifiez pas de nom, le nom du fichier jar sera le nom du projet."});
-        /* 12 */ lst.add(new String[] {"integrate-test"   , "-it"  , "--integrate-test"       , "0"        , "0"        , null                  , "0", "Permet d'intégrer les tests unitaires au projet."});
+        /* 0  */ lst.add(new String[] {"file"             , "-f"   , "--file"                 , "0"        , "1"        , MavenLite.FILE     , "0", "Permet de charger les options à partir d'un fichier de configuration. En savoir plus : "});
+        /* 1  */ lst.add(new String[] {"create"           , "-cr"  , "--create"               , "0"        , "1"        , MavenLite.CREATE   , "0", "Créer l'arborescence du projet ainsi qu'un fichier de config par défaut."});
+        /* 2  */ lst.add(new String[] {"mvc"              , "-mvc" , "--model-view-controller", "0"        , "0"        , null               , "0", "Permet de spécifier à l'option '" + lst.get(1)[2] + "' de créer l'arborescence d'un projet MVC."});
+        /* 3  */ lst.add(new String[] {"compilation"      , "-c"   , "--compilation"          , "0"        , "0"        , null               , "0", "Compile le projet."});
+        /* 4  */ lst.add(new String[] {"launch"           , "-l"   , "--launch"               , "0"        , "0"        , null               , "0", "Lance le projet."});
+        /* 5  */ lst.add(new String[] {"compile-launch"   , "-cl"  , "--compile-launch"       , "0"        , "0"        , null               , "0", "Compile et lance le projet. (équivalent à -c -l)"});
+        /* 6  */ lst.add(new String[] {"launch-compile"   , "-lc"  , "--launch-compile"       , "0"        , "0"        , null               , "0", "Compile et lance le projet. (équivalent à -c -l)"});
+        /* 7  */ lst.add(new String[] {"quiet"            , "-q"   , "--quiet"                , "0"        , "0"        , null               , "0", "Permet de supprimer l'affichage de java dans le terminal lors de l'exécution du projet."});
+        /* 8  */ lst.add(new String[] {"verbose"          , "-v"   , "--verbose"              , "0"        , "0"        , null               , "0", "Permet d'afficher les commandes exécutées."});
+        /* 9  */ lst.add(new String[] {"exclude"          , "-ex"  , "--exclude"              , "unlimited", "unlimited", null               , "0", "Permet d'exclure des fichiers java et des dossiers de la compilation. Si vous voulez passé un argument qui commencer par '-' échapper le caractère '-' avec deux '\\' comme ceci : '-ex \\\\-fichier'."});
+        /* 10 */ lst.add(new String[] {"compile-jar"      , "-cj"  , "--compile-jar"          , "0"        , "1"        , null               , "0", "Permet de créer un fichier jar de votre projet. Vous pouvez spécifier le nom du fichier jar à créer. Si vous ne spécifiez pas de nom, le nom du fichier jar sera le nom du projet."});
+        /* 11 */ lst.add(new String[] {"launch-jar"       , "-lj"  , "--launch-jar"           , "0"        , "1"        , null               , "0", "Permet de lancer un fichier jar exécutable. Vous pouvez spécifier le nom du fichier jar à lancer. Si vous ne spécifiez pas de nom, le nom du fichier jar sera le nom du projet."});
+        /* 12 */ lst.add(new String[] {"integrate-test"   , "-it"  , "--integrate-test"       , "0"        , "0"        , null               , "0", "Permet d'intégrer les tests unitaires au projet."});
         /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
         /* Tous se qui est au dessus de cette ligne ne doit pas être déplacer, leur ordre est important */
 
-        /* 13 */ lst.add(new String[] {"source"           , "-s"   , "--source"               , "1"        , "1"        , MavenLite.SOURCE      , "1", "Dossier contenant les fichiers java à compiler."});
-        /* 14 */ lst.add(new String[] {"target"           , "-t"   , "--target"               , "1"        , "1"        , MavenLite.TARGET      , "1", "Dossier de sortie des fichiers compilés. Ce dossier sera créer si il n'existe pas et sera automatiquement ajouter au classpath lors de la compilation et du lancement."});
-        /* 15 */ lst.add(new String[] {"resources"        , "-r"   , "--resources"            , "1"        , "1"        , MavenLite.RESOURCES   , "1", "Dossier contenant les fichiers ressources à copier dans le dossier de sortie des fichiers compilés dans le cas de la création d'un fichier jar."});
-        /* 15 */ lst.add(new String[] {"classpath"        , "-cp"  , "--classpath"            , "unlimited", "unlimited", null                  , "0", "Permet de spécifier le classpath à utiliser lors de la compilation et du lancement. Si vous voulez ajouter plusieurs éléments au classpath, il faut les séparer par des ':'."});
-        /* 16 */ lst.add(new String[] {"libraries"        , "-lib" , "--libraries"            , "0"        , "1"        , MavenLite.LIBRARIES   , "0", "Dossier contenant les fichiers jar utiliser par le programme. Tout les fichiers jar seront ajoutés au classpath lors de la compilation et du lancement."});
-        /* 17 */ lst.add(new String[] {"arguments"        , "-args", "--arguments"            , "unlimited", "unlimited", null                  , "0", "Tous les arguments à passer à la classe principale. Si vous voulez passé un argument qui commencer par '-' échapper le caractère '-' avec deux '\\' comme ceci : '-args \\\\-argument_pour_le_main'."});
-        /* 18 */ lst.add(new String[] {"main"             , "-m"   , "--main"                 , "1"        , "1"        , null                  , "0", "Classe principale à lancer. Si vous voulez lancer une classe qui se trouve dans un package, il faut spécifier le package avec le nom de la classe comme ceci : 'package.nom.MainClass'"});
-        /* 19 */ lst.add(new String[] {"encoding"         , "-e"   , "--encoding"             , "1"        , "1"        , MavenLite.ENCODING    , "1", "Permet de changer l'encodage des fichiers java à compiler."});
-        /* 20 */ lst.add(new String[] {"export"           , "-exp" , "--export"               , "0"        , "1"        , MavenLite.EXPORT      , "0", "Permet de créer un fichier jar exécutable permettant de lancer le projet sans avoir installer MavenLite."});
-        /* 21 */ lst.add(new String[] {"maven"            , "-mvn" , "--maven"                , "0"        , "0"        , null                  , "0", "Convertie le projet en projet maven en créant un fichier pom.xml et en déplaçant les fichiers si nécessaire."});
-        /* 22 */ lst.add(new String[] {"version"          , "-V"   , "--version"              , "0"        , "0"        , MavenLite.VERSION     , "0", "Affiche la version."});
-        /* 23 */ lst.add(new String[] {"help"             , "-h"   , "--help"                 , "0"        , "0"        , null                  , "0", "Affiche l'aide et quitte."});
-        /* 24 */ lst.add(new String[] {"clear"            , "-clr" , "--clear"                , "0"        , "0"        , null                  , "0", "Permet de supprimer les fichiers dans le dossier de sortie des fichiers compilés."});
-        /* 25 */ //lst.add(new String[] {"add-comile-option", "-aco" , "--add-compile-option"   , "unlimited", "unlimited", null                  , "0", "Permet d'ajouter une option à java lors de la compilation. Attention, Aucune vérification n'est faite sur l'option, il faut donc faire attention à ce que vous ajoutez."});
-        /* 26 */ //lst.add(new String[] {"add-launch-option", "-alo" , "--add-launch-option"    , "unlimited", "unlimited", null                  , "0", "Permet d'ajouter une option à java lors du lancement. Attention, Aucune vérification n'est faite sur l'option, il faut donc faire attention à ce que vous ajoutez."});
+        /* 13 */ lst.add(new String[] {"source"           , "-s"   , "--source"               , "1"        , "1"        , MavenLite.SOURCE   , "1", "Dossier contenant les fichiers java à compiler."});
+        /* 14 */ lst.add(new String[] {"target"           , "-t"   , "--target"               , "1"        , "1"        , MavenLite.TARGET   , "1", "Dossier de sortie des fichiers compilés. Ce dossier sera créer si il n'existe pas et sera automatiquement ajouter au classpath lors de la compilation et du lancement."});
+        /* 15 */ lst.add(new String[] {"resources"        , "-r"   , "--resources"            , "1"        , "1"        , MavenLite.RESOURCES, "1", "Dossier contenant les fichiers ressources à copier dans le dossier de sortie des fichiers compilés dans le cas de la création d'un fichier jar."});
+        /* 15 */ lst.add(new String[] {"classpath"        , "-cp"  , "--classpath"            , "unlimited", "unlimited", null               , "0", "Permet de spécifier le classpath à utiliser lors de la compilation et du lancement. Si vous voulez ajouter plusieurs éléments au classpath, il faut les séparer par des ':'."});
+        /* 16 */ lst.add(new String[] {"libraries"        , "-lib" , "--libraries"            , "0"        , "1"        , MavenLite.LIBRARIES, "0", "Dossier contenant les fichiers jar utiliser par le programme. Tout les fichiers jar seront ajoutés au classpath lors de la compilation et du lancement."});
+        /* 17 */ lst.add(new String[] {"arguments"        , "-args", "--arguments"            , "unlimited", "unlimited", null               , "0", "Tous les arguments à passer à la classe principale. Si vous voulez passé un argument qui commencer par '-' échapper le caractère '-' avec deux '\\' comme ceci : '-args \\\\-argument_pour_le_main'."});
+        /* 18 */ lst.add(new String[] {"main"             , "-m"   , "--main"                 , "1"        , "1"        , null               , "0", "Classe principale à lancer. Si vous voulez lancer une classe qui se trouve dans un package, il faut spécifier le package avec le nom de la classe comme ceci : 'package.nom.MainClass'"});
+        /* 19 */ lst.add(new String[] {"encoding"         , "-e"   , "--encoding"             , "1"        , "1"        , MavenLite.ENCODING , "1", "Permet de changer l'encodage des fichiers java à compiler."});
+        /* 20 */ lst.add(new String[] {"export"           , "-exp" , "--export"               , "0"        , "1"        , MavenLite.EXPORT   , "0", "Permet de créer un fichier jar exécutable permettant de lancer le projet sans avoir installer MavenLite."});
+        /* 21 */ lst.add(new String[] {"maven"            , "-mvn" , "--maven"                , "0"        , "0"        , null               , "0", "Convertie le projet en projet maven en créant un fichier pom.xml et en déplaçant les fichiers si nécessaire."});
+        /* 22 */ lst.add(new String[] {"version"          , "-V"   , "--version"              , "0"        , "0"        , MavenLite.VERSION  , "0", "Affiche la version."});
+        /* 23 */ lst.add(new String[] {"help"             , "-h"   , "--help"                 , "0"        , "0"        , null               , "0", "Affiche l'aide et quitte."});
+        /* 24 */ lst.add(new String[] {"clear"            , "-clr" , "--clear"                , "0"        , "0"        , null               , "0", "Permet de supprimer les fichiers dans le dossier de sortie des fichiers compilés."});
+        /* 25 */ //lst.add(new String[] {"add-compile-option", "-aco" , "--add-compile-option"   , "unlimited", "unlimited", null                  , "0", "Permet d'ajouter une option à java lors de la compilation. Attention, Aucune vérification n'est faite sur l'option, il faut donc faire attention à ce que vous ajoutez."});
+        /* 26 */ //lst.add(new String[] {"add-launch-option" , "-alo" , "--add-launch-option"    , "unlimited", "unlimited", null                  , "0", "Permet d'ajouter une option à java lors du lancement. Attention, Aucune vérification n'est faite sur l'option, il faut donc faire attention à ce que vous ajoutez."});
         /* Pour ajouter une option, il faut ajouter un tableau de String dans la liste ci-dessus. Si l'option doit executé du code ajouter la au switch dans la méthode executeOption() et créer une méthode pour l'exécution de l'option. */
 
         return lst;
-    }
+    }   
 
     /**
      * Parse les arguments passés au programme.
@@ -1434,7 +1434,7 @@ public class MavenLite
     {
         String helpStyle = "\n";
 
-        /* Écriture de 'MVNL' en ascii art */
+        /* Écriture de 'Maven Lite' en ascii art */
         helpStyle += "        __  ___                          __    _ __      \n";
         helpStyle += "       /  |/  /___ __   _____  ____     / /   (_) /____   \n";
         helpStyle += "      / /|_/ / __ `/ | / / _ \\/ __ \\   / /   / / __/ _ \\  \n";

@@ -1,5 +1,8 @@
 # Installation et désinstallation de Maven Lite et de ses dépendances
 
+- See the [English documentation](./Installation.en.md)
+- Voir la [documentation en PDF](./pdf/Installation.fr.pdf)
+
 ## Table des matières
 
 - [Installation et désinstallation de Maven Lite et de ses dépendances](#installation-et-désinstallation-de-maven-lite-et-de-ses-dépendances)
