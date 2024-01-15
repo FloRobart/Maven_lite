@@ -417,3 +417,6 @@
     - Cliquez sur `OK`
     - Cliquez sur `OK`
     - Cliquez sur `OK`
+
+<!-- Ajoute un bouton retour en HTML -->
+<a href="https://florobart.github.io/mavenlite.github.io/Documentation/"><button type="button">Retour</button></a>
