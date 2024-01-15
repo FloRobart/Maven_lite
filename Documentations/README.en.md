@@ -50,8 +50,8 @@ Each argument must be preceded by its option; you cannot put an argument without
 
 ## Maven Lite Installation and Dependencies
 
-[See the documentation on Maven Lite installation](./Documentations/Installation.fr.md)
+[See the documentation on Maven Lite installation](./Installation.fr.md)
 
 ## Using Maven Lite
 
-[See the documentation on using Maven Lite](./Documentations/Utilisation.fr.md)
+[See the documentation on using Maven Lite](./Utilisation.fr.md)
