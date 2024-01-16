@@ -7,21 +7,22 @@
 
 - [Utilisation de Maven Lite et description de toutes les fonctionnalités](#utilisation-de-maven-lite-et-description-de-toutes-les-fonctionnalités)
   - [Table des matières](#table-des-matières)
-  - [Options List](#options-list)
+  - [List of Options](#list-of-options)
   - [Basic Usage](#basic-usage)
   - [Command Line](#command-line)
+    - [Example Command Line](#example-command-line)
   - [Configuration File](#configuration-file)
+    - [Example Configuration File](#example-configuration-file)
   - [Project Creation](#project-creation)
+  - [Model-View-Controller](#model-view-controller)
   - [Project Compilation](#project-compilation)
   - [Project Launch](#project-launch)
-  - [Project Compilation and Launch](#project-compilation-and-launch)
-  - [Project Launch and Compilation](#project-launch-and-compilation)
-  - [Quiet Mode](#quiet-mode)
-  - [Verbose Mode](#verbose-mode)
-  - [Exclude Files and Folders](#exclude-files-and-folders)
-  - [Compile to JAR File](#compile-to-jar-file)
-  - [Launch JAR File](#launch-jar-file)
-  - [Integrate Unit Tests](#integrate-unit-tests)
+  - [Quiet](#quiet)
+  - [Verbose](#verbose)
+  - [Exclusion of Files and Folders](#exclusion-of-files-and-folders)
+  - [Compilation into a Jar File](#compilation-into-a-jar-file)
+  - [Launching a Jar File](#launching-a-jar-file)
+  - [Integration of Unit Tests](#integration-of-unit-tests)
   - [Project Source](#project-source)
   - [Compiled Files Destination](#compiled-files-destination)
   - [Resources](#resources)
@@ -29,10 +30,10 @@
   - [Libraries](#libraries)
   - [Arguments](#arguments)
     - [Example of using the Arguments option](#example-of-using-the-arguments-option)
-    - [Command Line Arguments](#command-line-arguments)
+    - [Arguments in the command line](#arguments-in-the-command-line)
       - [Command line under Linux and MacOS](#command-line-under-linux-and-macos)
       - [Command line under Windows](#command-line-under-windows)
-    - [Arguments in the Configuration File](#arguments-in-the-configuration-file)
+    - [Arguments in the configuration file](#arguments-in-the-configuration-file)
   - [Main Class](#main-class)
   - [Encoding](#encoding)
   - [Export](#export)
@@ -40,35 +41,36 @@
   - [Version](#version)
   - [Help](#help)
   - [Clear Compiled Files](#clear-compiled-files)
+  - [Example, Features, and Limitations](#example-features-and-limitations)
 
-## Options List
+## List of Options
 
 - [`-f`](#configuration-file), [`--file`](#configuration-file): Load options from a configuration file.
 - [`-cr`](#project-creation), [`--create`](#project-creation): Create the project structure along with a default configuration file.
-- [`-mvc`](#project-creation), [`--model-view-controller`](#project-creation): Create the project structure along with a default configuration file and the Model-View-Controller (MVC) structure.
+- [`-mvc`](#model-view-controller), [`--model-view-controller`](#model-view-controller): Specify to the '[`--create`](#project-creation)' option to create the structure of an MVC project.
 - [`-c`](#project-compilation), [`--compilation`](#project-compilation): Compile the project.
 - [`-l`](#project-launch), [`--launch`](#project-launch): Launch the project.
-- [`-cl`](#project-compilation-launch), [`--compile-launch`](#project-compilation-launch): Compile and launch the project (equivalent to -c -l).
-- [`-lc`](#project-launch-compilation), [`--launch-compile`](#project-launch-compilation): Launch and compile the project (equivalent to -c -l).
-- [`-q`](#quiet), [`--quiet`](#quiet): Suppress java output in the terminal during project execution.
-- [`-v`](#verbose), [`--verbose`](#verbose): Display executed commands.
-- [`-ex`](#exclude-files-and-folders), [`--exclude`](#exclude-files-and-folders): Exclude java files and folders from compilation.
-- [`-cj`](#compile-to-jar-file), [`--compile-jar`](#compile-to-jar-file): Create a jar file of the project.
-- [`-lj`](#launch-jar-file), [`--launch-jar`](#launch-jar-file): Launch an executable jar file.
-- [`-it`](#integrate-unit-tests), [`--integrate-test`](#integrate-unit-tests): Integrate unit tests into the project.
+- [`-cl`](#project-compilation), [`--compile-launch`](#project-compilation): Compile and launch the project (equivalent to -c -l).
+- [`-lc`](#project-compilation), [`--launch-compile`](#project-compilation): Compile and launch the project (equivalent to -c -l).
+- [`-q`](#quiet), [`--quiet`](#quiet): Suppress the display of java in the terminal during project execution.
+- [`-v`](#verbose), [`--verbose`](#verbose): Display the executed commands.
+- [`-ex`](#exclusion-of-files-and-folders), [`--exclude`](#exclusion-of-files-and-folders): Exclude files and folders from compilation.
+- [`-cj`](#jar-file-compilation), [`--compile-jar`](#jar-file-compilation): Create a jar file of the project.
+- [`-lj`](#jar-file-launch), [`--launch-jar`](#jar-file-launch): Launch an executable jar file.
+- [`-it`](#unit-test-integration), [`--integrate-test`](#unit-test-integration): Integrate unit tests into the project.
 - [`-s`](#project-source), [`--source`](#project-source): Folder containing java files to compile.
 - [`-t`](#compiled-files-destination), [`--target`](#compiled-files-destination): Output folder for compiled files.
-- [`-r`](#resources), [`--resources`](#resources): Folder containing resource files to be copied to the output folder.
+- [`-r`](#resources), [`--resources`](#resources): Folder containing resource files to copy into the output folder for compiled files.
 - [`-cp`](#classpath), [`--classpath`](#classpath): Specify the classpath to use during compilation and launch.
 - [`-lib`](#libraries), [`--libraries`](#libraries): Folder containing jar files used by the program.
 - [`-args`](#arguments), [`--arguments`](#arguments): All arguments to pass to the main class.
 - [`-m`](#class-main), [`--main`](#class-main): Main class to launch.
-- [`-e`](#encoding), [`--encoding`](#encoding): Change the encoding of java files to compile.
-- [`-exp`](#export), [`--export`](#export): Create an executable jar file to run the project without installing MavenLite.
-- [`-mvn`](#transform-to-maven-project), [`--maven`](#transform-to-maven-project): Convert the project to a Maven project.
+- [`-e`](#encoding), [`--encoding`](#encoding): Change the encoding of the java files to be compiled.
+- [`-exp`](#export), [`--export`](#export): Create an executable jar file to launch the project without installing MavenLite.
+- [`-mvn`](#maven-project-transformation), [`--maven`](#maven-project-transformation): Convert the project to a Maven project.
 - [`-V`](#version), [`--version`](#version): Display the version.
 - [`-h`](#help), [`--help`](#help): Display help and exit.
-- [`-clr`](#clear-compiled-files), [`--clear`](#clear-compiled-files): Delete files in the output folder.
+- [`-clr`](#clear-compiled-files), [`--clear`](#clear-compiled-files): Clear files in the output folder for compiled files.
 
 ## Basic Usage
 
@@ -80,14 +82,23 @@
 
 ## Command Line
 
-The command line is the traditional method to use Maven Lite, although it is less convenient than using a configuration file.
+The command line is the classic way to use Maven Lite, although it is less convenient than using a configuration file.
 
-You can include as many options as you want, in any order.
+You can include as many options as you want in any order.
 
-Just separate options with spaces, and put arguments in quotes, for example, `-args "your argument"`. Under Windows, it is not possible to use the `"` character in command line arguments.
+Just place the arguments with spaces in quotes, for example, `-args "your argument"`.
+On Windows, it is impossible to include the `"` character in arguments.
+
+- It does not support comments.
+- You can use options in the format `--option` or `-o`. You can use any option listed in [the list of options](#list-of-options).
+- You can pass arguments with spaces to the main class of your project by using double quotes, for example, `mvnl -args "your argument"`.
+- You can place multiple options on the same line, separating them with a space, for example, `mvnl -q --verbose --arguments "your arguments"` or `mvnl -quiet -v -args "your arguments"`.
+- You can escape special characters with a backslash `\`, for example, `-args "examp\"le"` on Linux and MacOS only.
+
+### Example Command Line
 
 - Example of a command line with arguments
-  - In this example, we will compile and launch a Java project with the source folder `src/main/java`, the target output folder `target`, the library folder `src/main/resources/lib`, and display executed commands.
+  - In this example, we will compile and launch a Java project with the source folder `src/main/java`, the output folder for compiled files `target`, the folder containing jar files `src/main/resources/lib`, and display of executed commands.
 
   ```sh
   mvnl --source src/main/java --target target --libraries src/main/resources/lib --verbose -cl
@@ -97,236 +108,366 @@ Just separate options with spaces, and put arguments in quotes, for example, `-a
 
 The use of a configuration file is done with the `--file` or `-f` option.
 
-The configuration file is unique for each project and configures the options that Maven Lite should use.
+The configuration file is unique to each project and configures the options that Maven Lite should use.
 
-The default name for the configuration file is `LPOM.conf`, and it should be at the project's root. You can rename it, but then you need to specify its name when using the option, for example, `mvnl -f myFile.extension`.
+The default name of the configuration file is `LPOM.conf` and must be at the root of the project. You can rename it, but in that case, you need to specify its name when using the option, for example, `mvnl -f myFile.extension`.
 
-If you want to add your system CLASSPATH to Maven Lite
+If you want to add your system CLASSPATH to the Maven Lite CLASSPATH in the configuration file, use the term `$CLASSPATH` in uppercase.
 
-'s CLASSPATH, you can do it in the configuration file, in the `systemClasspath` property.
+You can include as many options as you want in any order.
 
-- Example of a configuration file with options
-  - In this example, we will create a configuration file with the project source folder set to `src`, the target output folder set to `out`, and the encoding set to `UTF-8`.
+- It supports comments using the `#` character at the beginning of the line.
+- You can use options in the format `--option` or `-o`. You can use any option listed in [the list of options](#list-of-options) except for the `--file` and `-f` options.
+- You can pass arguments with spaces to the main class of your project by using double quotes, for example, `-args "your argument"`.
+- You can place multiple options on the same line, separating them with a space, for example, `--quiet -v --arguments "your arguments"` or `-q --verbose -args "your arguments"`.
+- You can escape special characters with a backslash `\`
+  - Special characters in the configuration file are: `\` and `"`. Here are examples of use:
+    - `-args "examp\"le"` becomes `examp"le`
+    - `-args "examp\\\\\"le` becomes `examp\"le`
+    - `-args "\-example"` becomes `\-example`
+    - `-args "\--example"` becomes `\--example`
+    - `-args "examp\\le"` becomes `examp\le`
+    - `-args "examp\le"` becomes `examp\le`
+    - `-args "examp\\\le"` becomes `examp\\le`
+    - `-args "examp\\\"le"` becomes `examp\"le`
+    - `-args "examp#le"` becomes `examp#le`
+    - `-args "examp\ le"` becomes `examp\ le`
 
-  ```sh
-  mvnl -cr
-  mvnl --source src --target out --encoding UTF-8
+### Example Configuration File
+
+- A typical example of a configuration file is as follows:
+
+  ```conf
+  # Project source
+  --source src/main/java
+
+  # Output folder for compiled files
+  --target target
+
+  # List of libraries to add to the classpath
+  --libraries src/main/resources/lib
+
+  # Display executed commands
+  --verbose
+
+  # Add the system classpath to the Maven Lite classpath
+  --classpath CLASSPATH
+
+  # Add an argument to the main class
+  --arguments "argument 2 (in config)"
+  -args "argument 3 (in config)"
+
+  # Suppress java output and display executed commands
+  --quiet --verbose
   ```
 
 ## Project Creation
 
-The project creation is done with the `--create` or `-cr` option.
+The use of this option is done with the `--create` or `-cr` option.
 
-The project structure created is a minimal project with a source folder, a target folder, and a configuration file.
+It is impossible to create a project with a space in the name.
+It is impossible to create a project with a name that is already used by a file or folder.
 
-You can add more folders and files to your project by adding them in the configuration file.
+You can create a project in the current folder with the following command:
 
-- Example of project creation
-  - In this example, we will create a project with the default configuration.
+```sh
+mvnl --create ./
+```
+
+By default, the project name is `NewProject`, and the structure is as follows:
+
+```txt
+NewProject
+├── LPOM.conf
+├── src
+│   ├── main
+│   │   └── java
+│   │       └── HelloWorld.java
+│   └── resources
+│       └── lib
+└── target
+```
+
+## Model-View-Controller
+
+The use of this option is done with the `--model-view-controller` or `-mvc` option.
+
+It allows specifying to the '[`--create`](#project-creation)' option to create the structure of an MVC project.
+
+- To create an MVC project, you can use the following command
 
   ```sh
-  mvnl --create
+  mvnl --create ProjectName --model-view-controller
   ```
 
-- Example of project creation with MVC structure
-  - In this example, we will create a project with the default configuration and the Model-View-Controller (MVC) structure.
+  - Project structure:
 
-  ```sh
-  mvnl --create --model-view-controller
-  ```
+    ```txt
+    ProjectName
+    ├── LPOM.conf
+    ├── src
+    │   ├── main
+    │   │   └── java
+    │   │       ├── controller
+    │   │       │   └── Controller.java
+    │   │       ├── model
+    │   │       └── view
+    │   └── resources
+    │       └── lib
+    └── target
+    ```
 
 ## Project Compilation
 
-The project compilation is done with the `--compilation` or `-c` option.
+The use of this option is done with the `--compilation` or `-c` or `--compile-launch` or `-cl` or `--launch-compile` or `-lc` option.
 
-You can compile your project without launching it.
+This option allows compiling the project.
 
-- Example of project compilation
-  - In this example, we will compile a project with the default configuration.
+- Example of using the Compilation option
+  - In this example, we will compile a Java project with the default source and output folder for compiled files.
 
   ```sh
-  mvnl --compilation
+  mvnl -c
   ```
 
 ## Project Launch
 
-The project launch is done with the `--launch` or `-l` option.
+The use of this option is done with the `--launch` or `-l` or `--compile-launch` or `-cl` or `--launch-compile` or `-lc` option.
 
-You can launch your project without compiling it.
+This option allows launching the project.
 
-- Example of project launch
-  - In this example, we will launch a project with the default configuration.
-
-  ```sh
-  mvnl --launch
-  ```
-
-## Project Compilation and Launch
-
-The project compilation and launch can be done with the `--compile-launch` or `-cl` option.
-
-This option is equivalent to using `--compilation` and `--launch` separately.
-
-- Example of project compilation and launch
-  - In this example, we will compile and launch a project with the default configuration.
+- Example of using the Launch option
+  - In this example, we will launch a Java project with the default source and output folder for compiled files.
 
   ```sh
-  mvnl --compile-launch
+  mvnl -l
   ```
 
-## Project Launch and Compilation
+## Quiet
 
-The project launch and compilation can be done with the `--launch-compile` or `-lc` option.
+The use of this option is done with the `--quiet` or `-q` option.
 
-This option is equivalent to using `--launch` and `--compilation` separately.
+This option suppresses the display of java in the terminal during project execution.
 
-- Example of project launch and compilation
-  - In this example, we will launch and compile a project with the default configuration.
+- Example of using the Quiet option
+  - In this example, we will compile and launch a Java project with the display of java in the terminal disabled, as well as the default source folder and output folder for compiled files.
 
   ```sh
-  mvnl --launch-compile
+  mvnl -q -cl
   ```
 
-## Quiet Mode
+## Verbose
 
-The quiet mode is done with the `--quiet` or `-q` option.
+The use of this option is done with the `--verbose` or `-v` option.
 
-This option suppresses java output in the terminal during project execution.
+This option displays the executed commands.
 
-- Example of quiet mode
-  - In this example, we will compile and launch a project with the default configuration in quiet mode.
+- Example of using the Verbose option
+  - In this example, we will compile and launch a Java project with the display of executed commands by Maven Lite, as well as the default source folder and output folder for compiled files.
 
   ```sh
-  mvnl -cl --quiet
+  mvnl -v -cl
   ```
 
-## Verbose Mode
+## Exclusion of Files and Folders
 
-The verbose mode is done with the `--verbose` or `-v` option.
+The use of this option is done with the `--exclude` or `-ex` option.
 
-This option displays executed commands in the terminal.
+This option allows excluding Java files and folders from the [compilation](#project-compilation).
 
-- Example of verbose mode
-  - In this example, we will compile and launch a project with the default configuration in verbose mode.
+If you want to exclude a folder, you should use the relative path of the folder from the project's source folder and without using `./` or `../`.
+
+If you exclude a folder, all the files and folders it contains will also be excluded.
+
+**Note: If you exclude the `test` folder, all files or folders containing the word `test` in their name will also be excluded.**
+
+- Example of using the Exclusion option
+  - In this example, we will compile and launch a Java project with the exclusion of the file `Main2.java` and all files and folders contained in the `tests` folder, as well as the default source folder and output folder for compiled files.
 
   ```sh
-  mvnl -cl --verbose
+  mvnl -ex Main2.java tests -cl
   ```
 
-## Exclude Files and Folders
+## Compilation into a Jar File
 
-Excluding files and folders during compilation is done with the `--exclude` or `-ex` option.
+The use of this option is done with the `--compile-jar` or `-cj` option.
 
-This option allows you to specify files or folders to exclude from the compilation process.
+This option allows creating an executable jar file of your project.
 
-- Example of excluding files and folders
-  - In this example, we will compile a project excluding the files in the `excluded` folder.
+The naming conventions for jar files are as follows: `<name>-<M>.<m>.<b>.jar`.
 
-  ```sh
-  mvnl -c --exclude excluded
-  ```
+- `<name>`: Name of the project.
+- `<M>`: Major version number. It starts at 1 and is incremented with each new version that is not compatible with the previous one and has significant changes.
+- `<m>`: Minor version number. It starts at 0 and is incremented with each new version compatible with the previous one and has small changes, and resets to 0 with each major version change.
+- `<b>`: Build version number. It starts at 0 and is incremented with each bug fix and resets to 0 with each minor or major version change.
 
-## Compile to JAR File
-
-Compiling your project to a JAR file is done with the `--compile-jar` or `-cj` option.
-
-This option creates a JAR file of your project in the target folder.
-
-- Example of compiling to a JAR file
-  - In this example, we will compile a project and create a JAR file in the target folder.
+- Example of using the Compilation into a Jar File option
+  - In this example, we will create a jar file of the Java project with the default output folder for compiled files.
 
   ```sh
   mvnl -cj
   ```
 
-## Launch JAR File
+## Launching a Jar File
 
-Launching your project from a JAR file is done with the `--launch-jar` or `-lj` option.
+The use of this option is done with the `--launch-jar` or `-lj` option.
 
-This option launches an executable JAR file in the target folder.
+This option allows launching the executable jar file of your project.
 
-- Example of launching from a JAR file
-  - In this example, we will launch a project from an executable JAR file in the target folder.
-
-  ```sh
-  mvnl -lj
-  ```
-
-## Integrate Unit Tests
-
-Integrating unit tests into your project is done with the `--integrate-test` or `-it` option.
-
-This option adds a testing framework to your project and generates sample test files.
-
-- Example of integrating unit tests
-  - In this example, we will integrate unit tests into a project.
+- Example of using the Launching a Jar File option
+  - In this example, we will launch the executable jar file `MyProject-1.0.0.jar` located in the `target` folder.
 
   ```sh
-  mvnl --integrate-test
+  mvnl -lj target/MyProject-1.0.0.jar
   ```
+
+## Integration of Unit Tests
+
+The use of this option is done with the `--integrate-test` or `-it` option.
+
+This option allows integrating unit tests into the project, i.e., creating the unit test directory structure, unit test files, and also copying the jar files used by JUnit into the libraries folder.
+
+If you use it together with the [`-cr`](#project-creation) or [`--create`](#project-creation) option, Maven Lite will create the unit test directory structure as well as a default test file containing a unit test for the main class.
+
+If you use it after creating the project, Maven Lite will create the unit test directory structure as well as a unit test file for each Java file in the project.
+
+- Example of using the Integration of Unit Tests option
+  - In this example, we will create a Java project with the integration of unit tests.
+
+  ```sh
+  mvnl -cr -it
+  ```
+
+  - Project structure:
+
+    ```txt
+    NewProject
+    ├── LPOM.conf
+    ├── src
+    │   ├── main
+    │   │   └── java
+    │   │       └── HelloWorld.java
+    │   ├── resources
+    │   │   └── lib
+    │   │       ├── hamcrest-core-1.3.jar
+    │   │       └── junit-4.13.2.jar
+    │   └── test
+    │       └── java
+    │           └── HelloWorldTest.java
+    └── target
+    ```
+
+- Example of using the Integration of Unit Tests option with an MVC project
+  - In this example, we will create an MVC Java project with the integration of unit tests.
+
+  ```sh
+  mvnl -cr -mvc -it
+  ```
+
+  - Project structure:
+
+    ```txt
+    NewProject
+    ├── LPOM.conf
+    ├── src
+    │   ├── main
+    │   │   └── java
+    │   │       ├── controller
+    │   │       │   └── Controller.java
+    │   │       ├── model
+    │   │       └── view
+    │   ├── resources
+    │   │   └── lib
+    │   │       ├── hamcrest-core-1.3.jar
+    │   │       └── junit-4.13.2.jar
+    │   └── test
+    │       └── java
+    │           ├── controller
+    │           │   └── ControllerTest.java
+    │           ├── model
+    │           └── view
+    └── target
+    ```
 
 ## Project Source
 
-Setting the project source folder is done with the `--source` or `-s` option.
+The use of this option is done with the `--source` or `-s` option.
 
-This option allows you to specify the folder containing your Java files to compile.
+This option allows specifying the folder containing the Java files to compile.
 
-- Example of setting the project source folder
-  - In this example, we will compile a project with the source folder set to `src`.
+The source folder is not the root of the project but the first folder containing the Java files to compile. The Java files in this folder do not have a package.
+
+- Example of using the Project Source option
+  - In this example, we will compile and launch a Java project with `src` as the source folder and the default output folder for compiled files.
 
   ```sh
-  mvnl -c --source src
+  mvnl -s src -cl
   ```
 
 ## Compiled Files Destination
 
-Setting the output folder for compiled files is done with the `--target` or `-t` option.
+The use of this option is done with the `--target` or `-t` option.
 
-This option allows you to specify the folder where Maven Lite will put the compiled files.
+This option allows specifying the output folder for compiled files, the input folder for launch files, the output folder for jar files, and the input folder for .class files to include in the jar.
 
-- Example of setting the compiled files destination
-  - In this example, we will compile a project and put the compiled files in the `out` folder.
+You don't need to create the output folder for compiled files; Maven Lite will do it for you.
+
+You don't need to add the output folder for compiled files to the classpath; Maven Lite will do it for you.
+
+- Example of using the Compiled Files Destination option
+  - In this example, we will compile and launch a Java project with `src` as the source folder and `target` as the output folder for compiled files.
 
   ```sh
-  mvnl -c --target out
+  mvnl -s src -t target -cl
+  ```
+
+- Example of using the target option to create a jar file
+  - In this example, we will create a jar file of the Java project with `target` as the output folder for compiled files. You can find the jar file in the `target` folder and launch the jar file with the command `mvnl -lj target/MyProject-1.0.0.jar`.
+
+  ```sh
+  mvnl -t target -cj
   ```
 
 ## Resources
 
-Setting the folder containing resource files is done with the `--resources` or `-r` option.
+The use of this option is done with the `--resources` or `-r` option.
 
-This option allows you to specify the folder containing resource files to be copied to the output folder.
+This option allows specifying the folder containing resource files to be copied to the output folder for compiled files when creating a jar file.
 
-- Example of setting the resources folder
-  - In this example, we will compile a project with the resources folder set to `res`.
+- Example of using the Resources option
+  - In this example, we will create a jar file of the Java project with `src/main/resources` as the folder containing resource files to be copied to the output folder for compiled files.
 
   ```sh
-  mvnl -c --resources res
+  mvnl -r src/main/resources -cj
   ```
 
 ## Classpath
 
-Specifying the classpath to use during compilation and launch is done with the `--classpath` or `-cp` option.
+The use of this option is done with the `--classpath` or `-cp` option.
 
-This option allows you to specify the classpath for your project.
+This option allows specifying the classpath to use during compilation and execution.
 
-- Example of specifying the classpath
-  - In this example, we will compile and launch a project with a custom classpath.
+You can add the system classpath by using the term `$CLASSPATH` in uppercase in the configuration file.
+
+In the command line, you can use the system classpath by using the term `$CLASSPATH` under Linux and MacOS. Under Windows, you can use the term `%CLASSPATH%`.
+
+- Example of using the Classpath option
+  - In this example, we will compile and launch a Java project with the system classpath, the `src/main/resources/lib` folder, and the `target` folder in the project's classpath.
 
   ```sh
-  mvnl -cl --classpath lib/*.jar
+  mvnl -cp $CLASSPATH target src/main/resources/lib -cl
   ```
 
 ## Libraries
 
-Setting the folder containing jar files used by the program is done with the `--libraries` or `-lib`.
+The use of this option is done with the `--libraries` or `-lib` option.
 
-This option allows you to specify the folder containing the JAR files used by the program. All JAR files in the specified folder will be added to the classpath during compilation and execution.
+This option allows specifying the folder containing the jar files used by the program. All jar files will be added to the classpath during compilation and execution.
 
-You can create subfolders within the libraries folder to better organize your JAR files, and Maven Lite will take them into account.
+You can create subfolders in the libraries folder to better organize your jar files, and Maven Lite will take them into account.
 
-- Example of using the Libraries option:
-  - In this example, we will compile and run a Java project with the `src/main/resources/lib` folder as the folder containing the JAR files used by the program.
+- Example of using the Libraries option
+  - In this example, we will compile and launch a Java project with the `src/main/resources/lib` folder as the folder containing the jar files used by the program.
 
   ```sh
   mvnl -lib src/main/resources/lib -cl
@@ -334,18 +475,18 @@ You can create subfolders within the libraries folder to better organize your JA
 
 ## Arguments
 
-This option is used with the `--arguments` or `-args` option.
+The use of this option is done with the `--arguments` or `-args` option.
 
-This option allows you to specify all the arguments to pass to the main class of your project.
+This option allows specifying all the arguments to pass to the main class of your project.
 
 These arguments will be passed to the main class in the order they are passed to Maven Lite.
 
-**Note: Under Windows, it is impossible to use the `"` character in arguments passed on the command line, so it must be included in the configuration file.**
+**Note: Under Windows, it is impossible to use the character `"` in arguments passed in the command line, so it should be passed in the configuration file.**
 
 ### Example of using the Arguments option
 
-- Example of a command line with arguments and a configuration file:
-  - In this example, we will compile and run a Java project with arguments using the command line and a configuration file.
+- Example of a command line with arguments and a configuration file
+  - In this example, we will compile and launch a Java project with arguments using the command line and a configuration file.
 
   ```sh
   mvnl -args "argument 1" -f --arguments "argument 3" "argument 4" -args -cl
@@ -364,12 +505,12 @@ These arguments will be passed to the main class in the order they are passed to
     String args = new String[]{"argument 1", "argument 2 (in config)", "argument 3", "argument 4"};
     ```
 
-### Command Line Arguments
+### Arguments in the command line
 
 #### Command line under Linux and MacOS
 
-- To pass arguments to the main class of your project using the `-args` and `--arguments` options to avoid any escaping issues.
-  - Special characters on the command line are: `\`, `"`
+- To pass arguments to the main class of your project with the `-args` and `--arguments` options to avoid any escaping issues.
+  - Special characters in the command line are: `\`, `"`
     - `-args '"examp\"le"'` becomes `examp"le`
     - `-args '"-example"'` becomes `-example`
     - `-args '"--example"'` becomes `--example`
@@ -380,8 +521,8 @@ These arguments will be passed to the main class in the order they are passed to
 
 // TODO: Verify that special characters work under Windows
 
-- To pass arguments to the main class of your project using the `-args` and `--arguments` options to avoid any escaping issues.
-  - Special characters on the command line are: `\`
+- To pass arguments to the main class of your project with the `-args` and `--arguments` options to avoid any escaping issues.
+  - Special characters in the command line are: `\`
     - `-args '"examp\\\"le"'` becomes `examp\"le`
     - `-args '"-example"'` becomes `-example`
     - `-args '"--example"'` becomes `--example`
@@ -392,30 +533,30 @@ These arguments will be passed to the main class in the order they are passed to
     - `-args '"examp#le"'` becomes `examp#le`
     - `-args '"examp\ le"'` becomes `examp\ le`
 
-### Arguments in the Configuration File
+### Arguments in the configuration file
 
 // TODO: Verify special characters
 
-- To pass arguments to the main class of your project using the `-args` and `--arguments` options to avoid any escaping issues.
+- To pass arguments to the main class of your project with the `-args` and `--arguments` options to avoid any escaping issues.
   - Special characters in the configuration file are: `\`, `"`
     - `-args "examp\"le"` becomes `examp"le`
     - `-args "\-example"` becomes `\-example`
     - `-args "\--example"` becomes `\--example`
     - `-args "examp\\le"` becomes `examp\le`
     - `-args "examp\le"` becomes `examp\le`
-    - `-args "examp\\\le"` becomes `examp\\le`
-    - `-args "examp\\\"le"` becomes `examp\"le`
-    - `-args "examp#le"` becomes `examp#le`
-    - `-args "examp\ le"` becomes `examp\ le`
+    - `-args "examp\\\le"` becomes `exemp\\le`
+    - `-args "examp\\\"le"` becomes `exemp\"le`
+    - `-args "examp#le"` becomes `exemp#le`
+    - `-args "examp\ le"` becomes `exemp\ le`
 
 ## Main Class
 
-This option is used with the `--main` or `-m` option.
+The use of this option is done with the `--main` or `-m` option.
 
-This option allows you to specify the main class to launch with the package in the form `package.MainClass`. This option is only useful if you have multiple main classes in your project; if not, Maven Lite will automatically find and use the main class of the project.
+This option allows specifying the main class to be launched with the package in the form `package.MainClass`. This option is useful only if you have multiple main classes in your project; if not, Maven Lite will automatically find and use the main class of the project.
 
-- Example of using the Main Class option:
-  - In this example, we will compile and run a Java project with the main class `Main2` from the `com.example` package and the default output folder for compiled files.
+- Example of using the Main Class option
+  - In this example, we will compile and launch a Java project with the main class `Main2` from the `com.example` package and the default output folder for compiled files.
 
   ```sh
   mvnl -m com.example.Main2 -cl
@@ -423,12 +564,12 @@ This option allows you to specify the main class to launch with the package in t
 
 ## Encoding
 
-This option is used with the `--encoding` or `-e` option.
+The use of this option is done with the `--encoding` or `-e` option.
 
-This option allows you to specify the encoding of the Java files to be compiled.
+This option allows specifying the encoding of the Java files to compile.
 
-- Example of using the Encoding option:
-  - In this example, we will compile and run a Java project with the `ANSI` encoding and the default output folder for compiled files.
+- Example of using the Encoding option
+  - In this example, we will compile and launch a Java project with the `ANSI` encoding and the default output folder for compiled files.
 
   ```sh
   mvnl -e ANSI -cl
@@ -438,15 +579,15 @@ This option allows you to specify the encoding of the Java files to be compiled.
 
 This option is used with the `--export` or `-exp` option.
 
-This option allows you to create an executable .class file configured for your project, allowing you to compile and run your project without installing Maven Lite.
+This option allows creating an executable .class file configured for your project, enabling you to compile and run your project without installing Maven Lite.
 
-The only options accepted by the .class file are the main class options, `--arguments`, `-args`, launch and compile options, `--launch`, `-l`, `--compile`, `-c`, `--compile-launch`, `-cl`, `--launch-compile`, `-lc`, and the configuration file option `--file`, `-f`. Other options will not be taken into account.
+The only options that the .class file accepts are the main class options, `--arguments`, `-args`, launch, and compilation options, `--launch`, `-l`, `--compile`, `-c`, `--compile-launch`, `-cl`, `--launch-compile`, `-lc`, and the config file option `--file`, `-f`, and that's it. Other options will not be taken into account.
 
-It is important to use the configuration file when using the `--export` or `-exp` option as it specifies the parameters that the executable .class file will use.
+It is important to use the configuration file when using the `--export` or `-exp` option because it specifies the parameters that the executable .class file will use.
 
-The purpose of this option is to be able to launch your project via the execution of a single file without arguments and without having to install Maven Lite. This allows people who do not have Maven Lite installed to use your project.
+The purpose of this option is to be able to launch your project via a single file without arguments and without having to install Maven Lite. This allows people who do not have Maven Lite to use your project.
 
-- Example of using the Export option:
+- Example of using the Export option
   - In this example, we will create an executable .class file configured for our project, allowing us to compile and run our project without installing Maven Lite.
 
   ```sh
@@ -459,7 +600,7 @@ The purpose of this option is to be able to launch your project via the executio
     # Source
     --source src/main/java
 
-    #Output folder for compiled files
+    # Output folder for compiled files
     --target target
 
     # List of libraries to add to the classpath
@@ -473,13 +614,13 @@ The purpose of this option is to be able to launch your project via the executio
 
 This option is used with the `--maven` or `-mvn` option.
 
-This option allows you to convert your project to a Maven project by creating a `pom.xml` file and moving files as needed.
+This option allows converting your project to a Maven project by creating a pom.xml file and moving files if necessary.
 
 ## Version
 
 This option is used with the `--version` or `-V` option.
 
-This option displays the version of Maven Lite, the location of the main Maven Lite file, the Java version, the type of build, the Java runtime used, the system's default locale, the platform encoding used by Maven Lite, the operating system name, the operating system version, the operating system kernel version, and the system architecture.
+This option displays the version of Maven Lite as well as the location of the main Maven Lite file, Java version, build type, Java runtime used, system language, encoding platform used by Maven Lite, operating system name, operating system kernel version, and system architecture.
 
 - Example
 
@@ -495,12 +636,14 @@ This option displays the version of Maven Lite, the location of the main Maven L
 
 This option is used with the `--help` or `-h` option.
 
-This option displays the list of options along with their description, the number of arguments they take, their default value if they have one, and a link to the documentation.
+This option displays the list of options along with their description, the number of arguments they take, and their default value if they have one, as well as a link to the documentation.
 
 ## Clear Compiled Files
 
 This option is used with the `--clear` or `-clr` option.
 
-This option deletes all files in the output folder for compiled files. This option frees up disk space and provides a clean JAR file.
+This option allows deleting all files in the output folder for compiled files. This option frees up disk space and ensures a clean jar file.
+
+## Example, Features, and Limitations
 
 <a href="https://florobart.github.io/mavenlite.github.io/Documentations/README.en.html"><button type="button">Retour</button></a>
