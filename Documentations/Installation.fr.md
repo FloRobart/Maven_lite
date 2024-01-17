@@ -161,7 +161,7 @@
 
 #### Installation manuelle de Maven Lite - Debian
 
-- Téléchargez le [Fichier compressé de la version française](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_all.zip) contenant les fichiers de l'applications.
+- Téléchargez le [Fichier compressé de la version française](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_linux-macos.zip) contenant les fichiers de l'applications.
 - Décompressez le fichier compressé
 - Créez le dossier `/usr/local/etc/maven-lite`
 
@@ -202,7 +202,7 @@
 
 #### Installation automatique de Maven Lite - Linux & MacOs
 
-- Téléchargez le [Fichier compressé de la version française](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_all.zip) contenant les fichiers de l'applications.
+- Téléchargez le [Fichier compressé de la version française](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_linux-macos.zip) contenant les fichiers de l'applications.
 - Décompressez le fichier compressé
 - Éxecuter le script d'installation en éxécutant la commande suivante dans un terminal
 
@@ -214,7 +214,7 @@
 
 #### Installation manuelle de Maven Lite - Linux & MacOs
 
-- Téléchargez le [Fichier compressé de la version française](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_all.zip) contenant les fichiers de l'applications.
+- Téléchargez le [Fichier compressé de la version française](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_linux-macos.zip) contenant les fichiers de l'applications.
 - Décompressez le fichier compressé
 - Créez le dossier `/usr/local/etc/maven-lite`
 

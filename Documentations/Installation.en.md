@@ -19,6 +19,7 @@
       - [Installing Java on other Linux Distributions or MacOS](#installing-java-on-other-linux-distributions-or-macos)
       - [Installing Java on Windows](#installing-java-on-windows)
   - [Maven Lite Installation](#maven-lite-installation)
+    - [Installing Maven Lite on IUT du Havre Machines](#installing-maven-lite-on-iut-du-havre-machines)
     - [Maven Lite Installation on Debian and its Derivatives](#maven-lite-installation-on-debian-and-its-derivatives)
       - [Automatic Installation of Maven Lite - Debian](#automatic-installation-of-maven-lite---debian)
       - [Manual Installation of Maven Lite - Debian](#manual-installation-of-maven-lite---debian)
@@ -121,9 +122,29 @@
 
 **Follow the instructions corresponding to your operating system.**
 
+- [IUT Le Havre](#installation-de-maven-lite-sur-les-machines-de-liut-du-havre)
 - [Debian and its derivatives](#maven-lite-installation-on-debian-and-its-derivatives)
 - [Linux and MacOS](#maven-lite-installation-on-other-linux-distributions-or-macos)
 - [Windows](#maven-lite-installation-on-windows)
+
+### Installing Maven Lite on IUT du Havre Machines
+
+- Download the [Compressed File of the French Version](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_lh-iut.zip) containing the application files.
+- Decompress the compressed file.
+- Open a terminal in the directory containing the application files.
+- Make the `install.sh` file executable if it's not already.
+
+  ```sh
+  chmod +x install.sh
+  ```
+
+- Run the `install.sh` file.
+
+  ```sh
+  ./install.sh
+  ```
+
+- You can delete the remaining unused files.
 
 ### Maven Lite Installation on Debian and its Derivatives
 
@@ -140,7 +161,7 @@
 
 #### Manual Installation of Maven Lite - Debian
 
-- Download the [Compressed file of the French version](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_all.zip) containing the application files.
+- Download the [Compressed file of the French version](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_linux-macos.zip) containing the application files.
 - Unzip the compressed file.
 - Create the folder `/usr/local/etc/maven-lite`
 
@@ -181,7 +202,7 @@
 
 #### Automatic Installation of Maven Lite - Linux & MacOS
 
-- Download the [Compressed file of the French version](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_all.zip) containing the application files.
+- Download the [Compressed file of the French version](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_linux-macos.zip) containing the application files.
 - Unzip the compressed file.
 - Run the installation script by executing the following command in a terminal
 
@@ -193,7 +214,7 @@
 
 #### Manual Installation of Maven Lite - Linux & MacOS
 
-- Download the [Compressed file of the French version](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_all.zip) containing the application files.
+- Download the [Compressed file of the French version](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_linux-macos.zip) containing the application files.
 - Unzip the compressed file.
 - Create the folder `/usr/local/etc/maven-lite`
 
