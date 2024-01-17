@@ -10,7 +10,7 @@ ERROR="[ERREUR]"
 # Variables
 MavenLiteFolder="maven-lite"
 bin="/usr/local/bin"
-etc="/etc/${MavenLiteFolder}"
+etc="/usr/local/etc/${MavenLiteFolder}"
 man="/usr/local/man/fr/man1"
 
 binFileUn="mvnl"
