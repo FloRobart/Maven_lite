@@ -19,6 +19,7 @@
       - [Installation de java sur d'autre distributions Linux ou sur MacOs](#installation-de-java-sur-dautre-distributions-linux-ou-sur-macos)
       - [Installation de java sur Windows](#installation-de-java-sur-windows)
   - [Installation de Maven Lite](#installation-de-maven-lite)
+    - [Installation de Maven Lite sur les machines de l'IUT du Havre](#installation-de-maven-lite-sur-les-machines-de-liut-du-havre)
     - [Installation de Maven Lite sur Debian et ses dérivés](#installation-de-maven-lite-sur-debian-et-ses-dérivés)
       - [Installation automatique de Maven Lite - Debian](#installation-automatique-de-maven-lite---debian)
       - [Installation manuelle de Maven Lite - Debian](#installation-manuelle-de-maven-lite---debian)
@@ -121,9 +122,29 @@
 
 **Suivez les instructions correspondant à votre système d'exploitation.**
 
+- [IUT Le Havre](#installation-de-maven-lite-sur-les-machines-de-liut-du-havre)
 - [Debian et ses dérivés](#installation-de-maven-lite-sur-debian-et-ses-dérivés)
 - [Linux et MacOs](#installation-de-maven-lite-sur-dautres-distributions-linux-ou-sur-macos)
 - [Windows](#installation-de-maven-lite-sur-windows)
+
+### Installation de Maven Lite sur les machines de l'IUT du Havre
+
+- Téléchargez le [Fichier compressé de la version française](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_lh-iut.zip) contenant les fichiers de l'applications.
+- Décompressez le fichier compressé
+- Ouvrez un terminal dans le dossier contenant les fichiers de l'applications
+- Rendez le fichier `install.sh` exécutable s'il ne l'est pas déjà
+
+  ```sh
+  chmod +x install.sh
+  ```
+
+- Lancez le fichier `install.sh`
+
+  ```sh
+  ./install.sh
+  ```
+
+- Vous pouvez supprimez le reste des fichiers inutilisés.
 
 ### Installation de Maven Lite sur Debian et ses dérivés
 
