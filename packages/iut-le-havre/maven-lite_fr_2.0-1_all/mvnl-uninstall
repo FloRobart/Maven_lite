@@ -1,0 +1,33 @@
+#!/bin/bash
+
+#======#
+# Main #
+#======#
+# Constantes
+SUCCES="[SUCCES]"
+ERROR="[ERREUR]"
+
+# Variables
+mavenLiteFolder="/home/etudiant/$USER/.maven-lite"
+
+# Demande de confirmation
+echo -e "\n${SUCCES} Voulez-vous vraiment désinstaller Maven Lite ? (y/n)"
+read answer
+if [ "$answer" != "${answer#[Yy]}" ]; then
+    echo -e "\n${SUCCES} Désinstallation de Maven Lite en cours..."
+else
+    echo -e "\n${SUCCES} Désinstallation de Maven Lite annulée."
+    exit 0
+fi
+
+# Suppression du dossier maven-lite
+if [ -d ${mavenLiteFolder} ]; then
+    rm -rf ${mavenLiteFolder} || {
+        echo "${ERROR} Erreur lors de la suppression du dossier '${mavenLiteFolder}'."
+        exit 1
+    }
+fi
+
+echo -e "\n[INFO] Penssez à supprimer l'alias 'mvnl' dans le fichier '~/.di_shrc_priv'."
+echo "${SUCCES} Désinstallation de Maven Lite terminée avec succès."
+exit 0
