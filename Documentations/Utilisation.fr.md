@@ -646,4 +646,4 @@ Cette option permet de supprimer tous les fichiers dans le dossier de sortie des
 
 ## Exemple, fonctionnaliés et limites
 
-<a href="https://florobart.github.io/mavenlite.github.io/"><button type="button">Retour</button></a>
+<a href="https://florobart.github.io/mavenlite.github.io/Documentations/README.fr.html"><button type="button">Retour</button></a>
