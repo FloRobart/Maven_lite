@@ -19,155 +19,175 @@ Permet de compiler et lancer un projet Java en utilisant le minimum
 d\'options et de manipulations. Facilite la compilation et le lancement
 d\'un projet Java plus simplement que Maven.
 
-Toutes les options prennent un seul argument sauf -c et -l qui n\'en
-prennent aucun.
+L\'ordre des options n\'a pas d\'importance.
 
-L\'ordre des options n\'a pas d\'importance sauf pour l\'option \--file
-(-f) et \--help (-h) qui doit être la première option de la ligne de
-commande s\'ils sont utilisés. Les guillemets doubles ne sont pas
-obligatoires.
+Si une option est utilisée plusieurs fois, seule la dernière est prise
+en compte sauf pour les options qui prennent plusieurs arguments comme
+\--arguments, \--classpath et \--exclude.
 
-Les options qui sont utilisées avec -c alors qu\'elles sont utilisables
-uniquement avec -l sont ignorées et inversement. Les options qui sont
-utilisables avec -c ou -l sont utilisables avec -cl et -lc.
-
-Les arguments obligatoires pour les options longues le sont aussi pour
-les options courtes. Par exemple, -s et \--source sont équivalents.
+Nous vous conseillons vivement d'utiliser l'arborecence par défaut
+générée par la commande `mvnl --create`. Cela vous permettra de
+compiler et lancer votre projet Java sans avoir de fichier de
+configuration ni d'options à spécifier dans la ligne de commande
+à l'exception de l'option -c et -l.
 
 # EXEMPLES
 
--   `mvnl -s src -o bin -c -e UTF-8` \--\> compile le projet Java avec
+-   `mvnl -s src -t target -c -e UTF-8` \--\> compile le projet Java avec
     l\'encodage UTF-8 qui se trouve dans le dossier src et met les
-    fichiers compilés dans le dossier bin.
+    fichiers compilés dans le dossier target.
 
--   `mvnl -s src -o bin -m package.Main -cl` \--\> compile et lance le
+-   `mvnl -s src -t target -m package.Main -cl` \--\> compile et lance le
     projet Java qui se trouve dans le dossier src et met les fichiers
-    compilés dans le dossier bin, puis lance la classe package.Main.
+    compilés dans le dossier target, puis lance la classe package.Main.
 
--   `mvnl -s src -o bin -m package.Main -lc -arg argument_1 -arg argument_2`
+-   `mvnl -s src -t target -m package.Main -lc -args "argument 1" "argument 2"`
     \--\> compile et lance le projet Java qui se trouve dans le dossier
-    src et met les fichiers compilés dans le dossier bin, puis lance la
-    classe package.Main avec les arguments argument_1 et argument_2 dans
+    src et met les fichiers compilés dans le dossier target, puis lance la
+    classe package.Main avec les arguments `argument 1` et `argument 2` dans
     l\'ordre de passage à la commande.
 
--   `mvnl -m package.Main -l -cp bin;lib` \--\> lance la classe
-    package.Main en ajoutant le dossier bin et le dossier lib au
-    classpath du projet. Attention, sous Linux, le séparateur de chemin
-    est \':\' et non
+-   `mvnl -m package.Main -l -cp target lib` \--\> lance la classe
+    package.Main en ajoutant le dossier target et le dossier lib au
+    classpath du projet.
 
--   `mvnl -m Main -d lib -l` \--\> lance la classe Main en ajoutant tous
-    les fichiers JAR du dossier lib au classpath du projet.
-
--   `mvnl -s src -o bin -m package.Main -cl -dt data` \--\> compile le
-    projet Java qui se trouve dans le dossier src et met les fichiers
-    compilés dans le dossier bin, puis lance la classe package.Main et
-    copie le dossier data dans le dossier bin.
+-   `mvnl -m Main -lib lib -l` \--\> lance la classe Main en ajoutant tous
+    les fichiers JAR du dossier lib et ses sous dossier au classpath du projet.
 
 -   `mvnl -f config.txt -cl` \--\> charge les options à partir du
     fichier config.txt. Contenu du fichier config.txt :
-    `-s src -o bin -m package.Main`. Compile et lance le projet Java qui
+    `-s src -t target -m package.Main`. Compile et lance le projet Java qui
     se trouve dans le dossier src et met les fichiers compilés dans le
     dossier bin, puis lance la classe package.Main.
 
 # COMPORTEMENT PAR DÉFAUT
 
 Par défaut, si aucune option n\'est spécifiée, la commande `mvnl`
-affiche la page d\'aide qui est affichée avec l\'option `-h` ou
-`--help`. Cette page d\'aide est différente et plus simple que la page
-de manuel qui est affichée avec la commande `man mvnl`.
+affiche une vue stylisée de l'affichage de la commande `mvnl --version`.
 
 # OPTIONS
 
 ## Toutes les options
 
--v , \--version Affiche la version et quitter.
+Usage : mvnl [options] [argument]
 
--cr , \--create Créer l'arborescence du projet ainsi qu'un fichier de
-config par défaut. Si le dossier de sortie n'est pas spécifié, le
-dossier par défaut est le dossier courant.
+Options :
+  -f   , \--file               Permet de charger les options à partir d'un fichier de
+                              configuration. En savoir plus :
+                              Nombre de d'arguments : de 0 à 1.
+                              Valeur par défaut     : LPOM.conf.
 
--s , \--source Dossier racine du projet à compiler.
+  -cr  , \--create             Créer l'arborescence du projet ainsi qu'un fichier de
+                              config par défaut.
+                              Nombre de d'arguments : de 0 à 1.
+                              Valeur par défaut     : NewProject.
 
--o , \--output Dossier de sortie des fichiers compilés.
+  -mvc , \--model-view-controllerPermet de spécifier à l'option '--create' de créer
+                              l'arborescence d'un projet MVC.
+                              Nombre de d'argument  : 0.
 
--cp , \--classpath Liste des fichiers JAR à ajouter au classpath lors de
-la compilation et du lancement. Les fichiers JAR doivent être séparés
-par des \':\'. La valeur par défaut du classpath est le dossier de
-sortie des fichiers compilés si l\'option -o est utilisée, sinon le
-programme vous demandera de spécifier le classpath.
+  -c   , \--compilation        Compile le projet.
+                              Nombre de d'argument  : 0.
 
--d , \--dependency Dossier contenant les fichiers JAR utilisés par le
-programme. Tous les fichiers JAR présent à la racine de ce dossier
-seront ajoutés au classpath lors de la compilation et du lancement.
+  -l   , \--launch             Lance le projet.
+                              Nombre de d'argument  : 0.
 
--n , \--name Permet de changer le nom du fichier contenant les chemins
-des fichiers Java à compiler. Le nom par défaut est \`compile.list\'.
-Utilisable uniquement avec l\'option -c.
+  -cl  , \--compile-launch     Compile et lance le projet. (équivalent à -c -l)
+                              Nombre de d'argument  : 0.
 
--e , \--encoding Permet de changer l\'encodage des fichiers Java à
-compiler. L\'encodage par défaut est \`UTF-8\'. Utilisable uniquement
-avec l\'option -c.
+  -lc  , \--launch-compile     Compile et lance le projet. (équivalent à -c -l)
+                              Nombre de d'argument  : 0.
 
--m , \--main Classe principale à lancer. Utilisable uniquement avec
-l\'option -l.
+  -q   , \--quiet              Permet de supprimer l'affichage de java dans le terminal
+                              lors de l'exécution du projet.
+                              Nombre de d'argument  : 0.
 
--dt , \--data Dossier contenant les données du projet. Permet de copier
-le dossier de données dans le dossier de sortie. Utilisable uniquement
-avec l\'option -c.
+  -v   , \--verbose            Permet d'afficher les commandes exécutées.
+                              Nombre de d'argument  : 0.
 
--arg , \--arguments Arguments à passer à la classe principale. Un
-argument par option, c\'est-à-dire que si vous voulez passer deux
-arguments il faudra utiliser deux fois l\'option -arg. L\'ordre des
-arguments passés à la classe principale est le même que l\'ordre de
-passage à la commande. Les arguments de la ligne de commande sont pris
-en compte avant les arguments du fichier de configuration. Les arguments
-ne peuvent pas contenir d\'espace sous peine de bug. Utilisable
-uniquement avec l\'option -l.
+  -ex  , \--exclude            Permet d'exclure des fichiers java et des dossiers de la
+                              compilation. Si vous voulez passé un argument qui
+                              commencer par '-' échapper le caractère '-' avec deux '\'
+                              comme ceci : '-ex \\-fichier'.
+                              Nombre de d'argument  : unlimited.
 
--f , \--file Fichier de configuration. Permet de charger les options à
-partir d\'un fichier de configuration, les séparateurs sont l\'espace et
-le retour à la ligne. Les options du fichier de configuration
-prédominent sur les options de la ligne de commande. L\'option -f doit
-obligatoirement être la première option de la ligne de commande.
+  -cj  , \--compile-jar        Permet de créer un fichier jar de votre projet. Vous pouvez
+                              spécifier le nom du fichier jar à créer. Si vous ne spécifiez
+                              pas de nom, le nom du fichier jar sera le nom du projet.
+                              Nombre de d'arguments : de 0 à 1.
 
--c , \--compilation Compile le projet.
+  -lj  , \--launch-jar         Permet de lancer un fichier jar exécutable. Vous pouvez
+                              spécifier le nom du fichier jar à lancer. Si vous ne
+                              spécifiez pas de nom, le nom du fichier jar sera le nom du
+                              projet.
+                              Nombre de d'arguments : de 0 à 1.
 
--l , \--launch Lance le projet.
+  -it  , \--integrate-test     Permet d'intégrer les tests unitaires au projet.
+                              Nombre de d'argument  : 0.
 
--cl , \--compile-launch Compile puis lance le projet. (équivalent à -c
--l)
+  -s   , \--source             Dossier contenant les fichiers java à compiler.
+                              Nombre de d'argument  : 1.
+                              Valeur par défaut     : src/main/java.
 
--lc , \--launch-compile Compile puis lance le projet. (équivalent à -l
--c)
+  -t   , \--target             Dossier de sortie des fichiers compilés. Ce dossier sera
+                              créer si il n'existe pas et sera automatiquement ajouter au
+                              classpath lors de la compilation et du lancement.
+                              Nombre de d'argument  : 1.
+                              Valeur par défaut     : target.
 
--h , \--help Affiche l\'aide et quitter.
+  -r   , \--resources          Dossier contenant les fichiers ressources à copier dans le
+                              dossier de sortie des fichiers compilés dans le cas de la
+                              création d'un fichier jar.
+                              Nombre de d'argument  : 1.
+                              Valeur par défaut     : src/resources.
 
-## Les options obligatoires pour la compilation sont :
+  -cp  , \--classpath          Permet de spécifier le classpath à utiliser lors de la
+                              compilation et du lancement. Si vous voulez ajouter
+                              plusieurs éléments au classpath, il faut les séparer par
+                              des ':'.
+                              Nombre de d'argument  : unlimited.
 
--s , \--source Dossier racine du projet à compiler.
+  -lib , \--libraries          Dossier contenant les fichiers jar utiliser par le
+                              programme. Tout les fichiers jar seront ajoutés au
+                              classpath lors de la compilation et du lancement.
+                              Nombre de d'arguments : de 0 à 1.
+                              Valeur par défaut     : src/resources/lib.
 
--o , \--output Dossier de sortie des fichiers compilés.
+  -args, \--arguments          Tous les arguments à passer à la classe principale. Si vous
+                              voulez passé un argument qui commencer par '-' échapper le
+                              caractère '-' avec deux '\' comme ceci : '-args
+                              \\-argument_pour_le_main'.
+                              Nombre de d'argument  : unlimited.
 
--c , \--compilation Compile le projet.
+  -m   , \--main               Classe principale à lancer. Si vous voulez lancer une
+                              classe qui se trouve dans un package, il faut spécifier le
+                              package avec le nom de la classe comme ceci :
+                              'package.nom.MainClass'
+                              Nombre de d'argument  : 1.
 
-## Les options obligatoires pour le lancement sont :
+  -e   , \--encoding           Permet de changer l'encodage des fichiers java à compiler.
+                              Nombre de d'argument  : 1.
+                              Valeur par défaut     : UTF-8.
 
--m , \--main Classe principale à lancer.
+  -exp , \--export             Permet de créer un fichier jar exécutable permettant de
+                              lancer le projet sans avoir installer MavenLite.
+                              Nombre de d'arguments : de 0 à 1.
+                              Valeur par défaut     : run.java.
 
--l , \--launch Lance le projet.
+  -mvn , \--maven              Convertie le projet en projet maven en créant un fichier
+                              pom.xml et en déplaçant les fichiers si nécessaire.
+                              Nombre de d'argument  : 0.
 
--cp , \--classpath Voir l\'option -cp dans la liste des options
-ci-dessus.
+  -V   , \--version            Affiche la version.
+                              Nombre de d'argument  : 0.
+                              Valeur par défaut     : 2.0.0.
 
-## Les options obligatoires pour la compilation et le lancement sont :
+  -h   , \--help               Affiche l'aide et quitte.
+                              Nombre de d'argument  : 0.
 
--s , \--source Dossier racine du projet à compiler.
-
--o , \--output Dossier de sortie des fichiers compilés.
-
--m , \--main Classe principale à lancer.
-
--cl , \--compile-launch Compile et lance le projet. (équivalent à -c -l)
+  -clr , \--clear              Permet de supprimer les fichiers dans le dossier de sortie
+                              des fichiers compilés.
+                              Nombre de d'argument  : 0.
 
 # CODES DE RETOUR
 
@@ -177,20 +197,32 @@ ci-dessus.
 
 # FICHIERS
 
-Maven Lite est constitué uniquement de 2 fichiers.
+Maven Lite est constitué de 6 fichiers :
 
 -   `'mvnl'`, le fichier principal qui se situe dans le dossier
-    \'/usr/bin/\'.
+    `'/usr/local/bin/'`.
+
+-   `'mvnl-uninstall'`, le fichier de désinstallation qui se situe dans
+    le dossier `'/usr/local/bin/'`.
+
+-   `'MavenLite.class'`, le fichier de la classe MavenLite qui se situe
+    dans le dossier `'/usr/local/etc/maven-lite'`.
+
+-   `'hamcrest-core-1.3.jar'`, le fichier JAR de la librairie
+    Hamcrest-Core qui se situe dans le dossier `'/usr/local/etc/maven-lite'`.
+
+-   `'junit-4.13.1.jar'`, le fichier JAR de la librairie JUnit qui se
+    situe dans le dossier `'/usr/local/etc/maven-lite'`.
 
 -   `'mvnl.1.gz'`, le fichier d\'aide contenant la page de manuel
-    affichée avec la commande `man mvnl` qui se situe dans le dossier
-    `'/usr/local/man/fr/man1/'`.
+    affichée avec la commande `'man mvnl'` qui se situe dans le dossier
+    `'/usr/local/man/fr/man1/'` pour la version française et dans le
+    dossier `'/usr/local/man/en/man1/'` pour la version anglaise.
 
 # BOGUES
 
-Il y a un seul bogue connu qui concerne les arguments avec des espaces,
-que ce soit en ligne de commande ou dans le fichier de configuration. Il
-ne faut donc pas mettre d\'espaces dans les arguments.
+Il y a un seul bogue connu qui concerne les arguments avec des guillemets
+antislashs, etc.
 
 # AUTEUR
 
@@ -199,5 +231,5 @@ ne faut donc pas mettre d\'espaces dans les arguments.
 # RAPPORT DE BOGUES
 
 Reporter les bogues par mail à l\'adresse \<florisrobart.pro@gmail.com\>
-en précisant quel est le bogue, comment puis-je le reproduire, qu\'il
+en précisant quel est le bogue, comment puis-je le reproduire et qu\'il
 concerne Maven Lite ainsi que la version utilisé.
