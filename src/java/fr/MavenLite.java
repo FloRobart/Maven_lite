@@ -958,7 +958,6 @@ public class MavenLite
         /* 1 */ lstFoldersProject.add(projectName + "/" + MavenLite.SOURCE);
         /* 2 */ lstFoldersProject.add(projectName + "/" + MavenLite.TARGET);
         /* 3 */ lstFoldersProject.add(projectName + "/" + MavenLite.LIBRARIES);
-        /* 4 */ lstFoldersProject.add(projectName + "/" + MavenLite.TEST_UNITAIRE);
 
         /* Création de la liste des fichiers du projet */
         /* 0 */ lstFilesProject.add(projectName + "/" + MavenLite.FILE);
@@ -971,30 +970,34 @@ public class MavenLite
 
             /* Création de la liste des fichiers de test du projet */
             if (this.hmArgs.get(this.lstOptions.get(12)[0]) != null)
+            {
+                /* 4 */ lstFoldersProject.add(projectName + "/" + MavenLite.TEST_UNITAIRE);
                 /* 2 */ lstFilesProject.add(lstFoldersProject.get(4) + "/" + main + "Test.java");
+            }
         }
         else
         {
-            /* Création de la liste des dossiers du projet */
-            /* 5 */ lstFoldersProject.add(lstFoldersProject.get(1) + "/" + "controller");
-            /* 6 */ lstFoldersProject.add(lstFoldersProject.get(1) + "/" + "model");
-            /* 7 */ lstFoldersProject.add(lstFoldersProject.get(1) + "/" + "view");
-
             /* Création de la liste des dossier de test du projet */
             if (this.hmArgs.get(this.lstOptions.get(12)[0]) != null)
             {
-                /* 8  */ lstFoldersProject.add(lstFoldersProject.get(4) + "/" + "controller");
-                /* 9  */ lstFoldersProject.add(lstFoldersProject.get(4) + "/" + "model");
-                /* 10 */ lstFoldersProject.add(lstFoldersProject.get(4) + "/" + "view");
+                /* 4 */ lstFoldersProject.add(projectName + "/" + MavenLite.TEST_UNITAIRE);
+                /* 5 */ lstFoldersProject.add(lstFoldersProject.get(4) + "/" + "controller");
+                /* 6 */ lstFoldersProject.add(lstFoldersProject.get(4) + "/" + "model");
+                /* 7 */ lstFoldersProject.add(lstFoldersProject.get(4) + "/" + "view");
             }
+
+            /* Création de la liste des dossiers du projet */
+            /* 8  */ lstFoldersProject.add(lstFoldersProject.get(1) + "/" + "controller");
+            /* 9  */ lstFoldersProject.add(lstFoldersProject.get(1) + "/" + "model");
+            /* 10 */ lstFoldersProject.add(lstFoldersProject.get(1) + "/" + "view");
 
             /* Création de la liste des fichiers du projet */
             main = "Controller";
-            /* 1 */ lstFilesProject.add(lstFoldersProject.get(5) + "/" + main + ".java");
+            /* 1 */ lstFilesProject.add(lstFoldersProject.get(1) + "/controller/" + main + ".java");
 
             /* Création de la liste des fichiers de test du projet */
             if (this.hmArgs.get(this.lstOptions.get(12)[0]) != null)
-                /* 2 */ lstFilesProject.add(lstFoldersProject.get(8) + "/" + main + "Test.java");
+                /* 2 */ lstFilesProject.add(lstFoldersProject.get(5) + "/" + main + "Test.java");
         }
 
 
