@@ -4,21 +4,76 @@
 # Main #
 #======#
 # Constantes
+INFO="[INFO]"
 SUCCES="[SUCCES]"
 ERROR="[ERREUR]"
 
 # Variables
 mavenLiteFolder="/home/etudiant/$USER/.maven-lite"
+mvnlClass="${mavenLiteFolder}/MavenLite.class"
+junitJarUn="${mavenLiteFolder}/junit-4.13.2.jar"
+junitJarDeux="${mavenLiteFolder}/hamcrest-core-1.3.jar"
+binFileUn="${mavenLiteFolder}/mvnl"
+binFileDeux="${mavenLiteFolder}/mvnl-uninstall"
 
 # Demande de confirmation
 echo -e "\n${SUCCES} Voulez-vous vraiment désinstaller Maven Lite ? (y/n)"
 read answer
 if [ "$answer" != "${answer#[Yy]}" ]; then
-    echo -e "\n${SUCCES} Désinstallation de Maven Lite en cours..."
+    echo -e "\n${INFO} Désinstallation de Maven Lite en cours..."
 else
-    echo -e "\n${SUCCES} Désinstallation de Maven Lite annulée."
+    echo -e "\n${INFO} Désinstallation de Maven Lite annulée."
     exit 0
 fi
+
+
+# Suppression des fichiers jar et class
+if [ -f ${mvnlClass} ]; then
+    rm ${mvnlClass} && {
+        echo "${SUCCES} Suppression du fichier '${mvnlClass}' terminée avec succès."
+    } || {
+        echo "${ERROR} Erreur lors de la suppression du fichier '${mvnlClass}'."
+        exit 1
+    }
+fi
+
+if [ -f ${junitJarUn} ]; then
+    rm ${junitJarUn} && {
+        echo "${SUCCES} Suppression du fichier '${junitJarUn}' terminée avec succès."
+    } || {
+        echo "${ERROR} Erreur lors de la suppression du fichier '${junitJarUn}'."
+        exit 1
+    }
+fi
+
+if [ -f ${junitJarDeux} ]; then
+    rm ${junitJarDeux} && {
+        echo "${SUCCES} Suppression du fichier '${junitJarDeux}' terminée avec succès."
+    } || {
+        echo "${ERROR} Erreur lors de la suppression du fichier '${junitJarDeux}'."
+        exit 1
+    }
+fi
+
+# Suppression du fichier shell
+if [ -f ${binFileUn} ]; then
+    rm ${binFileUn} && {
+        echo "${SUCCES} Suppression du fichier binaire '${binFileUn}' terminée avec succès."
+    } || {
+        echo "${ERROR} Erreur lors de la suppression du fichier binaire '${binFileUn}'."
+        exit 1
+    }
+fi
+
+if [ -f ${binFileDeux} ]; then
+    rm ${binFileDeux} && {
+        echo "${SUCCES} Suppression du fichier binaire '${binFileDeux}' terminée avec succès."
+    } || {
+        echo "${ERROR} Erreur lors de la suppression du fichier binaire '${binFileDeux}'."
+        exit 1
+    }
+fi
+
 
 # Suppression du dossier maven-lite
 if [ -d ${mavenLiteFolder} ]; then
