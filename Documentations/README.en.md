@@ -55,3 +55,5 @@ Each argument must be preceded by its option; you cannot put an argument without
 ## Using Maven Lite
 
 [See the documentation on using Maven Lite](./Utilisation.fr.md)
+
+<a href="https://github.com/FloRobart/mavenlite.github.io"><button type="button">Retour</button></a>
