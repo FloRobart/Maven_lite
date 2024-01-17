@@ -41,7 +41,7 @@ cp -f ${junitJarFileUn} ${etc} && { echo "${SUCCES} Copie du fichier '${junitJar
 cp -f ${junitJarFileDeux} ${etc} && { echo "${SUCCES} Copie du fichier '${junitJarFileDeux}' terminé avec succès."; } || { echo "${ERROR} Erreur lors du déplacement du fichier '${junitJarFileDeux}'."; exit 1; }
 
 # Création d'une alias dans le fichier ~/.di_shrc_priv
-echo -e "\n\n# Alias pour Maven Lite\nalias mvnl='${bin}/mvnl'\n" >> /home/etudiant/$USER/.di_shrc_priv && { echo "${SUCCES} Création de l'alias 'mvnl' dans le fichier '~/.di_shrc_priv' terminé avec succès."; } || { echo "${ERROR} Erreur lors de la création de l'alias 'mvnl' dans le fichier '~/.di_shrc_priv'."; exit 1; }
+echo -e "\n\n# Alias pour Maven Lite\nalias mvnl='${bin}/mvnl'\nalias mvnl-uninstall='${bin}/mvnl-uninstall'" >> /home/etudiant/$USER/.di_shrc_priv && { echo "${SUCCES} Création de l'alias 'mvnl' dans le fichier '~/.di_shrc_priv' terminé avec succès."; } || { echo "${ERROR} Erreur lors de la création de l'alias 'mvnl' dans le fichier '~/.di_shrc_priv'."; exit 1; }
 source /home/etudiant/$USER/.di_shrc_priv
 
 echo -e "\n${SUCCES} Installation terminée avec succès."
