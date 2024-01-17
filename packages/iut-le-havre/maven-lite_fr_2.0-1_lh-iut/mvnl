@@ -1,0 +1,10 @@
+#!/bin/bash
+SPACE_REPLACEMENT="#;#SPACE#;#"
+for arg in "$@"
+do
+    new_arg=$( echo "$arg" | sed -r "s/[ ]/$SPACE_REPLACEMENT/g" )
+    new_arg=$(echo "$new_arg" | sed -r "s/\\\"/\\\\\"/g")
+    args="$args $new_arg"
+done
+
+java -cp /home/etudiant/$USER/.maven-lite/etc MavenLite $SPACE_REPLACEMENT $args
