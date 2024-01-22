@@ -29,7 +29,7 @@ public class MavenLite
     /* Valeurs par défauts */
     private static final String PROJECT_NAME    = System.getProperty("user.dir").substring(System.getProperty("user.dir").lastIndexOf("/")+1);
     private static final String AUTHOR          = "Floris Robart";
-    private static final String VERSION         = "2.0.0";
+    private static final String VERSION         = "2.1.0";
     private static final String ENCODING        = "UTF-8";
     private static final String EXPORT          = "run.java";
     private static final String TARGET          = "target";
@@ -158,9 +158,9 @@ public class MavenLite
         /* 22 */ lst.add(new String[] {"maven"            , "-mvn" , "--maven"                , "0"        , "0"        , null               , "0", "Convertie le projet en projet maven en créant un fichier pom.xml et en déplaçant les fichiers si nécessaire."});
         /* 23 */ lst.add(new String[] {"version"          , "-V"   , "--version"              , "0"        , "0"        , MavenLite.VERSION  , "0", "Affiche la version."});
         /* 24 */ lst.add(new String[] {"help"             , "-h"   , "--help"                 , "0"        , "0"        , null               , "0", "Affiche l'aide et quitte."});
-        /* 26 */ lst.add(new String[] {"clear"            , "-clr" , "--clear"                , "0"        , "0"        , null               , "0", "Permet de supprimer les fichiers dans le dossier de sortie des fichiers compilés."});
-        /* 27 */ //lst.add(new String[] {"add-compile-option", "-aco" , "--add-compile-option"   , "unlimited", "unlimited", null                  , "0", "Permet d'ajouter une option à java lors de la compilation. Attention, Aucune vérification n'est faite sur l'option, il faut donc faire attention à ce que vous ajoutez."});
-        /* 28 */ //lst.add(new String[] {"add-launch-option" , "-alo" , "--add-launch-option"    , "unlimited", "unlimited", null                  , "0", "Permet d'ajouter une option à java lors du lancement. Attention, Aucune vérification n'est faite sur l'option, il faut donc faire attention à ce que vous ajoutez."});
+        /* 25 */ lst.add(new String[] {"clear"            , "-clr" , "--clear"                , "0"        , "0"        , null               , "0", "Permet de supprimer les fichiers dans le dossier de sortie des fichiers compilés."});
+        /* 26 */ //lst.add(new String[] {"add-compile-option", "-aco" , "--add-compile-option"   , "unlimited", "unlimited", null                  , "0", "Permet d'ajouter une option à java lors de la compilation. Attention, Aucune vérification n'est faite sur l'option, il faut donc faire attention à ce que vous ajoutez."});
+        /* 27 */ //lst.add(new String[] {"add-launch-option" , "-alo" , "--add-launch-option"    , "unlimited", "unlimited", null                  , "0", "Permet d'ajouter une option à java lors du lancement. Attention, Aucune vérification n'est faite sur l'option, il faut donc faire attention à ce que vous ajoutez."});
         /* Pour ajouter une option, il faut ajouter un tableau de String dans la liste ci-dessus. Si l'option doit executé du code ajouter la au switch dans la méthode executeOption() et créer une méthode pour l'exécution de l'option. */
 
         return lst;

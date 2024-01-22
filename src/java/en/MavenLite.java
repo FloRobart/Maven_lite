@@ -30,7 +30,7 @@ public class MavenLite
     /* Valeurs par défauts */
     private static final String PROJECT_NAME    = System.getProperty("user.dir").substring(System.getProperty("user.dir").lastIndexOf("/")+1);
     private static final String AUTHOR          = "Floris Robart";
-    private static final String VERSION         = "2.0.0";
+    private static final String VERSION         = "2.1.0";
     private static final String ENCODING        = "UTF-8";
     private static final String EXPORT          = "run.java";
     private static final String TARGET          = "target";
