@@ -3,7 +3,7 @@
 - Voir la [documentation Française](../README.md)
 - See the [PDF documentation](./pdf/README.en.pdf)
 
-- Version: 2.0.0
+- Version: 2.1.0
 - Author: Floris Robart
 - Translated by: Chat GPT-3.5
 
