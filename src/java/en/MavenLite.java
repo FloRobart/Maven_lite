@@ -1276,7 +1276,7 @@ public class MavenLite
      */
     private void compileJar()
     {
-        System.out.println(MavenLite.INFO + "Jar compilation will be available in " + MavenLite.BLUE_BOLD + "version 2.1.0" + MavenLite.BLUE_BOLD + "...");
+        System.out.println(MavenLite.INFO + "Jar compilation will be available in " + MavenLite.BLUE_BOLD + "version 2.2.0" + MavenLite.BLUE_BOLD + "...");
         System.exit(0);
 
         /* Variables */
