@@ -129,7 +129,7 @@
 
 ### Installing Maven Lite on IUT du Havre Machines
 
-- Download the [Compressed File of the French Version](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_lh-iut.zip) containing the application files.
+- Download the [Compressed File of the French Version](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.1.0/maven-lite_fr_2.0-1_lh-iut.zip) containing the application files.
 - Decompress the compressed file.
 - Open a terminal in the directory containing the application files.
 - Make the `install.sh` file executable if it's not already.
@@ -150,7 +150,7 @@
 
 #### Automatic Installation of Maven Lite - Debian
 
-- Download the [Debian file for the French version](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_all.deb)
+- Download the [Debian file for the French version](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.1.0/maven-lite_fr_2.0-1_all.deb)
 - Execute the Debian file
 
   ```sh
@@ -161,7 +161,7 @@
 
 #### Manual Installation of Maven Lite - Debian
 
-- Download the [Compressed file of the French version](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_linux-macos.zip) containing the application files.
+- Download the [Compressed file of the French version](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.1.0/maven-lite_fr_2.0-1_linux-macos.zip) containing the application files.
 - Unzip the compressed file.
 - Create the folder `/usr/local/etc/maven-lite`
 
@@ -202,7 +202,7 @@
 
 #### Automatic Installation of Maven Lite - Linux & MacOS
 
-- Download the [Compressed file of the French version](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_linux-macos.zip) containing the application files.
+- Download the [Compressed file of the French version](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.1.0/maven-lite_fr_2.0-1_linux-macos.zip) containing the application files.
 - Unzip the compressed file.
 - Run the installation script by executing the following command in a terminal
 
@@ -214,7 +214,7 @@
 
 #### Manual Installation of Maven Lite - Linux & MacOS
 
-- Download the [Compressed file of the French version](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_linux-macos.zip) containing the application files.
+- Download the [Compressed file of the French version](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.1.0/maven-lite_fr_2.0-1_linux-macos.zip) containing the application files.
 - Unzip the compressed file.
 - Create the folder `/usr/local/etc/maven-lite`
 
@@ -255,7 +255,7 @@
 
 #### Automatic Installation of Maven Lite - Windows
 
-- Download the [Compressed file of the French version](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_win.zip) containing the application files.
+- Download the [Compressed file of the French version](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.1.0/maven-lite_fr_2.0-1_win.zip) containing the application files.
 - Unzip the compressed file by right-clicking on the file and clicking on `Extract all...`
   ![Unzip Image 1](./img/windows_unzip_1.png)
 - Confirm the extraction to the folder of your choice by clicking on `Extract`
@@ -285,7 +285,7 @@
 
 #### Manual Installation of Maven Lite - Windows
 
-- Download the [Compressed file of the French version](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.0.0/maven-lite_fr_2.0-1_win.zip) containing the application files.
+- Download the [Compressed file of the French version](https://github.com/FloRobart/mavenlite.github.io/releases/download/v2.1.0/maven-lite_fr_2.0-1_win.zip) containing the application files.
 - Unzip the compressed file by right-clicking on the file and clicking on `Extract all...`
   ![Unzip Image 1](./img/windows_unzip_1.png)
 - Confirm the extraction to the folder of your choice by clicking on `Extract`
