@@ -646,4 +646,4 @@ This option allows deleting all files in the output folder for compiled files. T
 
 ## Example, Features, and Limitations
 
-<a href="https://florobart.github.io/mavenlite.github.io/Documentations/README.en.html"><button type="button">Retour</button></a>
+<a href="https://florobart.github.io/Maven_lite/Documentations/README.en.html"><button type="button">Retour</button></a>
