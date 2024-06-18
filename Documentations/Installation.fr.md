@@ -265,20 +265,20 @@
 - Vous devriez voir une fenêtre de commande s'ouvrir et afficher un texte ressemblant à celui-ci
   ![Image resultat execution du script](./img/windows_execution_result.png)
 - Appuyez sur n'importe quelle touche pour fermer la fenêtre de commande
-- Ajoutez le dossier `C:\Program Files\Maven Lite` à la variable d'environnement système `PATH`
+- Ajoutez le dossier `C:\Program Files\maven-lite` à la variable d'environnement système `PATH`
   - Si vous ne savez pas comment faire éxactué la commande qui se trouve ci-dessous ou suivez les étapes suivantes ou suivez [ce tutoriel](https://wiki.gamedevalliance.fr/contribuer/path/)
     - Ouvrez le menu démarrer
     - Tapez `variables d'environnement` et cliquez sur `Modifier les variables d'environnement système`
     - Cliquez sur `Variables d'environnement...`
     - Sélectionnez la variable système `Path` et cliquez sur `Modifier...`
     - Cliquez sur `Nouveau`
-    - Tapez `C:\Program Files\Maven Lite` et cliquez sur `OK`
+    - Tapez `C:\Program Files\maven-lite` et cliquez sur `OK`
     - Cliquez sur `OK`
     - Cliquez sur `OK`
   - Éxécutez la commande suivante dans un terminal powershell en tant qu'administrateur
 
   ```powershell
-  SETX PATH "%PATH%;C:\Program Files\Maven Lite"
+  SETX PATH "%PATH%;C:\Program Files\maven-lite"
   ```
 
 - Vous pouvez supprimez le reste des fichiers inutilisés ainsi que le fichier compressé.
@@ -290,47 +290,47 @@
   ![Image décompression 1](./img/windows_unzip_1.png)
 - Validez la décompression dans le dossier de votre choix en cliquant sur `Extraire`
   ![Image décompression 2](./img/windows_unzip_2.png)
-- Créez le dossier `C:\Program Files\Maven Lite`
+- Créez le dossier `C:\Program Files\maven-lite`
 
   ```powershell
-  mkdir 'C:\Program Files\Maven Lite'
+  mkdir 'C:\Program Files\maven-lite'
   ```
 
-- Créez le dossier `C:\Program Files\Maven Lite\etc`
+- Créez le dossier `C:\Program Files\maven-lite\etc`
 
   ```powershell
-  mkdir 'C:\Program Files\Maven Lite\etc'
+  mkdir 'C:\Program Files\maven-lite\etc'
   ```
 
-- Déplacez les fichiers .class et .jar dans le dossier `C:\Program Files\Maven Lite\etc`
+- Déplacez les fichiers .class et .jar dans le dossier `C:\Program Files\maven-lite\etc`
 
   ```powershell
-  MOVE hamcrest-core-1.3.jar 'C:\Program Files\Maven Lite\etc'
-  MOVE junit-4.13.2.jar 'C:\Program Files\Maven Lite\etc'
-  MOVE MavenLite.class 'C:\Program Files\Maven Lite\etc'
+  MOVE hamcrest-core-1.3.jar 'C:\Program Files\maven-lite\etc'
+  MOVE junit-4.13.2.jar 'C:\Program Files\maven-lite\etc'
+  MOVE MavenLite.class 'C:\Program Files\maven-lite\etc'
   ```
 
-- Déplacez les fichiers Batch dans le dossier `C:\Program Files\Maven Lite`
+- Déplacez les fichiers Batch dans le dossier `C:\Program Files\maven-lite`
 
   ```powershell
-  MOVE mvnl.bat 'C:\Program Files\Maven Lite'
-  MOVE mvnl-uninstall.bat 'C:\Program Files\Maven Lite'
+  MOVE mvnl.bat 'C:\Program Files\maven-lite'
+  MOVE mvnl-uninstall.bat 'C:\Program Files\maven-lite'
   ```
 
-- Ajoutez le dossier `C:\Program Files\Maven Lite` à la variable d'environnement système `PATH`
+- Ajoutez le dossier `C:\Program Files\maven-lite` à la variable d'environnement système `PATH`
   - Si vous ne savez pas comment faire éxactué la commande qui se trouve ci-dessous ou suivez les étapes suivantes ou suivez [ce tutoriel](https://wiki.gamedevalliance.fr/contribuer/path/)
     - Ouvrez le menu démarrer
     - Tapez `variables d'environnement` et cliquez sur `Modifier les variables d'environnement système`
     - Cliquez sur `Variables d'environnement...`
     - Sélectionnez la variable système `Path` et cliquez sur `Modifier...`
     - Cliquez sur `Nouveau`
-    - Tapez `C:\Program Files\Maven Lite` et cliquez sur `OK`
+    - Tapez `C:\Program Files\maven-lite` et cliquez sur `OK`
     - Cliquez sur `OK`
     - Cliquez sur `OK`
-  - Éxécutez la commande suivante dans un terminal powershell en tant qu'administrateur
+  - OU Éxécutez la commande suivante dans un terminal powershell en tant qu'administrateur
 
   ```powershell
-  SETX PATH "%PATH%;C:\Program Files\Maven Lite"
+  SETX PATH "%PATH%;C:\Program Files\maven-lite"
   ```
 
 ## Désinstallation de Maven Lite
@@ -421,20 +421,20 @@
 
 #### Désinstallation manuelle de Maven Lite - Windows
 
-- Supprimez le dossier `C:\Program Files\Maven Lite` en éxécutant la commande suivante dans un terminal powershell
+- Supprimez le dossier `C:\Program Files\maven-lite` en éxécutant la commande suivante dans un terminal powershell
 
   ```powershell
-  rmdir 'C:\Program Files\Maven Lite'
+  rmdir 'C:\Program Files\maven-lite'
   ```
 
 - Confirmer la suppression en tapant `O`
-- Supprimez le dossier `C:\Program Files\Maven Lite\` de la variable d'environnement système `PATH`
+- Supprimez le dossier `C:\Program Files\maven-lite\` de la variable d'environnement système `PATH`
   - Si vous ne savez pas comment faire suivez les étapes suivantes ou suivez [ce tutoriel](https://wiki.gamedevalliance.fr/contribuer/path/)
     - Ouvrez le menu démarrer
     - Tapez `variables d'environnement` et cliquez sur `Modifier les variables d'environnement système`
     - Cliquez sur `Variables d'environnement...`
     - Sélectionnez la variable système `Path` et cliquez sur `Modifier...`
-    - Cliquez sur `C:\Program Files\Maven Lite` et cliquez sur `Supprimer`
+    - Cliquez sur `C:\Program Files\maven-lite` et cliquez sur `Supprimer`
     - Cliquez sur `OK`
     - Cliquez sur `OK`
     - Cliquez sur `OK`
