@@ -19,7 +19,7 @@
 
 - Windows 10 (Non testé)
 - Windows 11 (Testé sur Windows 11 22H2)
-- Linux possèdant `bash` (Testé sur Ubuntu 23.10 Mantic Minotaur)
+- Linux possèdant `bash` (Testé sur Debian, Ubuntu 23.04, 23.10 et 24.04)
 - MacOS Mojave 10.14.6 et inférieur (Non testé)
 - MacOS Catalina 10.15 et supérieur à condition d'installé `bash` (Non testé)
 

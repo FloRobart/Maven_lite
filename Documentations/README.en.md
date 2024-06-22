@@ -20,7 +20,7 @@
 
 - Windows 10 (Not tested)
 - Windows 11 (Tested on Windows 11 22H2)
-- Linux with `bash` (Tested on Ubuntu 23.10 Mantic Minotaur)
+- Linux with `bash` (Tested on Debian, Ubuntu 23.04, 23.10 and 24.04)
 - MacOS Mojave 10.14.6 and lower (Not tested)
 - MacOS Catalina 10.15 and higher with `bash` installed (Not tested)
 
