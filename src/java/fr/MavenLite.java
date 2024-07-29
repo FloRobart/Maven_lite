@@ -13,6 +13,11 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/*
+ * Ce fichier fait partie du projet Maven Lite.
+ * Copyright (C) 2024 Floris Robart <florisrobart.pro@gmail.com>
+ */
+
 /**
  * MavenLite est un programme qui permet de compiler et de lancer un projet java
  * @author Floris Robart

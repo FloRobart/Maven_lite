@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# This file is part of the Maven Lite project
+# Copyright (C) 2024 Floris Robart <florisrobart.pro@gmail.com>
+
 #======#
 # Main #
 #======#
