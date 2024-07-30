@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 
 /*
  * This file is part of Maven Lite.
- * Copyright (C) 2024 Floris Robart <florisrobart.pro@gmail.com>
+ * Copyright (C) 2024 Floris Robart <florobart.github@gmail.com>
  */
 
 /**

@@ -1,7 +1,7 @@
 @echo off
 
 REM This file is part of Maven Lite.
-REM Copyright (C) 2024 Floris Robart florisrobart.pro@gmail.com
+REM Copyright (C) 2024 Floris Robart florobart.github@gmail.com
 
 REM Constantes
 SET "SUCCES=[SUCCESS]"

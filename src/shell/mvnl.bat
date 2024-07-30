@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 REM This file is part of Maven Lite.
-REM Copyright (C) 2024 Floris Robart florisrobart.pro@gmail.com
+REM Copyright (C) 2024 Floris Robart florobart.github@gmail.com
 
 REM Remplacement de l'espace par le caractère spécifique
 SET "SPACE_REPLACEMENT=#;#SPACE#;#"
