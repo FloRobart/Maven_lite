@@ -453,7 +453,7 @@ public class MavenLite
         return packageName;
     }
 
-    /* Compilation et compilation en jar */
+    /* Compilation */
     /**
      * Génère la liste des fichiers à compiler
      * @param source le dossier à parcourir (source du projet java)
@@ -461,6 +461,8 @@ public class MavenLite
      */
     private String genererCompileList(File source)
     {
+        String exclude = this.hmArgs.get(this.lstOptions.get(9)[0]);
+        boolean excludeFile = false;
         StringBuilder sCompileList = new StringBuilder();
     
         if (source.exists() && source.isDirectory())
@@ -470,13 +472,30 @@ public class MavenLite
             {
                 for (File file : lstFiles)
                 {
-                    if (file.isFile() && file.getName().endsWith(".java"))
+                    if (exclude != null)
                     {
-                        sCompileList.append(file.getPath()).append("\n");
+                        excludeFile = false;
+                        for (String ex : exclude.replace("\\", "").split(MavenLite.ARG_SEPARATOR))
+                        {
+                            if (ex.equals("")) { continue; }
+                            if (file.getPath().contains(ex))
+                            {
+                                excludeFile = true;
+                                break;
+                            }
+                        }
                     }
-                    else if (file.isDirectory())
+                    
+                    if (!excludeFile)
                     {
-                        sCompileList.append(this.genererCompileList(file));
+                        if (file.isFile() && file.getName().endsWith(".java"))
+                        {
+                            sCompileList.append(file.getPath()).append("\n");
+                        }
+                        else if (file.isDirectory())
+                        {
+                            sCompileList.append(this.genererCompileList(file));
+                        }
                     }
                 }
             }
@@ -493,13 +512,6 @@ public class MavenLite
             
             System.exit(1);
         }
-
-        String exclude = this.hmArgs.get(this.lstOptions.get(9)[0]);
-        if (exclude != null)
-            for (String ex : exclude.replace("\\", "").split(MavenLite.ARG_SEPARATOR))
-                for (String line : sCompileList.toString().split("\n"))
-                    if (line.contains(ex))
-                        sCompileList = new StringBuilder(sCompileList.toString().replace(line + "\n", ""));
 
         return sCompileList.toString();
     }
@@ -1428,13 +1440,19 @@ public class MavenLite
     }
 
     /**
-     * Exporte le projet dans un fichier jar.
-     * Le fichier jar sera exporté dans le dossier de sortie.
+     * Créer un fichier exécutables pour lancer le projet sans avoir besoin de Maven Lite.
      */
     private void export()
     {
-        System.out.println(MavenLite.INFO + "Export arrive bientôt...");
-        // TODO : Exporter le projet dans un fichier .class
+        // TODO : Créer un fichier exécutables pour lancer le projet sans avoir besoin de Maven Lite
+        if (MavenLite.OS.contains("windows"))
+        {
+            System.out.println(MavenLite.INFO + "Export arrive bientôt sur Windows...");
+        }
+        else
+        {
+            System.out.println(MavenLite.INFO + "Export arrive bientôt Linux et MacOS...");
+        }
     }
 
     /**
