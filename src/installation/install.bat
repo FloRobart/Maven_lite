@@ -55,7 +55,7 @@ COPY /Y "%currentDir%\%junitJarFileUn%" "%etc%" && ( echo "%SUCCESS% File '%juni
 COPY /Y "%currentDir%\%junitJarFileDeux%" "%etc%" && ( echo "%SUCCESS% File '%junitJarFileDeux%' copied successfully." ) || ( echo "%ERROR% Error copying the file '%junitJarFileDeux%'." & call :exitPersonal & exit /b 1 )
 
 REM Moving the lang directory to the etc directory
-COPY /Y "%currentDir%\%lang%" "%etc%" && ( echo "%SUCCESS% Directory '%lang%' copied successfully." ) || ( echo "%ERROR% Error copying the directory '%lang%'." & call :exitPersonal & exit /b 1 )
+COPY /Y /E "%currentDir%\%lang%" "%etc%" && ( echo "%SUCCESS% Directory '%lang%' copied successfully." ) || ( echo "%ERROR% Error copying the directory '%lang%'." & call :exitPersonal & exit /b 1 )
 
 echo.
 echo "[INFO] Add the '%bin%' directory to the system 'Path' environment variable."
