@@ -38,6 +38,7 @@
   - [Encoding](#encoding)
   - [Export](#export)
   - [Convert to Maven Project](#convert-to-maven-project)
+  - [Language](#language)
   - [Version](#version)
   - [Help](#help)
   - [Clear Compiled Files](#clear-compiled-files)
@@ -615,6 +616,25 @@ The purpose of this option is to be able to launch your project via a single fil
 This option is used with the `--maven` or `-mvn` option.
 
 This option allows converting your project to a Maven project by creating a pom.xml file and moving files if necessary.
+
+Voici la traduction en anglais :  
+
+## Language  
+
+The use of this option is done with the `-lang` or `--language` option.  
+
+This option allows displaying the available languages for Maven Lite if used alone.  
+
+If you use this option with a language, Maven Lite will use that language to display messages.  
+
+This option is persistent, meaning that if you use it once, Maven Lite will continue using this language to display messages until you change the language again.  
+
+- Example of using the Language option  
+  - In this example, we will set Maven Lite's language to English.  
+
+  ```sh
+  mvnl -lang en
+  ```
 
 ## Version
 
