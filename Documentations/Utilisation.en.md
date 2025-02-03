@@ -620,18 +620,18 @@ This option allows converting your project to a Maven project by creating a pom.
 
 Voici la traduction en anglais :  
 
-## Language  
+## Language
 
-The use of this option is done with the `-lang` or `--language` option.  
+The use of this option is done with the `-lang` or `--language` option.
 
-This option allows displaying the available languages for Maven Lite if used alone.  
+This option allows displaying the available languages for Maven Lite if used alone.
 
-If you use this option with a language, Maven Lite will use that language to display messages.  
+If you use this option with a language, Maven Lite will use that language to display messages.
 
-This option is persistent, meaning that if you use it once, Maven Lite will continue using this language to display messages until you change the language again.  
+This option is persistent, meaning that if you use it once, Maven Lite will continue using this language to display messages until you change the language again.
 
-- Example of using the Language option  
-  - In this example, we will set Maven Lite's language to English.  
+- Example of using the Language option
+  - In this example, we will set Maven Lite's language to English.
 
   ```sh
   mvnl -lang en
