@@ -1,6 +1,0 @@
-Package: mvnl
-Version: 2.0-1
-Architecture: all
-Maintainer: Floris Robart <florisrobart.pro@gmail.com>
-depends: bash
-Description: Maven Lite
