@@ -94,7 +94,7 @@ sous windows il est impossible de mettre le caratère `"` dans les arguments.
 - Elle ne prend pas en charge les commentaires.
 - Il est possible de mettre des options en utilisant le format `--option` ou `-o`. Vous pouvez mettre n'inporte quel option cité dans [la liste des options](#liste-des-options).
 - Il est possible de passer des arguments avec des espaces à la class main de votre projet en utilisant des guillemets double, par exemple `mvnl -args "votre argument"`.
-- Il est possible de mettre plusieurs options sur la même ligne en les séparant par un espace, par exemple `mvnl -q --verbose --arguments "votre arguments"` ou `mvnl -quiet -v -args "votre arguments"`.
+- Il est possible de mettre plusieurs options sur la même ligne en les séparant par un espace, par exemple `mvnl -q --verbose --arguments "votre arguments"` ou `mvnl --quiet -v -args "votre arguments"`.
 - Il est possible d'échapper les caractères spéciaux avec un antislash `\`, par exemple `-args "exemp\"le"` sous Linux et Macos uniquement.
 
 ### Exemple de ligne de commande

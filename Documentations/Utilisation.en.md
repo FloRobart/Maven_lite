@@ -94,7 +94,7 @@ On Windows, it is impossible to include the `"` character in arguments.
 - It does not support comments.
 - You can use options in the format `--option` or `-o`. You can use any option listed in [the list of options](#list-of-options).
 - You can pass arguments with spaces to the main class of your project by using double quotes, for example, `mvnl -args "your argument"`.
-- You can place multiple options on the same line, separating them with a space, for example, `mvnl -q --verbose --arguments "your arguments"` or `mvnl -quiet -v -args "your arguments"`.
+- You can place multiple options on the same line, separating them with a space, for example, `mvnl -q --verbose --arguments "your arguments"` or `mvnl --quiet -v -args "your arguments"`.
 - You can escape special characters with a backslash `\`, for example, `-args "examp\"le"` on Linux and MacOS only.
 
 ### Example Command Line
