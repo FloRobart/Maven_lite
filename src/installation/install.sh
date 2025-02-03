@@ -22,6 +22,7 @@ classFile="MavenLite.class"
 junitJarFileUn="junit-4.13.2.jar"
 junitJarFileDeux="hamcrest-core-1.3.jar"
 manFile="mvnl.1.gz"
+lang="lang"
 
 # Creation of the /etc/maven-lite directory
 if [ ! -d ${etc} ]; then
@@ -38,6 +39,9 @@ sudo cp -f ${classFile} ${etc} && { echo "${SUCCESS} Copying the '${classFile}' 
 # Moving junit jar files to /etc/maven-lite
 sudo cp -f ${junitJarFileUn} ${etc} && { echo "${SUCCESS} Copying the '${junitJarFileUn}' file completed successfully."; } || { echo "${ERROR} Error moving the '${junitJarFileUn}' file."; exit 1; }
 sudo cp -f ${junitJarFileDeux} ${etc} && { echo "${SUCCESS} Copying the '${junitJarFileDeux}' file completed successfully."; } || { echo "${ERROR} Error moving the '${junitJarFileDeux}' file."; exit 1; }
+
+# Moving lang files to /etc/maven-lite
+sudo cp -fr ${lang} ${etc} && { echo "${SUCCESS} Copying the 'lang' directory completed successfully."; } || { echo "${ERROR} Error moving the 'lang' directory."; exit 1; }
 
 # Moving manual pages to /usr/local
 sudo cp -f ${manFile} ${man} && { echo "${SUCCESS} Copying manual pages completed successfully."; } || { echo "${ERROR} Error moving manual pages."; exit 1; }

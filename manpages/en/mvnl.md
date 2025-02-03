@@ -184,6 +184,10 @@ Options:
                               of compiled files.
                               Number of arguments  : 0.
 
+  -lang, --language           Displays the list of available languages if
+                              no argument is passed. If an argument is passed, it allows
+                              changing the application's language: 'mvnl -lang en'.
+
 # RETURN CODES
 
 0: Everything went well.
@@ -214,6 +218,9 @@ Maven Lite consists of 6 files:
     `'/usr/local/man/fr/man1/'` for the French version and in the
     `'/usr/local/man/en/man1/'` folder for the English version.
 
+-   `'/usr/local/etc/maven-lite/lang/'`, the folder containing
+    the 6 language files.
+
 # BUGS
 
 There is only one known bug related to arguments with quotes,
@@ -225,6 +232,6 @@ Written by Robart Floris.
 
 # BUG REPORT
 
-Report bugs via email to \<florisrobart.pro@gmail.com\>
+Report bugs via email to \<florobart.github@gmail.com\>
 specifying what the bug is, how I can reproduce it, and that
 it concerns Maven Lite as well as the version used.

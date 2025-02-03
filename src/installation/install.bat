@@ -17,6 +17,7 @@ SET "binFileDeux=mvnl-uninstall.bat"
 SET "classFile=MavenLite.class"
 SET "junitJarFileUn=junit-4.13.2.jar"
 SET "junitJarFileDeux=hamcrest-core-1.3.jar"
+SET "lang=lang"
 
 SET "courantDir=%~dp0"
 
@@ -52,6 +53,9 @@ COPY /Y "%currentDir%\%classFile%" "%etc%" && ( echo "%SUCCESS% File '%classFile
 REM Moving jar files to the etc directory
 COPY /Y "%currentDir%\%junitJarFileUn%" "%etc%" && ( echo "%SUCCESS% File '%junitJarFileUn%' copied successfully." ) || ( echo "%ERROR% Error copying the file '%junitJarFileUn%'." & call :exitPersonal & exit /b 1 )
 COPY /Y "%currentDir%\%junitJarFileDeux%" "%etc%" && ( echo "%SUCCESS% File '%junitJarFileDeux%' copied successfully." ) || ( echo "%ERROR% Error copying the file '%junitJarFileDeux%'." & call :exitPersonal & exit /b 1 )
+
+REM Moving the lang directory to the etc directory
+COPY /Y "%currentDir%\%lang%" "%etc%" && ( echo "%SUCCESS% Directory '%lang%' copied successfully." ) || ( echo "%ERROR% Error copying the directory '%lang%'." & call :exitPersonal & exit /b 1 )
 
 echo.
 echo "[INFO] Add the '%bin%' directory to the system 'Path' environment variable."

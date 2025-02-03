@@ -171,6 +171,10 @@ Number of arguments : 0.
 .PP
 -clr , --clear Delete files in the output folder of compiled files.
 Number of arguments : 0.
+.PP
+-lang , --language Displays the list of available languages if
+no argument is passed. If an argument is passed, it allows
+changing the application's language: 'mvnl -lang en'.
 .SH RETURN CODES
 0: Everything went well.
 .PP
@@ -199,12 +203,15 @@ displayed with the \f[CR]\[aq]man mvnl\[aq]\f[R] command located in the
 folder \f[CR]\[aq]/usr/local/man/fr/man1/\[aq]\f[R] for the French
 version and in the \f[CR]\[aq]/usr/local/man/en/man1/\[aq]\f[R] folder
 for the English version.
+.IP \[bu] 2
+\f[CR]\[aq]/usr/local/etc/maven-lite/lang/\[aq]\f[R], the folder containing
+the 6 language files.
 .SH BUGS
 There is only one known bug related to arguments with quotes,
 backslashes, etc.
 .SH AUTHOR
 Written by Robart Floris.
 .SH BUG REPORT
-Report bugs via email to <florisrobart.pro\[at]gmail.com> specifying
+Report bugs via email to <florobart.github\[at]gmail.com> specifying
 what the bug is, how I can reproduce it, and that it concerns Maven Lite
 as well as the version used.

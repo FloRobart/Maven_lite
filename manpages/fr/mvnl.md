@@ -189,6 +189,10 @@ Options :
                               des fichiers compilés.
                               Nombre de d'argument  : 0.
 
+  -lang, --language           Affiche la liste des langues disponibles si
+                              aucun argument n'est passé. Si un argument est passé, il permet
+                              de changer la langue de l'application : 'mvnl -lang en'.
+
 # CODES DE RETOUR
 
 0 : Tout s\'est bien passé.
@@ -219,6 +223,9 @@ Maven Lite est constitué de 6 fichiers :
     `'/usr/local/man/fr/man1/'` pour la version française et dans le
     dossier `'/usr/local/man/en/man1/'` pour la version anglaise.
 
+-   `'/usr/local/etc/maven-lite/lang/'`, dans lequel se
+    trouve les 6 fichiers de langue.
+
 # BOGUES
 
 Il y a un seul bogue connu qui concerne les arguments avec des guillemets
@@ -230,6 +237,6 @@ antislashs, etc.
 
 # RAPPORT DE BOGUES
 
-Reporter les bogues par mail à l\'adresse \<florisrobart.pro@gmail.com\>
+Reporter les bogues par mail à l\'adresse \<florobart.github@gmail.com\>
 en précisant quel est le bogue, comment puis-je le reproduire et qu\'il
 concerne Maven Lite ainsi que la version utilisé.
