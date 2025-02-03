@@ -156,11 +156,11 @@ Il est possible de mettre autant d'options que vous le souhaitez et dans n'impor
   --classpath CLASSPATH
 
   # Ajoute un argument à la classe principale
-  --arguments "argument 2 (dans config)"
-  -args "argument 3 (dans config)"
+  --arguments "argument 1 (dans config)"
+  -args "argument 2 (dans config)"
 
-  # Supprime l'affichage de java et affiche les commandes éxécutées
-  --quiet --verbose
+  # Supprime l'affichage de java
+  --quiet
   ```
 
 ## Création d'un projet
@@ -202,7 +202,7 @@ Permet de spécifier à l'option [create](#création-dun-projet) de créer l'arb
   mvnl --create NomProjet --model-view-controller
   ```
 
-  - Arborescence du projet qui
+  - Arborescence du projet
 
     ```txt
     NomProjet

@@ -159,8 +159,8 @@ You can include as many options as you want in any order.
   --arguments "argument 2 (in config)"
   -args "argument 3 (in config)"
 
-  # Suppress java output and display executed commands
-  --quiet --verbose
+  # Suppress java output
+  --quiet
   ```
 
 ## Project Creation
