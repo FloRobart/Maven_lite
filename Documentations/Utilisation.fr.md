@@ -69,6 +69,7 @@
 - [`-e`](#encodage), [`--encoding`](#encodage) : Change l'encodage des fichiers java à compiler.
 - [`-exp`](#exportation), [`--export`](#exportation) : Crée un fichier jar exécutable pour lancer le projet sans installer MavenLite.
 - [`-mvn`](#transformation-en-projet-maven), [`--maven`](#transformation-en-projet-maven) : Convertit le projet en projet Maven.
+- [`-lang`](#langue), [`--language`](#langue) : Affiche les langues disponibles et permet de changer la langue de Maven Lite.
 - [`-V`](#version), [`--version`](#version) : Affiche la version.
 - [`-h`](#aide), [`--help`](#aide) : Affiche l'aide et quitte.
 - [`-clr`](#supprimer-les-fichiers-compilés), [`--clear`](#supprimer-les-fichiers-compilés) : Supprime les fichiers dans le dossier de sortie des fichiers compilés.

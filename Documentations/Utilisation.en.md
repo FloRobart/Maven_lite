@@ -69,6 +69,7 @@
 - [`-e`](#encoding), [`--encoding`](#encoding): Change the encoding of the java files to be compiled.
 - [`-exp`](#export), [`--export`](#export): Create an executable jar file to launch the project without installing MavenLite.
 - [`-mvn`](#maven-project-transformation), [`--maven`](#maven-project-transformation): Convert the project to a Maven project.
+- [`-lang`](#language), [`--language`](#language): Display the available languages and set the language for Maven Lite.
 - [`-V`](#version), [`--version`](#version): Display the version.
 - [`-h`](#help), [`--help`](#help): Display help and exit.
 - [`-clr`](#clear-compiled-files), [`--clear`](#clear-compiled-files): Clear files in the output folder for compiled files.
